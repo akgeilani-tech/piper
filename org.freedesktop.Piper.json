@@ -16,7 +16,7 @@
             "name": "python-evdev",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --prefix=/app --no-deps --no-build-isolation ."
+                "pip3 install --prefix=/app --no-deps --no-build-isolation --ignore-installed ."
             ],
             "sources": [
                 {
@@ -30,7 +30,7 @@
             "name": "python-lxml",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --prefix=/app --no-deps --no-build-isolation ."
+                "pip3 install --prefix=/app --no-deps --no-build-isolation --ignore-installed ."
             ],
             "sources": [
                 {
