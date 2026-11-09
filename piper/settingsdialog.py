@@ -97,7 +97,11 @@ class SettingsPanel(Gtk.Box):
         self.connect("destroy", self._on_destroy)
 
     def _on_configure_clicked(self, button: Gtk.Button) -> None:
-        self._shortcuts.configure("")
+        button.set_sensitive(False)
+        try:
+            self._shortcuts.configure("")
+        finally:
+            button.set_sensitive(self._shortcuts.available)
 
     def _on_close_clicked(self, button: Gtk.Button) -> None:
         self._on_close()

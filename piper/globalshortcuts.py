@@ -21,6 +21,10 @@ SESSION_HANDLE_TOKEN = "piper"
 SHORTCUT_ID = "next-profile"
 DEFAULT_TRIGGER = "CTRL+ALT+p"
 
+# Upper bound, in milliseconds, for the portal method call itself. The
+# request response is waited for separately, after the call returns.
+PORTAL_CALL_TIMEOUT_MS = 5000
+
 
 class _PortalError(Exception):
     """Raised when a portal request returns a failure response."""
@@ -57,6 +61,7 @@ class GlobalShortcuts(GObject.GObject):
         self._session_handle = None
         self._shortcut_description = None
         self._bound = False
+        self._configuring = False
         self._connect()
 
     @property
@@ -96,7 +101,7 @@ class GlobalShortcuts(GObject.GObject):
             self._session_handle = self._create_session()
             shortcuts = self._list_shortcuts()
         except (GLib.Error, _PortalError) as error:
-            self._fail(error)
+            self._handle_request_error(error)
             return
 
         if shortcuts is None:
@@ -111,11 +116,14 @@ class GlobalShortcuts(GObject.GObject):
         try:
             description = self._bind("")
         except (GLib.Error, _PortalError) as error:
-            self._fail(error)
+            self._handle_request_error(error)
             return
 
         if description is None:
-            description = _unpack_options(existing[1]).get("trigger_description")
+            # A cancelled BindShortcuts must not leave the session marked as
+            # usable: the portal would reject binding it again. The shortcut
+            # is not active in the new session, so do not report the old one.
+            self._reset_session()
         self._set_shortcut_description(description)
 
     def configure(self, parent_window=""):
@@ -124,8 +132,9 @@ class GlobalShortcuts(GObject.GObject):
         If the shortcut was never bound in this run, the first Configure call
         has to create the binding, which also shows the portal dialog.
         """
-        if not self.available:
+        if not self.available or self._configuring:
             return
+        self._configuring = True
         try:
             if self._session_handle is None:
                 self._session_handle = self._create_session()
@@ -138,7 +147,7 @@ class GlobalShortcuts(GObject.GObject):
                         "ConfigureShortcuts",
                         parameters,
                         Gio.DBusCallFlags.NONE,
-                        -1,
+                        PORTAL_CALL_TIMEOUT_MS,
                         None,
                     )
                 else:
@@ -147,7 +156,9 @@ class GlobalShortcuts(GObject.GObject):
                     self._reset_session()
                     self._session_handle = self._create_session()
                     description = self._bind(parent_window)
-                    if description is not None:
+                    if description is None:
+                        self._reset_session()
+                    else:
                         self._set_shortcut_description(description)
             else:
                 description = self._bind(parent_window)
@@ -156,7 +167,9 @@ class GlobalShortcuts(GObject.GObject):
                 else:
                     self._set_shortcut_description(description)
         except (GLib.Error, _PortalError) as error:
-            self._fail(error)
+            self._handle_request_error(error)
+        finally:
+            self._configuring = False
 
     def close(self):
         """Closes the portal session.
@@ -177,7 +190,9 @@ class GlobalShortcuts(GObject.GObject):
                 SESSION_INTERFACE,
                 None,
             )
-            session.call_sync("Close", None, Gio.DBusCallFlags.NONE, -1, None)
+            session.call_sync(
+                "Close", None, Gio.DBusCallFlags.NONE, PORTAL_CALL_TIMEOUT_MS, None
+            )
         except GLib.Error as error:
             print(
                 f"piper: could not close the global shortcuts session: {error}",
@@ -278,6 +293,8 @@ class GlobalShortcuts(GObject.GObject):
 
         response = {}
         loop = GLib.MainLoop()
+        handler = None
+        timeout_id = 0
 
         def on_response(proxy, sender_name, signal_name, signal_parameters):
             if signal_name != "Response":
@@ -288,39 +305,54 @@ class GlobalShortcuts(GObject.GObject):
             loop.quit()
 
         def on_timeout():
+            nonlocal timeout_id
             response["timeout"] = True
+            timeout_id = 0
             loop.quit()
             return False
 
-        handler = request.connect("g-signal", on_response)
-        timeout_id = GLib.timeout_add_seconds(timeout, on_timeout)
         try:
-            self._portal.call_sync(
-                method,
-                parameters_builder(token),
-                Gio.DBusCallFlags.NONE,
-                -1,
-                None,
-            )
+            handler = request.connect("g-signal", on_response)
+            try:
+                # Bound the method call itself. Otherwise its nested main loop
+                # could run forever if the portal never replies.
+                self._portal.call_sync(
+                    method,
+                    parameters_builder(token),
+                    Gio.DBusCallFlags.NONE,
+                    PORTAL_CALL_TIMEOUT_MS,
+                    None,
+                )
+            except GLib.Error:
+                # A response received while the call was being cut off wins
+                # over the call timeout.
+                if "code" not in response:
+                    raise
+            # Only wait for the Response after the call returns, so the
+            # timeout cannot be consumed inside call_sync's nested loop.
             if "code" not in response:
+                timeout_id = GLib.timeout_add_seconds(timeout, on_timeout)
                 loop.run()
         finally:
             if timeout_id:
                 GLib.source_remove(timeout_id)
-            request.disconnect(handler)
+            if handler is not None:
+                request.disconnect(handler)
 
+        code = response.get("code")
+        if code is not None:
+            if code == 1:
+                return None
+            if code != 0:
+                results = response.get("results") or {}
+                error = results.get("error")
+                if isinstance(error, GLib.Variant):
+                    error = error.unpack()
+                raise _PortalError(error or f"the portal returned response {code}")
+            return response.get("results") or {}
         if response.get("timeout"):
             raise _PortalError(f"the portal request timed out after {timeout}s")
-        code = response.get("code")
-        if code == 1:
-            return None
-        if code != 0:
-            results = response.get("results") or {}
-            error = results.get("error")
-            if isinstance(error, GLib.Variant):
-                error = error.unpack()
-            raise _PortalError(error or f"the portal returned response {code}")
-        return response.get("results") or {}
+        raise _PortalError(f"the portal did not answer the {method} request")
 
     def _request_path(self, token):
         sender = self._bus.get_unique_name()
@@ -366,6 +398,19 @@ class GlobalShortcuts(GObject.GObject):
                     continue
                 description = _unpack_options(properties).get("trigger_description")
                 self._set_shortcut_description(description)
+
+    def _handle_request_error(self, error):
+        """Logs a transient request failure and resets the session.
+
+        Timeouts, cancellations and portal request errors must not disable the
+        feature until the next restart: closing the session lets a later
+        attempt start from a clean state.
+        """
+        print(
+            f"piper: global shortcuts request failed: {error}",
+            file=sys.stderr,
+        )
+        self._reset_session()
 
     def _fail(self, error):
         print(

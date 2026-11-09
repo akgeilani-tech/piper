@@ -31,6 +31,9 @@ All notable changes to this project are documented here. This project follows
   releases and a pinned Piper commit. The build no longer tries to uninstall
   the SDK's read-only `lxml` copy.
 - The main CI workflow pins its GitHub Actions by commit SHA.
+- Hardened the global shortcut integration: it supports portal v1/v2, bounds
+  portal requests with timeouts, recovers from transient errors and cancelled
+  sessions, and confines keyboard focus inside the Settings panel with Tab.
 
 ### Changed
 
