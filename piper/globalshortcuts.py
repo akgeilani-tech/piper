@@ -53,6 +53,7 @@ class GlobalShortcuts(GObject.GObject):
         self.available = False
         self._bus = None
         self._portal = None
+        self._portal_version = 0
         self._session_handle = None
         self._shortcut_description = None
         self._bound = False
@@ -68,7 +69,7 @@ class GlobalShortcuts(GObject.GObject):
             self._bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
             self._portal = Gio.DBusProxy.new_sync(
                 self._bus,
-                Gio.DBusProxyFlags.DO_NOT_LOAD_PROPERTIES,
+                Gio.DBusProxyFlags.NONE,
                 None,
                 PORTAL_BUS_NAME,
                 PORTAL_OBJECT_PATH,
@@ -78,6 +79,8 @@ class GlobalShortcuts(GObject.GObject):
         except GLib.Error as error:
             self._fail(error)
             return
+        version = self._portal.get_cached_property("version")
+        self._portal_version = version.unpack() if version is not None else 0
         self._portal.connect("g-signal", self._on_portal_signal)
         self.available = True
 
@@ -124,16 +127,33 @@ class GlobalShortcuts(GObject.GObject):
         if not self.available:
             return
         try:
+            if self._session_handle is None:
+                self._session_handle = self._create_session()
             if self._bound:
-                parameters = GLib.Variant(
-                    "(osa{sv})", (self._session_handle, parent_window, {})
-                )
-                self._portal.call_sync(
-                    "ConfigureShortcuts", parameters, Gio.DBusCallFlags.NONE, -1, None
-                )
+                if self._portal_version >= 2:
+                    parameters = GLib.Variant(
+                        "(osa{sv})", (self._session_handle, parent_window, {})
+                    )
+                    self._portal.call_sync(
+                        "ConfigureShortcuts",
+                        parameters,
+                        Gio.DBusCallFlags.NONE,
+                        -1,
+                        None,
+                    )
+                else:
+                    # Portal v1 has no ConfigureShortcuts. Closing the session
+                    # lets the next BindShortcuts call be accepted.
+                    self._reset_session()
+                    self._session_handle = self._create_session()
+                    description = self._bind(parent_window)
+                    if description is not None:
+                        self._set_shortcut_description(description)
             else:
                 description = self._bind(parent_window)
-                if description is not None:
+                if description is None:
+                    self._reset_session()
+                else:
                     self._set_shortcut_description(description)
         except (GLib.Error, _PortalError) as error:
             self._fail(error)
@@ -164,6 +184,12 @@ class GlobalShortcuts(GObject.GObject):
                 file=sys.stderr,
             )
         self._session_handle = None
+
+    def _reset_session(self):
+        """Closes the current session so a new bind attempt is allowed."""
+        self.close()
+        self._session_handle = None
+        self._bound = False
 
     def _create_session(self):
         results = self._call_with_response(
@@ -230,13 +256,14 @@ class GlobalShortcuts(GObject.GObject):
                     self._options(handle_token=token),
                 ),
             ),
+            timeout=120,
         )
         if results is None:
             return None
         self._bound = True
         return self._shortcut_description_from(results)
 
-    def _call_with_response(self, method, parameters_builder):
+    def _call_with_response(self, method, parameters_builder, timeout=5):
         token = "piper_" + uuid.uuid4().hex
         request_path = self._request_path(token)
         request = Gio.DBusProxy.new_sync(
@@ -260,7 +287,13 @@ class GlobalShortcuts(GObject.GObject):
             response["results"] = results
             loop.quit()
 
+        def on_timeout():
+            response["timeout"] = True
+            loop.quit()
+            return False
+
         handler = request.connect("g-signal", on_response)
+        timeout_id = GLib.timeout_add_seconds(timeout, on_timeout)
         try:
             self._portal.call_sync(
                 method,
@@ -272,8 +305,12 @@ class GlobalShortcuts(GObject.GObject):
             if "code" not in response:
                 loop.run()
         finally:
+            if timeout_id:
+                GLib.source_remove(timeout_id)
             request.disconnect(handler)
 
+        if response.get("timeout"):
+            raise _PortalError(f"the portal request timed out after {timeout}s")
         code = response.get("code")
         if code == 1:
             return None

@@ -30,7 +30,7 @@ All notable changes to this project are documented here. This project follows
 - The Flatpak manifest now uses the GNOME 50 runtime, current `evdev`/`lxml`
   releases and a pinned Piper commit. The build no longer tries to uninstall
   the SDK's read-only `lxml` copy.
-- GitHub Actions are pinned by commit SHA.
+- The main CI workflow pins its GitHub Actions by commit SHA.
 
 ### Changed
 

@@ -268,6 +268,7 @@ class Window(Gtk.ApplicationWindow):
         self._settings_scrim = scrim
         self._settings_panel = panel
         self.stack_titlebar.set_sensitive(False)
+        self.stack_perspectives.set_sensitive(False)
         self._settings_key_handler = self.connect(
             "key-press-event", self._on_settings_key_press
         )
@@ -288,6 +289,7 @@ class Window(Gtk.ApplicationWindow):
             self._settings_scrim.destroy()
             self._settings_scrim = None
         self.stack_titlebar.set_sensitive(True)
+        self.stack_perspectives.set_sensitive(True)
 
     def _on_settings_key_press(self, widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         if event.keyval == Gdk.KEY_Escape:

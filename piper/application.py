@@ -102,7 +102,7 @@ class Application(Gtk.Application):
                 continue
             try:
                 profile.set_active()
-            except (RatbagError, RatbagdDBusTimeoutError) as error:
+            except (RatbagError, RatbagdDBusTimeoutError, GLib.Error) as error:
                 print(
                     f"piper: failed to switch the profile of {device.name}: {error}",
                     file=sys.stderr,
