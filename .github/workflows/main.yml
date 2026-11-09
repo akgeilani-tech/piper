@@ -4,9 +4,9 @@ on: [ push, pull_request ]
 
 env:
   UBUNTU_DEPS: |
-      pkg-config gettext appstream
+      pkg-config gettext appstream tree
       python3 python-gi-dev python3-lxml python3-evdev
-      gir1.2-rsvg-2.0 python3-gi-cairo flake8 gtk-update-icon-cache desktop-file-utils
+      gir1.2-rsvg-2.0 python3-gi-cairo gtk-update-icon-cache desktop-file-utils
   PIP_PACKAGES: meson ninja black==25.1.0 ruff==0.9.7
 
 jobs:
@@ -22,26 +22,26 @@ jobs:
           - name: release
             meson_args: '-Druntime-dependency-checks=false -Dbuildtype=release'
     steps:
+      # TODO: pin this action to a commit SHA instead of the moving v4 tag (H9).
       - uses: actions/checkout@v4
-      - uses: libratbag/libratbag/.github/actions/pkginstall@master
-        with:
-          apt: $UBUNTU_DEPS
-          pip: $PIP_PACKAGES
-      - name: meson install ${{matrix.meson_args}}
-        uses: libratbag/libratbag/.github/actions/meson@master
-        with:
-          meson_args: --prefix=$PWD/_instdir ${{matrix.meson_args}}
-          ninja_args: install
-      - name: check installation of data files
-        run:  diff -u <(cd data/devices; ls *.device) <(cd _instdir/share/libratbag; ls *.device)
+      - name: install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y $UBUNTU_DEPS
+          python3 -m pip install --upgrade pip
+          python3 -m pip install $PIP_PACKAGES
+      - name: meson setup ${{ matrix.meson_args }}
+        run: meson setup builddir --prefix="$PWD/_instdir" ${{ matrix.meson_args }}
+      - name: ninja install
+        run: ninja -C builddir install
+      - name: meson test
+        run: meson test -C builddir --print-errorlogs
       - name: ninja uninstall
-        uses: libratbag/libratbag/.github/actions/meson@master
-        with:
-          meson_args: --prefix=$PWD/_instdir
-          ninja_args: uninstall
+        run: ninja -C builddir uninstall
       - name: list any files left after uninstall
         run: (test -d _instdir && tree _instdir) || exit 0
       # Capture all the meson logs, even if we failed
+      # TODO: pin this action to a commit SHA instead of the moving v4 tag (H9).
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}  # even if we fail
         with:
