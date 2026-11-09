@@ -24,8 +24,7 @@ jobs:
           - name: runtime-checks
             meson_args: ''
     steps:
-      # TODO: pin this action to a commit SHA instead of the moving v4 tag (H9).
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
       - name: install dependencies
         run: |
           sudo apt-get update
@@ -43,8 +42,7 @@ jobs:
       - name: list any files left after uninstall
         run: (test -d _instdir && tree _instdir) || exit 0
       # Capture all the meson logs, even if we failed
-      # TODO: pin this action to a commit SHA instead of the moving v4 tag (H9).
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         if: ${{ always() }}  # even if we fail
         with:
           name: 'meson test logs ${{ matrix.name }}'
