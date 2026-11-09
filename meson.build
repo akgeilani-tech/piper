@@ -161,6 +161,12 @@ test(
 )
 
 test(
+  'profile-cycle',
+  find_program('tests/profile-cycle-test.py'),
+  args : [meson.current_source_dir()],
+)
+
+test(
   'files-in-git',
   find_program('tests/check-files-in-git.sh'),
   args : [meson.current_source_dir()],

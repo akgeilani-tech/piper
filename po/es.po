@@ -531,3 +531,47 @@ msgstr "Seleccione un dispositivo"
 #: data/ui/Window.ui:8
 msgid "_About Piper"
 msgstr "_Acerca de Piper"
+
+#: data/ui/Window.ui:6
+msgid "_Settings"
+msgstr "_Configuración"
+
+#: piper/settingsdialog.py
+msgid "Settings"
+msgstr "Configuración"
+
+#: piper/settingsdialog.py
+msgid "Global shortcut"
+msgstr "Atajo global"
+
+#: piper/settingsdialog.py
+msgid ""
+"Switch to the next profile on all connected mice. Works while Piper is "
+"running, even when another window has focus."
+msgstr ""
+"Cambia al siguiente perfil de todos los ratones conectados. Funciona "
+"mientras Piper esté abierto, aunque otra ventana tenga el foco."
+
+#: piper/settingsdialog.py
+msgid "Current shortcut: %s"
+msgstr "Atajo actual: %s"
+
+#: piper/settingsdialog.py
+msgid "Not configured"
+msgstr "Sin configurar"
+
+#: piper/settingsdialog.py
+msgid "Configure shortcut…"
+msgstr "Configurar atajo…"
+
+#: piper/settingsdialog.py
+msgid "Close"
+msgstr "Cerrar"
+
+#: piper/settingsdialog.py
+msgid "Global shortcuts are not available on this system."
+msgstr "Los atajos globales no están disponibles en este sistema."
+
+#: piper/globalshortcuts.py
+msgid "Switch to the next profile"
+msgstr "Cambiar al siguiente perfil"

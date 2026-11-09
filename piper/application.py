@@ -1,8 +1,18 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
+import sys
 from typing import Optional
 
-from .ratbagd import Ratbagd
+from .globalshortcuts import SHORTCUT_ID, GlobalShortcuts
+from .profiles import next_profile
+from .ratbagd import (
+    Ratbagd,
+    RatbagdDBusTimeoutError,
+    RatbagdIncompatibleError,
+    RatbagdUnavailableError,
+    RatbagError,
+)
+from .settingsdialog import SettingsPanel
 from .window import Window
 
 import gi
@@ -36,6 +46,9 @@ class Application(Gtk.Application):
         Gtk.Application.do_startup(self)
         self._build_app_menu()
         self._ratbagd: Optional[Ratbagd] = None
+        self._global_shortcuts = GlobalShortcuts()
+        self._global_shortcuts.connect("activated", self._on_shortcut_activated)
+        self._global_shortcuts.start()
 
     def init_ratbagd(self) -> Ratbagd:
         if self._ratbagd is None:
@@ -50,11 +63,49 @@ class Application(Gtk.Application):
 
     def _build_app_menu(self) -> None:
         # Set up the app menu
-        actions = [("about", self._about), ("quit", self._quit)]
+        actions = [
+            ("settings", self._settings),
+            ("about", self._about),
+            ("quit", self._quit),
+        ]
         for name, callback in actions:
             action = Gio.SimpleAction.new(name, None)
             action.connect("activate", callback)
             self.add_action(action)
+
+    def _settings(self, action: Gio.SimpleAction, param: None) -> None:
+        window = self.get_active_window()
+        if window is None or window._settings_panel is not None:
+            return
+        panel = SettingsPanel(self._global_shortcuts, window.hide_settings)
+        window.show_settings(panel)
+
+    def _on_shortcut_activated(
+        self, shortcuts: GlobalShortcuts, shortcut_id: str
+    ) -> None:
+        if shortcut_id == SHORTCUT_ID:
+            self._cycle_profiles()
+
+    def _cycle_profiles(self) -> None:
+        try:
+            ratbagd = self.init_ratbagd()
+        except (RatbagdUnavailableError, RatbagdIncompatibleError) as error:
+            print(
+                f"piper: cannot switch profiles: {error}",
+                file=sys.stderr,
+            )
+            return
+        for device in ratbagd.devices:
+            profile = next_profile(device.profiles)
+            if profile is None:
+                continue
+            try:
+                profile.set_active()
+            except (RatbagError, RatbagdDBusTimeoutError) as error:
+                print(
+                    f"piper: failed to switch the profile of {device.name}: {error}",
+                    file=sys.stderr,
+                )
 
     def _about(self, action: Gio.SimpleAction, param: None) -> None:
         # Set up the about dialog.
