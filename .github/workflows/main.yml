@@ -21,6 +21,8 @@ jobs:
             meson_args: '-Druntime-dependency-checks=false -Dbuildtype=plain'
           - name: release
             meson_args: '-Druntime-dependency-checks=false -Dbuildtype=release'
+          - name: runtime-checks
+            meson_args: ''
     steps:
       # TODO: pin this action to a commit SHA instead of the moving v4 tag (H9).
       - uses: actions/checkout@v4
