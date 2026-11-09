@@ -8,15 +8,18 @@ piper/buttondialog.py
 piper/buttonspage.py
 piper/devicerow.py
 piper/errorperspective.py
+piper/globalshortcuts.py
 piper/leddialog.py
 piper/ledspage.py
 piper/mousemap.py
 piper/mouseperspective.py
 piper/optionbutton.py
 piper/profilerow.py
+piper/profiles.py
 piper/ratbagd.py
 piper/resolutionrow.py
 piper/resolutionspage.py
+piper/settingsdialog.py
 piper/welcomeperspective.py
 piper/window.py
 

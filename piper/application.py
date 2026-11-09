@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 import sys
+from gettext import gettext as _
 from typing import Optional
 
 from .globalshortcuts import SHORTCUT_ID, GlobalShortcuts
@@ -114,6 +115,7 @@ class Application(Gtk.Application):
         )
         about: Optional[Gtk.AboutDialog] = builder.get_object("about_dialog")  # type: ignore
         assert about is not None
+        about.add_credit_section(_("Contributors"), ["akgeilani-tech"])
         about.set_transient_for(self.get_active_window())
         about.connect("response", lambda about, param: about.destroy())
         about.show()

@@ -51,6 +51,17 @@
   </provides>
 
   <releases>
-    <release version="@version@" date="@version_date@"/>
+    <release version="@version@" date="@version_date@">
+      <description>
+        <ul>
+          <li>Add a Settings panel with a global keyboard shortcut to cycle through mouse profiles.</li>
+          <li>Add Spanish translations for the new Settings UI.</li>
+          <li>Fix reuse of the Ratbagd instance at startup.</li>
+          <li>Run the test suite in CI and pin GitHub Actions by commit.</li>
+          <li>Validate GTK and Rsvg at configure time.</li>
+          <li>Update the Flatpak runtime and dependencies and make the build reproducible.</li>
+        </ul>
+      </description>
+    </release>
   </releases>
 </component>

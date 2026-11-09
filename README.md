@@ -9,6 +9,11 @@ for instructions on how to run ratbagd.
 If you are running piper from git, we recommend using libratbag from git
 as well to make sure the latest bugfixes are applied.
 
+This repository is the Piper fork maintained by
+[@akgeilani-tech](https://github.com/akgeilani-tech). It is based on
+[libratbag/piper](https://github.com/libratbag/piper). See the
+[changelog](CHANGELOG.md) for the changes in this release (0.9).
+
 Supported Devices
 =================
 Piper is merely a frontend, the list of supported devices depends on
@@ -17,6 +22,16 @@ files](https://github.com/libratbag/libratbag/tree/master/data/devices) for
 a list of all known devices.  The device-specific protocols usually have to
 be reverse-engineered and the features available may vary to the
 manufacturer's advertized features.
+
+Settings and global shortcut
+============================
+
+Piper 0.9 adds a **Settings** entry before *About Piper*. From there you can
+assign a global keyboard shortcut that switches every connected mouse to its
+next enabled profile (0 → 1 → 2 … → 0), skipping disabled profiles. The
+shortcut is registered through the XDG Desktop Portal, so it keeps working
+while another window, such as a game, has focus. Piper must be running; the
+shortcut is configured from *Settings → Configure shortcut…*.
 
 Screenshots
 ===========
@@ -45,7 +60,7 @@ Piper uses the [meson build system](http://mesonbuild.com/). Run the following
 commands to clone Piper and initialize the build:
 
 ```sh
-git clone https://github.com/libratbag/piper.git
+git clone https://github.com/akgeilani-tech/piper.git
 cd piper
 meson builddir --prefix=/usr/
 ```
@@ -95,18 +110,23 @@ following command:
 meson test -C builddir
 ```
 
+Contributors
+============
+
+- [@akgeilani-tech](https://github.com/akgeilani-tech)
+
 Source
 ======
 
 ```sh
-git clone https://github.com/libratbag/piper.git
+git clone https://github.com/akgeilani-tech/piper.git
 ```
 
 Bugs
 ====
 
 Bugs can be reported in the issue tracker on our GitHub repo:
-https://github.com/libratbag/piper/issues
+https://github.com/akgeilani-tech/piper/issues
 
 License
 =======
