@@ -27,7 +27,6 @@ class Window(Gtk.ApplicationWindow):
 
     __gtype_name__ = "Window"
 
-    overlay: Gtk.Overlay = Gtk.Template.Child()  # type: ignore
     primary_menu: Gtk.Menu = Gtk.Template.Child()  # type: ignore
     stack_perspectives: Gtk.Stack = Gtk.Template.Child()  # type: ignore
     stack_titlebar: Gtk.Stack = Gtk.Template.Child()  # type: ignore
@@ -40,10 +39,6 @@ class Window(Gtk.ApplicationWindow):
         Gtk.ApplicationWindow.__init__(self, *args, **kwargs)
 
         self.set_icon_name("org.freedesktop.Piper")
-
-        self._settings_panel: Optional[Gtk.Widget] = None
-        self._settings_scrim: Optional[Gtk.Widget] = None
-        self._settings_key_handler = 0
 
         self._add_perspective(ErrorPerspective(), None)
         try:
@@ -246,53 +241,3 @@ class Window(Gtk.ApplicationWindow):
         perspective.titlebar.pack_end(button_primary_menu)
         # Place the button last in the titlebar.
         perspective.titlebar.child_set_property(button_primary_menu, "position", 0)
-
-    def show_settings(self, panel: Gtk.Widget) -> None:
-        """Shows a modal settings panel over the current perspective."""
-        if self._settings_panel is not None:
-            return
-
-        scrim = Gtk.EventBox()
-        scrim.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0.45))
-        scrim.set_halign(Gtk.Align.FILL)
-        scrim.set_valign(Gtk.Align.FILL)
-        scrim.set_hexpand(True)
-        scrim.set_vexpand(True)
-        scrim.connect("button-press-event", lambda *args: True)
-
-        panel.set_halign(Gtk.Align.CENTER)
-        panel.set_valign(Gtk.Align.CENTER)
-
-        self.overlay.add_overlay(scrim)
-        self.overlay.add_overlay(panel)
-        self._settings_scrim = scrim
-        self._settings_panel = panel
-        self.stack_titlebar.set_sensitive(False)
-        self.stack_perspectives.set_sensitive(False)
-        self._settings_key_handler = self.connect(
-            "key-press-event", self._on_settings_key_press
-        )
-        scrim.show()
-        panel.show_all()
-        panel.grab_focus()
-
-    def hide_settings(self) -> None:
-        """Closes the settings panel and restores the window."""
-        if self._settings_panel is None:
-            return
-        if self._settings_key_handler:
-            self.disconnect(self._settings_key_handler)
-            self._settings_key_handler = 0
-        self._settings_panel.destroy()
-        self._settings_panel = None
-        if self._settings_scrim is not None:
-            self._settings_scrim.destroy()
-            self._settings_scrim = None
-        self.stack_titlebar.set_sensitive(True)
-        self.stack_perspectives.set_sensitive(True)
-
-    def _on_settings_key_press(self, widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
-        if event.keyval == Gdk.KEY_Escape:
-            self.hide_settings()
-            return True
-        return False

@@ -6,52 +6,43 @@ from .globalshortcuts import GlobalShortcuts
 
 import gi
 
+gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
-from gi.repository import GLib, Gtk, Pango  # noqa
-
-_CSS = b"""
-.piper-settings-panel {
-    background-color: @theme_bg_color;
-    border-radius: 8px;
-    padding: 18px;
-}
-"""
+from gi.repository import Gdk, GLib, Gtk, Pango  # noqa
 
 
-class SettingsPanel(Gtk.Box):
-    """Modal settings panel shown over the main window content.
+class SettingsDialog(Gtk.Dialog):
+    """Modal settings dialog, using the same window format as About Piper."""
 
-    It is intentionally not a toplevel window: KWin draws a title bar on every
-    toplevel in this setup and ignores set_decorated(False), so an in-window
-    overlay is the only way to get a borderless, focused settings UI.
-    """
-
-    def __init__(self, shortcuts: GlobalShortcuts, on_close, *args, **kwargs) -> None:
-        Gtk.Box.__init__(
-            self, *args, orientation=Gtk.Orientation.VERTICAL, spacing=8, **kwargs
-        )
+    def __init__(self, shortcuts: GlobalShortcuts, *args, **kwargs) -> None:
+        Gtk.Dialog.__init__(self, *args, **kwargs)
         self._shortcuts = shortcuts
-        self._on_close = on_close
-        self.set_can_focus(True)
+        self.set_title(_("Settings"))
+        self.set_modal(True)
+        self.set_destroy_with_parent(True)
+        self.set_resizable(False)
+        self.set_type_hint(Gdk.WindowTypeHint.NORMAL)
         self.set_size_request(380, -1)
+        self.add_button(_("Close"), Gtk.ResponseType.CLOSE)
+        self.connect("response", lambda dialog, response: dialog.destroy())
 
-        provider = Gtk.CssProvider()
-        provider.load_from_data(_CSS)
-        self._css_provider = provider
-        context = self.get_style_context()
-        context.add_class("piper-settings-panel")
-        context.add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        content = self.get_content_area()
+        content.set_spacing(8)
+        content.set_margin_top(12)
+        content.set_margin_bottom(12)
+        content.set_margin_start(12)
+        content.set_margin_end(12)
 
         title = Gtk.Label(xalign=0.5)
         title.set_markup("<b>{}</b>".format(GLib.markup_escape_text(_("Settings"))))
-        self.add(title)
+        content.add(title)
 
         heading = Gtk.Label(xalign=0)
         heading.set_markup(
             "<b>{}</b>".format(GLib.markup_escape_text(_("Global shortcut")))
         )
-        self.add(heading)
+        content.add(heading)
 
         description = Gtk.Label(
             label=_(
@@ -66,7 +57,7 @@ class SettingsPanel(Gtk.Box):
         attributes.insert(Pango.attr_scale_new(0.9))
         description.set_attributes(attributes)
         description.set_justify(Gtk.Justification.FILL)
-        self.add(description)
+        content.add(description)
 
         row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
         self._configure_button = Gtk.Button(label=_("Configure shortcut…"))
@@ -75,7 +66,7 @@ class SettingsPanel(Gtk.Box):
         self._shortcut_label = Gtk.Label(xalign=1)
         self._shortcut_label.set_halign(Gtk.Align.END)
         row.pack_end(self._shortcut_label, False, False, 0)
-        self.add(row)
+        content.add(row)
 
         if not shortcuts.available:
             unavailable = Gtk.Label(
@@ -83,12 +74,8 @@ class SettingsPanel(Gtk.Box):
                 xalign=0,
                 wrap=True,
             )
-            self.add(unavailable)
+            content.add(unavailable)
             self._configure_button.set_sensitive(False)
-
-        close_button = Gtk.Button(label=_("Close"))
-        close_button.connect("clicked", self._on_close_clicked)
-        self.add(close_button)
 
         self._update_shortcut(self._shortcuts, self._shortcuts.shortcut_description)
         self._shortcut_handler = self._shortcuts.connect(
@@ -102,9 +89,6 @@ class SettingsPanel(Gtk.Box):
             self._shortcuts.configure("")
         finally:
             button.set_sensitive(self._shortcuts.available)
-
-    def _on_close_clicked(self, button: Gtk.Button) -> None:
-        self._on_close()
 
     def _on_shortcut_changed(self, shortcuts: GlobalShortcuts, description) -> None:
         self._update_shortcut(shortcuts, description)

@@ -37,6 +37,8 @@ All notable changes to this project are documented here. This project follows
 
 ### Changed
 
+- The Settings window is now a standard modal dialog, matching the About Piper
+  window format.
 - Version bumped to 0.9.
 - README updated with the new Settings feature, build notes and contributor
   information.

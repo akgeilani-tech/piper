@@ -13,7 +13,7 @@ from .ratbagd import (
     RatbagdUnavailableError,
     RatbagError,
 )
-from .settingsdialog import SettingsPanel
+from .settingsdialog import SettingsDialog
 from .window import Window
 
 import gi
@@ -47,6 +47,7 @@ class Application(Gtk.Application):
         Gtk.Application.do_startup(self)
         self._build_app_menu()
         self._ratbagd: Optional[Ratbagd] = None
+        self._settings_dialog: Optional[SettingsDialog] = None
         self._global_shortcuts = GlobalShortcuts()
         self._global_shortcuts.connect("activated", self._on_shortcut_activated)
         self._global_shortcuts.start()
@@ -75,11 +76,19 @@ class Application(Gtk.Application):
             self.add_action(action)
 
     def _settings(self, action: Gio.SimpleAction, param: None) -> None:
-        window = self.get_active_window()
-        if window is None or window._settings_panel is not None:
+        if self._settings_dialog is not None:
+            self._settings_dialog.present()
             return
-        panel = SettingsPanel(self._global_shortcuts, window.hide_settings)
-        window.show_settings(panel)
+        window = self.get_active_window()
+        if window is None:
+            return
+        dialog = SettingsDialog(self._global_shortcuts, transient_for=window)
+        dialog.connect("destroy", self._on_settings_destroyed)
+        self._settings_dialog = dialog
+        dialog.show_all()
+
+    def _on_settings_destroyed(self, dialog: SettingsDialog) -> None:
+        self._settings_dialog = None
 
     def _on_shortcut_activated(
         self, shortcuts: GlobalShortcuts, shortcut_id: str
