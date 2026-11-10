@@ -6,10 +6,9 @@ from .globalshortcuts import GlobalShortcuts
 
 import gi
 
-gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
-from gi.repository import Gdk, GLib, Gtk, Pango  # noqa
+from gi.repository import GLib, Gtk, Pango  # noqa
 
 
 class SettingsDialog(Gtk.Dialog):
@@ -22,10 +21,12 @@ class SettingsDialog(Gtk.Dialog):
         self.set_modal(True)
         self.set_destroy_with_parent(True)
         self.set_resizable(False)
-        self.set_type_hint(Gdk.WindowTypeHint.NORMAL)
         self.set_size_request(380, -1)
-        self.add_button(_("Close"), Gtk.ResponseType.CLOSE)
-        self.connect("response", lambda dialog, response: dialog.destroy())
+        header = Gtk.HeaderBar()
+        header.set_show_close_button(True)
+        header.set_title("")
+        self.set_titlebar(header)
+        self.connect("delete-event", self._on_delete_event)
 
         content = self.get_content_area()
         content.set_spacing(8)
@@ -82,6 +83,10 @@ class SettingsDialog(Gtk.Dialog):
             "shortcut-changed", self._on_shortcut_changed
         )
         self.connect("destroy", self._on_destroy)
+
+    def _on_delete_event(self, widget: Gtk.Widget, event) -> bool:
+        self.destroy()
+        return True
 
     def _on_configure_clicked(self, button: Gtk.Button) -> None:
         button.set_sensitive(False)
