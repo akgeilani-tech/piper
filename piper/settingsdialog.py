@@ -24,7 +24,7 @@ class SettingsDialog(Gtk.Dialog):
         self.set_size_request(380, -1)
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
-        header.set_title("")
+        header.set_title(_("Settings"))
         self.set_titlebar(header)
         self.connect("delete-event", self._on_delete_event)
 
@@ -34,10 +34,6 @@ class SettingsDialog(Gtk.Dialog):
         content.set_margin_bottom(12)
         content.set_margin_start(12)
         content.set_margin_end(12)
-
-        title = Gtk.Label(xalign=0.5)
-        title.set_markup("<b>{}</b>".format(GLib.markup_escape_text(_("Settings"))))
-        content.add(title)
 
         heading = Gtk.Label(xalign=0)
         heading.set_markup(
