@@ -47,12 +47,14 @@
         {
             "name": "Piper",
             "buildsystem": "meson",
-            "config-opts": [ "-Druntime-dependency-checks=false" ],
+            "config-opts": [
+                "-Druntime-dependency-checks=false"
+            ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/akgeilani-tech/piper",
-                    "commit": "bbf416abf1812fd3aaf6a9ed0ed07ec7827b330f"
+                    "commit": "b98b14c2d35a8d1b82e7a8c3bd128047539a7f92"
                 }
             ]
         }
