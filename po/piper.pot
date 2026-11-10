@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 11:12-0400\n"
+"POT-Creation-Date: 2026-11-10 15:53-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,36 +73,54 @@ msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:58
 msgid ""
+"Add a mouse selector with hotplug detection and a second shortcut to switch "
+"between mice."
+msgstr ""
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:59
+msgid ""
 "Add Dark, Light and System color modes plus automatic startup and minimize-"
 "to-tray options."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:59
+#: data/org.freedesktop.Piper.appdata.xml.in.in:60
 msgid "Add a system tray icon and a Quit menu entry."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:60
-msgid "Ship complete English and Spanish translations."
-msgstr ""
-
 #: data/org.freedesktop.Piper.appdata.xml.in.in:61
-msgid "Fix reuse of the Ratbagd instance at startup."
+msgid "Allow renaming profiles and persist the names across restarts."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:62
-msgid "Run the test suite in CI and pin the main workflow actions by commit."
+msgid "Ship complete English and Spanish translations."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:63
-msgid "Validate GTK and Rsvg at configure time."
+msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:64
+msgid "Run the test suite in CI and pin the main workflow actions by commit."
+msgstr ""
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:65
+msgid "Validate GTK and Rsvg at configure time."
+msgstr ""
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:66
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
 
-#: piper/application.py:185
+#: piper/application.py:59
+msgid "Switch to the next profile"
+msgstr ""
+
+#: piper/application.py:65
+msgid "Switch to the next mouse"
+msgstr ""
+
+#: piper/application.py:182
 msgid "Contributors"
 msgstr ""
 
@@ -145,7 +163,7 @@ msgid "Disabled"
 msgstr ""
 
 #. Translators: the button has an unknown function.
-#: piper/buttonspage.py:117 piper/ratbagd.py:866
+#: piper/buttonspage.py:117 piper/ratbagd.py:874
 msgid "Unknown"
 msgstr ""
 
@@ -154,262 +172,303 @@ msgstr ""
 msgid "Configure button {}"
 msgstr ""
 
-#: piper/globalshortcuts.py:259
-msgid "Switch to the next profile"
+#: piper/mouseperspective.py:112
+#, python-format
+msgid "Mouse not supported: %s"
 msgstr ""
 
-#: piper/mouseperspective.py:121 data/ui/ResolutionsPage.ui:78
+#: piper/mouseperspective.py:128 piper/mouseperspective.py:167
+msgid "Profile"
+msgstr ""
+
+#: piper/mouseperspective.py:234 data/ui/ResolutionsPage.ui:78
 msgid "Resolutions"
 msgstr ""
 
-#: piper/mouseperspective.py:125
+#: piper/mouseperspective.py:238
 msgid "Buttons"
 msgstr ""
 
-#: piper/mouseperspective.py:128
+#: piper/mouseperspective.py:241
 msgid "LEDs"
 msgstr ""
 
-#: piper/mouseperspective.py:139
+#: piper/mouseperspective.py:252
 msgid "Advanced"
 msgstr ""
 
-#: piper/ratbagd.py:856
+#: piper/mouseperspective.py:266 data/ui/MousePerspective.ui:43
+msgid "Something went wrong. The device has been reset to a previous state."
+msgstr ""
+
+#: piper/mouseperspective.py:299 piper/mouseperspective.py:310
+#: piper/profilerow.py:72 piper/profilerow.py:127
+#, python-format
+msgid "Profile %d"
+msgstr ""
+
+#: piper/profilerow.py:84 piper/profilerow.py:107
+msgid "Switch to another profile before removing this one"
+msgstr ""
+
+#: piper/profilerow.py:88 data/ui/ProfileRow.ui:16
+msgid "Remove this profile from the device"
+msgstr ""
+
+#: piper/profilerow.py:115
+#, python-format
+msgid "Could not remove the profile: %s"
+msgstr ""
+
+#: piper/profilerow.py:164
+#, python-format
+msgid "Could not rename the profile: %s"
+msgstr ""
+
+#: piper/ratbagd.py:864
 msgid "Left mouse button click"
 msgstr ""
 
-#: piper/ratbagd.py:857
+#: piper/ratbagd.py:865
 msgid "Right mouse button click"
 msgstr ""
 
-#: piper/ratbagd.py:858
+#: piper/ratbagd.py:866
 msgid "Middle mouse button click"
 msgstr ""
 
-#: piper/ratbagd.py:859
+#: piper/ratbagd.py:867
 msgid "Backward"
 msgstr ""
 
-#: piper/ratbagd.py:860
+#: piper/ratbagd.py:868
 msgid "Forward"
 msgstr ""
 
-#: piper/ratbagd.py:865
+#: piper/ratbagd.py:873
 msgid "Invalid"
 msgstr ""
 
-#: piper/ratbagd.py:867
+#: piper/ratbagd.py:875
 msgid "Doubleclick"
 msgstr ""
 
-#: piper/ratbagd.py:868
+#: piper/ratbagd.py:876
 msgid "Wheel Left"
 msgstr ""
 
-#: piper/ratbagd.py:869
+#: piper/ratbagd.py:877
 msgid "Wheel Right"
 msgstr ""
 
-#: piper/ratbagd.py:870
+#: piper/ratbagd.py:878
 msgid "Wheel Up"
 msgstr ""
 
-#: piper/ratbagd.py:871
+#: piper/ratbagd.py:879
 msgid "Wheel Down"
 msgstr ""
 
-#: piper/ratbagd.py:872
+#: piper/ratbagd.py:880
 msgid "Ratchet Mode"
 msgstr ""
 
-#: piper/ratbagd.py:873
+#: piper/ratbagd.py:881
 msgid "Cycle Resolution Up"
 msgstr ""
 
-#: piper/ratbagd.py:874
+#: piper/ratbagd.py:882
 msgid "Cycle Resolution Down"
 msgstr ""
 
-#: piper/ratbagd.py:875
+#: piper/ratbagd.py:883
 msgid "Resolution Up"
 msgstr ""
 
-#: piper/ratbagd.py:876
+#: piper/ratbagd.py:884
 msgid "Resolution Down"
 msgstr ""
 
-#: piper/ratbagd.py:877
+#: piper/ratbagd.py:885
 msgid "Resolution Switch"
 msgstr ""
 
-#: piper/ratbagd.py:878
+#: piper/ratbagd.py:886
 msgid "Default Resolution"
 msgstr ""
 
-#: piper/ratbagd.py:879
+#: piper/ratbagd.py:887
 msgid "Cycle Profile Up"
 msgstr ""
 
-#: piper/ratbagd.py:880
+#: piper/ratbagd.py:888
 msgid "Cycle Profile Down"
 msgstr ""
 
-#: piper/ratbagd.py:881
+#: piper/ratbagd.py:889
 msgid "Profile Up"
 msgstr ""
 
-#: piper/ratbagd.py:882
+#: piper/ratbagd.py:890
 msgid "Profile Down"
 msgstr ""
 
-#: piper/ratbagd.py:883
+#: piper/ratbagd.py:891
 msgid "Second Mode"
 msgstr ""
 
-#: piper/ratbagd.py:884
+#: piper/ratbagd.py:892
 msgid "Battery Level"
 msgstr ""
 
 #. Translators: this is used when there is no macro to preview.
-#: piper/ratbagd.py:1030 data/ui/ButtonDialog.ui:100
+#: piper/ratbagd.py:1038 data/ui/ButtonDialog.ui:100
 #: data/ui/ButtonDialog.ui:181
 msgid "None"
 msgstr ""
 
 #. Translators: the LED is off.
-#: piper/ratbagd.py:1106 data/ui/LedDialog.ui:368
+#: piper/ratbagd.py:1114 data/ui/LedDialog.ui:368
 msgid "Off"
 msgstr ""
 
 #. Translators: the LED has a single, solid color.
-#: piper/ratbagd.py:1108 data/ui/LedDialog.ui:59
+#: piper/ratbagd.py:1116 data/ui/LedDialog.ui:59
 msgid "Solid"
 msgstr ""
 
 #. Translators: the LED is cycling between red, green and blue.
-#: piper/ratbagd.py:1110 data/ui/LedDialog.ui:172
+#: piper/ratbagd.py:1118 data/ui/LedDialog.ui:172
 msgid "Cycle"
 msgstr ""
 
 #. Translators: the LED's is pulsating a single color on different
 #. brightnesses.
-#: piper/ratbagd.py:1113 data/ui/LedDialog.ui:328
+#: piper/ratbagd.py:1121 data/ui/LedDialog.ui:328
 msgid "Breathing"
 msgstr ""
 
-#: piper/settingsdialog.py:24 piper/settingsdialog.py:31
+#: piper/settingsdialog.py:31 piper/settingsdialog.py:38
 msgid "Settings"
 msgstr ""
 
-#: piper/settingsdialog.py:44
-msgid "Global shortcut"
+#: piper/settingsdialog.py:51
+msgid "Global shortcuts"
 msgstr ""
 
-#: piper/settingsdialog.py:50
+#: piper/settingsdialog.py:57
 msgid ""
-"Switch to the next profile on all connected mice. Works while Piper is "
-"running, even when another window has focus."
+"These shortcuts work while Piper is running, even when another window has "
+"focus."
 msgstr ""
 
-#: piper/settingsdialog.py:64
-msgid "Configure shortcut…"
+#: piper/settingsdialog.py:69
+msgid "Profile shortcut"
 msgstr ""
 
-#: piper/settingsdialog.py:74
-msgid "Global shortcuts are not available on this system."
+#: piper/settingsdialog.py:70
+msgid "Switch to the next profile of the selected mouse."
 msgstr ""
 
-#: piper/settingsdialog.py:85
+#: piper/settingsdialog.py:75
+msgid "Mouse shortcut"
+msgstr ""
+
+#: piper/settingsdialog.py:76
+msgid "Switch to the next compatible mouse."
+msgstr ""
+
+#: piper/settingsdialog.py:84
 msgid "Appearance"
 msgstr ""
 
-#: piper/settingsdialog.py:92
+#: piper/settingsdialog.py:91
 msgid "Dark"
 msgstr ""
 
-#: piper/settingsdialog.py:93
+#: piper/settingsdialog.py:92
 msgid "Light"
 msgstr ""
 
-#: piper/settingsdialog.py:94
+#: piper/settingsdialog.py:93
 msgid "System"
 msgstr ""
 
-#: piper/settingsdialog.py:110
+#: piper/settingsdialog.py:109
 msgid "Startup"
 msgstr ""
 
-#: piper/settingsdialog.py:115
+#: piper/settingsdialog.py:114
 msgid "Start automatically with the system"
 msgstr ""
 
-#: piper/settingsdialog.py:122
+#: piper/settingsdialog.py:121
 msgid "Start minimized in the system tray"
 msgstr ""
 
-#: piper/settingsdialog.py:164
+#: piper/settingsdialog.py:171
+msgid "Configure shortcut…"
+msgstr ""
+
+#: piper/settingsdialog.py:186
+msgid "Global shortcuts are not available on this system."
+msgstr ""
+
+#: piper/settingsdialog.py:232
 #, python-format
 msgid "Current shortcut: %s"
 msgstr ""
 
-#: piper/settingsdialog.py:166
+#: piper/settingsdialog.py:234
 msgid "Not configured"
 msgstr ""
 
-#: piper/window.py:48
+#: piper/window.py:87
 msgid "Cannot connect to ratbagd"
 msgstr ""
 
-#: piper/window.py:50
+#: piper/window.py:89
 msgid ""
 "Please make sure ratbagd is running and your user is in the required group"
 msgstr ""
 
-#: piper/window.py:59
+#: piper/window.py:98
 msgid "Please update both piper and libratbag to the latest versions"
 msgstr ""
 
-#: piper/window.py:75 piper/window.py:143
-msgid "Cannot find any devices"
-msgstr ""
-
-#: piper/window.py:76 piper/window.py:144
-msgid "Please make sure your device is supported and plugged in"
-msgstr ""
-
-#: piper/window.py:91
+#: piper/window.py:118
 msgid "There are unapplied changes. Are you sure you want to quit?"
 msgstr ""
 
-#: piper/window.py:102
+#: piper/window.py:135
 msgid "Ooops. ratbagd has disappeared"
 msgstr ""
 
-#: piper/window.py:102
+#: piper/window.py:135
 msgid "Please restart Piper"
 msgstr ""
 
-#: piper/window.py:133
-msgid "Your device disconnected!"
+#: piper/window.py:174
+msgid "Mouse not supported"
 msgstr ""
 
-#: piper/window.py:134
-msgid "Please make sure your device is plugged in"
+#: piper/window.py:176 piper/window.py:178 piper/window.py:189
+msgid "Mouse not available"
 msgstr ""
 
-#: piper/window.py:180
+#: piper/window.py:200
 msgid "Cannot display device SVG"
 msgstr ""
 
-#: piper/window.py:188
+#: piper/window.py:205
 msgid "Newer version of ratbagd required"
 msgstr ""
 
-#: piper/window.py:189
+#: piper/window.py:206
 msgid "Please update to the latest available version"
 msgstr ""
 
-#: piper/window.py:193
+#: piper/window.py:210
 msgid "Unknown exception occurred"
 msgstr ""
 
@@ -503,7 +562,7 @@ msgid "Ignore any changes made"
 msgstr ""
 
 #: data/ui/ButtonDialog.ui:339 data/ui/LedDialog.ui:403
-#: data/ui/MousePerspective.ui:187
+#: data/ui/MousePerspective.ui:259
 msgid "Apply"
 msgstr ""
 
@@ -559,27 +618,39 @@ msgstr ""
 msgid "This LED is off"
 msgstr ""
 
-#: data/ui/MousePerspective.ui:43
-msgid "Something went wrong. The device has been reset to a previous state."
+#: data/ui/MousePerspective.ui:97
+msgid "Connect a compatible mouse"
 msgstr ""
 
-#: data/ui/MousePerspective.ui:116
+#: data/ui/MousePerspective.ui:129
+msgid "Click to switch to another mouse"
+msgstr ""
+
+#: data/ui/MousePerspective.ui:170
 msgid "Click to switch to another profile"
 msgstr ""
 
-#: data/ui/MousePerspective.ui:131
+#: data/ui/MousePerspective.ui:185
 msgid "Add profile"
 msgstr ""
 
-#: data/ui/MousePerspective.ui:135
+#: data/ui/MousePerspective.ui:189
 msgid "Add a new profile to the device"
 msgstr ""
 
-#: data/ui/MousePerspective.ui:163
+#: data/ui/MousePerspective.ui:217
+msgid "Select the mouse to configure"
+msgstr ""
+
+#: data/ui/MousePerspective.ui:223
+msgid "Mouse"
+msgstr ""
+
+#: data/ui/MousePerspective.ui:235
 msgid "Select another profile"
 msgstr ""
 
-#: data/ui/MousePerspective.ui:181
+#: data/ui/MousePerspective.ui:253
 msgid "Commit the changes to the device"
 msgstr ""
 
@@ -587,8 +658,8 @@ msgstr ""
 msgid "Open the configuration dialog"
 msgstr ""
 
-#: data/ui/ProfileRow.ui:16
-msgid "Remove this profile from the device"
+#: data/ui/ProfileRow.ui:42
+msgid "Rename this profile"
 msgstr ""
 
 #. Translators: this is used to indicate the active resolution.

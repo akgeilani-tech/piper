@@ -469,6 +469,14 @@ class RatbagdProfile(_RatbagdDBus):
 
     def _on_properties_changed(self, proxy, changed_props, invalidated_props):
         try:
+            changed_props["Name"]
+        except KeyError:
+            # Different property changed, skip.
+            pass
+        else:
+            self.notify("name")
+
+        try:
             angle_snapping = changed_props["AngleSnapping"]
         except KeyError:
             # Different property changed, skip.

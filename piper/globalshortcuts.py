@@ -2,7 +2,6 @@
 
 import sys
 import uuid
-from gettext import gettext as _
 
 import gi
 
@@ -18,8 +17,10 @@ REQUEST_INTERFACE = "org.freedesktop.portal.Request"
 # A stable session token lets the portal remember the configured shortcut
 # between Piper runs.
 SESSION_HANDLE_TOKEN = "piper"
-SHORTCUT_ID = "next-profile"
-DEFAULT_TRIGGER = "CTRL+ALT+p"
+PROFILE_SHORTCUT_ID = "next-profile"
+DEVICE_SHORTCUT_ID = "next-device"
+DEFAULT_PROFILE_TRIGGER = "CTRL+ALT+p"
+DEFAULT_DEVICE_TRIGGER = "CTRL+ALT+m"
 
 # Upper bound, in milliseconds, for the portal method call itself. The
 # request response is waited for separately, after the call returns.
@@ -52,8 +53,18 @@ class GlobalShortcuts(GObject.GObject):
         "shortcut-changed": (GObject.SignalFlags.RUN_FIRST, None, (object,)),
     }
 
-    def __init__(self):
+    def __init__(
+        self,
+        shortcut_id: str = PROFILE_SHORTCUT_ID,
+        description: str = "Switch to the next profile",
+        default_trigger: str = DEFAULT_PROFILE_TRIGGER,
+        session_token: str = SESSION_HANDLE_TOKEN,
+    ):
         GObject.GObject.__init__(self)
+        self.shortcut_id = shortcut_id
+        self._description = description
+        self._default_trigger = default_trigger
+        self._session_token = session_token
         self.available = False
         self._bus = None
         self._portal = None
@@ -108,7 +119,7 @@ class GlobalShortcuts(GObject.GObject):
             self._set_shortcut_description(None)
             return
 
-        existing = next((s for s in shortcuts if s[0] == SHORTCUT_ID), None)
+        existing = next((s for s in shortcuts if s[0] == self.shortcut_id), None)
         if existing is None:
             self._set_shortcut_description(None)
             return
@@ -214,7 +225,7 @@ class GlobalShortcuts(GObject.GObject):
                 (
                     self._options(
                         handle_token=token,
-                        session_handle_token=SESSION_HANDLE_TOKEN,
+                        session_handle_token=self._session_token,
                     ),
                 ),
             ),
@@ -233,7 +244,7 @@ class GlobalShortcuts(GObject.GObject):
             sender = sender.replace(".", "_")
             handle = (
                 "/org/freedesktop/portal/desktop/session/"
-                f"{sender}/{SESSION_HANDLE_TOKEN}"
+                f"{sender}/{self._session_token}"
             )
         return handle
 
@@ -254,10 +265,10 @@ class GlobalShortcuts(GObject.GObject):
 
     def _bind(self, parent_window):
         shortcut = (
-            SHORTCUT_ID,
+            self.shortcut_id,
             {
-                "description": GLib.Variant("s", _("Switch to the next profile")),
-                "preferred_trigger": GLib.Variant("s", DEFAULT_TRIGGER),
+                "description": GLib.Variant("s", self._description),
+                "preferred_trigger": GLib.Variant("s", self._default_trigger),
             },
         )
         results = self._call_with_response(
@@ -372,10 +383,9 @@ class GlobalShortcuts(GObject.GObject):
             shortcuts = shortcuts.unpack()
         return shortcuts or []
 
-    @classmethod
-    def _shortcut_description_from(cls, results):
-        for shortcut_id, properties in cls._shortcuts_from_results(results):
-            if shortcut_id != SHORTCUT_ID:
+    def _shortcut_description_from(self, results):
+        for shortcut_id, properties in self._shortcuts_from_results(results):
+            if shortcut_id != self.shortcut_id:
                 continue
             return _unpack_options(properties).get("trigger_description")
         return None
@@ -387,14 +397,14 @@ class GlobalShortcuts(GObject.GObject):
     def _on_portal_signal(self, proxy, sender_name, signal_name, parameters):
         if signal_name == "Activated":
             unpacked = parameters.unpack()
-            if unpacked[0] == self._session_handle and unpacked[1] == SHORTCUT_ID:
-                self.emit("activated", SHORTCUT_ID)
+            if unpacked[0] == self._session_handle and unpacked[1] == self.shortcut_id:
+                self.emit("activated", self.shortcut_id)
         elif signal_name == "ShortcutsChanged":
             unpacked = parameters.unpack()
             if unpacked[0] != self._session_handle:
                 return
             for shortcut_id, properties in unpacked[1]:
-                if shortcut_id != SHORTCUT_ID:
+                if shortcut_id != self.shortcut_id:
                     continue
                 description = _unpack_options(properties).get("trigger_description")
                 self._set_shortcut_description(description)

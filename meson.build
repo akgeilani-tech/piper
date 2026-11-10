@@ -167,6 +167,18 @@ test(
 )
 
 test(
+  'devices',
+  find_program('tests/devices-test.py'),
+  args : [meson.current_source_dir()],
+)
+
+test(
+  'settings',
+  find_program('tests/settings-test.py'),
+  args : [meson.current_source_dir()],
+)
+
+test(
   'files-in-git',
   find_program('tests/check-files-in-git.sh'),
   args : [meson.current_source_dir()],

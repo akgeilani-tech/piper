@@ -87,7 +87,61 @@
         </child>
       </object>
     </child>
+    <child type="overlay">
+      <object class="GtkLabel" id="no_device_label">
+        <property name="visible">False</property>
+        <property name="halign">center</property>
+        <property name="valign">center</property>
+        <property name="justify">center</property>
+        <property name="wrap">True</property>
+        <property name="label" translatable="yes">Connect a compatible mouse</property>
+        <style>
+          <class name="dim-label"/>
+        </style>
+      </object>
+    </child>
   </template>
+  <object class="GtkPopover" id="popover_devices">
+    <property name="can-focus">False</property>
+    <property name="border-width">2</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="shadow-type">in</property>
+            <property name="propagate-natural-width">True</property>
+            <property name="propagate-natural-height">True</property>
+            <child>
+              <object class="GtkViewport">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkListBox" id="listbox_devices">
+                    <property name="width-request">180</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="tooltip-text" translatable="yes">Click to switch to another mouse</property>
+                    <signal name="row-activated" handler="_on_device_row_activated" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkPopover" id="popover_profiles">
     <property name="can-focus">False</property>
     <property name="border-width">2</property>
@@ -153,6 +207,24 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="stack">stack</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuButton" id="button_device">
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="tooltip-text" translatable="yes">Select the mouse to configure</property>
+        <property name="popover">popover_devices</property>
+        <child>
+          <object class="GtkLabel" id="label_device">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Mouse</property>
+            <property name="justify">center</property>
+            <property name="track-visited-links">False</property>
+          </object>
+        </child>
       </object>
     </child>
     <child>

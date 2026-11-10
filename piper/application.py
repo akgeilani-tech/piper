@@ -1,18 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-import sys
 from gettext import gettext as _
 from typing import Optional
 
-from .globalshortcuts import SHORTCUT_ID, GlobalShortcuts
-from .profiles import next_profile
-from .ratbagd import (
-    Ratbagd,
-    RatbagdDBusTimeoutError,
-    RatbagdIncompatibleError,
-    RatbagdUnavailableError,
-    RatbagError,
+from .globalshortcuts import (
+    DEFAULT_DEVICE_TRIGGER,
+    DEFAULT_PROFILE_TRIGGER,
+    DEVICE_SHORTCUT_ID,
+    PROFILE_SHORTCUT_ID,
+    SESSION_HANDLE_TOKEN,
+    GlobalShortcuts,
 )
+from .ratbagd import Ratbagd
 from .settings import Settings
 from .settingsdialog import SettingsDialog
 from .tray import TrayIcon
@@ -55,9 +54,21 @@ class Application(Gtk.Application):
         self._build_app_menu()
         self._ratbagd: Optional[Ratbagd] = None
         self._settings_dialog: Optional[SettingsDialog] = None
-        self._global_shortcuts = GlobalShortcuts()
-        self._global_shortcuts.connect("activated", self._on_shortcut_activated)
-        self._global_shortcuts.start()
+        self._profile_shortcuts = GlobalShortcuts(
+            PROFILE_SHORTCUT_ID,
+            _("Switch to the next profile"),
+            DEFAULT_PROFILE_TRIGGER,
+            SESSION_HANDLE_TOKEN,
+        )
+        self._device_shortcuts = GlobalShortcuts(
+            DEVICE_SHORTCUT_ID,
+            _("Switch to the next mouse"),
+            DEFAULT_DEVICE_TRIGGER,
+            "piper_device",
+        )
+        for shortcuts in (self._profile_shortcuts, self._device_shortcuts):
+            shortcuts.connect("activated", self._on_shortcut_activated)
+            shortcuts.start()
 
     def init_ratbagd(self) -> Ratbagd:
         if self._ratbagd is None:
@@ -93,7 +104,7 @@ class Application(Gtk.Application):
             self._window.present()
 
     def _create_window(self) -> Window:
-        window = Window(self.init_ratbagd, application=self)
+        window = Window(self.init_ratbagd, self._settings, application=self)
         window.connect("delete-event", self._on_window_delete_event)
         window.connect("destroy", self._on_window_destroyed)
         return window
@@ -139,7 +150,10 @@ class Application(Gtk.Application):
         if window is None:
             return
         dialog = SettingsDialog(
-            self._global_shortcuts, self._settings, transient_for=window
+            self._profile_shortcuts,
+            self._device_shortcuts,
+            self._settings,
+            transient_for=window,
         )
         dialog.connect("destroy", self._on_settings_destroyed)
         self._settings_dialog = dialog
@@ -151,29 +165,12 @@ class Application(Gtk.Application):
     def _on_shortcut_activated(
         self, shortcuts: GlobalShortcuts, shortcut_id: str
     ) -> None:
-        if shortcut_id == SHORTCUT_ID:
-            self._cycle_profiles()
-
-    def _cycle_profiles(self) -> None:
-        try:
-            ratbagd = self.init_ratbagd()
-        except (RatbagdUnavailableError, RatbagdIncompatibleError) as error:
-            print(
-                f"piper: cannot switch profiles: {error}",
-                file=sys.stderr,
-            )
+        if self._window is None:
             return
-        for device in ratbagd.devices:
-            profile = next_profile(device.profiles)
-            if profile is None:
-                continue
-            try:
-                profile.set_active()
-            except (RatbagError, RatbagdDBusTimeoutError, GLib.Error) as error:
-                print(
-                    f"piper: failed to switch the profile of {device.name}: {error}",
-                    file=sys.stderr,
-                )
+        if shortcut_id == PROFILE_SHORTCUT_ID:
+            self._window.cycle_profile()
+        elif shortcut_id == DEVICE_SHORTCUT_ID:
+            self._window.cycle_device()
 
     def _about(self, action: Gio.SimpleAction, param: None) -> None:
         # Set up the about dialog.

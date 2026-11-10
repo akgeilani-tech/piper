@@ -10,10 +10,22 @@ All notable changes to this project are documented here. This project follows
 - **Settings and global profile shortcut.** A new *Settings* entry (before
   *About Piper*) opens a modal dialog. It registers a global keyboard shortcut
   through the XDG Desktop Portal
-  (`org.freedesktop.portal.GlobalShortcuts`) that switches every connected
-  mouse to its next enabled profile. The cycle wraps around and skips disabled
+  (`org.freedesktop.portal.GlobalShortcuts`) that switches the selected mouse
+  to its next enabled profile. The cycle wraps around and skips disabled
   profiles. It works while another window (for example a game) has focus, as
   long as Piper is running.
+- **Mouse selector.** A selector to the left of *Profile* lists the mice
+  reported by ratbagd, remembers the current mouse in `settings.ini`, and
+  detects hotplug events. It shows *Mouse not supported* or *Mouse not
+  available* when there is no usable mouse and disables the profile controls
+  and shortcut.
+- **Mouse shortcut.** A second global shortcut switches between compatible
+  mice. The profile shortcut always applies to the selected mouse and commits
+  immediately, without asking about unrelated pending changes.
+- **Persistent profile names.** Profiles can be renamed inline. Since many
+  devices (including the Logitech G604) silently ignore ratbagd's writable
+  `Name` property, Piper stores names in `settings.ini` and restores them on
+  the next start.
 - **Appearance and startup settings.** The Settings dialog adds a color mode
   (Dark, Light or System, following the desktop appearance portal), an option
   to start Piper automatically with the session, and an option to start
@@ -28,6 +40,8 @@ All notable changes to this project are documented here. This project follows
 - English and Spanish translation profiles, with Spanish translations for the
   complete interface.
 - Unit test for the profile cycling logic.
+- Tests for mouse discovery/status, profile-name persistence and device
+  selection.
 - CI matrix entry (`runtime-checks`) that configures with runtime dependency
   checks enabled.
 
@@ -52,6 +66,11 @@ All notable changes to this project are documented here. This project follows
 - The `.ui` templates declare the `piper` translation domain and gettext is
   configured before the application modules load, so translated templates no
   longer fall back to English.
+- Switching the selected mouse disconnects the previous device signals, so
+  profile changes no longer render another mouse's profiles.
+- The active profile cannot be disabled from the profile list, and profile
+  enable/disable operations respect `CAP_DISABLE` and report D-Bus errors in
+  the in-app banner.
 
 ### Changed
 

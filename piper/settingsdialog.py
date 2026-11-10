@@ -9,23 +9,30 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
-from gi.repository import GLib, Gtk, Pango  # noqa
+from gi.repository import Gdk, GLib, Gtk, Pango  # noqa
 
 
 class SettingsDialog(Gtk.Dialog):
     """Modal settings dialog, using the same window format as About Piper."""
 
+    _compact_css_loaded = False
+
     def __init__(
-        self, shortcuts: GlobalShortcuts, settings: Settings, *args, **kwargs
+        self,
+        profile_shortcuts: GlobalShortcuts,
+        device_shortcuts: GlobalShortcuts,
+        settings: Settings,
+        *args,
+        **kwargs,
     ) -> None:
         Gtk.Dialog.__init__(self, *args, **kwargs)
-        self._shortcuts = shortcuts
         self._settings = settings
+        self._shortcut_handlers = []
         self.set_title(_("Settings"))
         self.set_modal(True)
         self.set_destroy_with_parent(True)
         self.set_resizable(False)
-        self.set_size_request(480, -1)
+        self.set_size_request(520, -1)
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
         header.set_title(_("Settings"))
@@ -39,44 +46,36 @@ class SettingsDialog(Gtk.Dialog):
         content.set_margin_start(12)
         content.set_margin_end(12)
 
-        heading = Gtk.Label(xalign=0)
-        heading.set_markup(
-            "<b>{}</b>".format(GLib.markup_escape_text(_("Global shortcut")))
+        shortcuts_heading = Gtk.Label(xalign=0)
+        shortcuts_heading.set_markup(
+            "<b>{}</b>".format(GLib.markup_escape_text(_("Global shortcuts")))
         )
-        content.add(heading)
+        content.add(shortcuts_heading)
 
-        description = Gtk.Label(
+        shortcuts_description = Gtk.Label(
             label=_(
-                "Switch to the next profile on all connected mice. Works while "
-                "Piper is running, even when another window has focus."
+                "These shortcuts work while Piper is running, even when another "
+                "window has focus."
             ),
             xalign=0,
             wrap=True,
-            max_width_chars=58,
+            max_width_chars=60,
         )
-        attributes = Pango.AttrList()
-        attributes.insert(Pango.attr_scale_new(0.9))
-        description.set_attributes(attributes)
-        description.set_justify(Gtk.Justification.FILL)
-        content.add(description)
+        self._set_small(shortcuts_description)
+        content.add(shortcuts_description)
 
-        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-        self._configure_button = Gtk.Button(label=_("Configure shortcut…"))
-        self._configure_button.connect("clicked", self._on_configure_clicked)
-        row.pack_start(self._configure_button, False, False, 0)
-        self._shortcut_label = Gtk.Label(xalign=1)
-        self._shortcut_label.set_halign(Gtk.Align.END)
-        row.pack_end(self._shortcut_label, False, False, 0)
-        content.add(row)
-
-        if not shortcuts.available:
-            unavailable = Gtk.Label(
-                label=_("Global shortcuts are not available on this system."),
-                xalign=0,
-                wrap=True,
-            )
-            content.add(unavailable)
-            self._configure_button.set_sensitive(False)
+        self._add_shortcut_section(
+            content,
+            _("Profile shortcut"),
+            _("Switch to the next profile of the selected mouse."),
+            profile_shortcuts,
+        )
+        self._add_shortcut_section(
+            content,
+            _("Mouse shortcut"),
+            _("Switch to the next compatible mouse."),
+            device_shortcuts,
+        )
 
         content.add(Gtk.Separator())
 
@@ -125,22 +124,92 @@ class SettingsDialog(Gtk.Dialog):
         self._minimized_check.connect("toggled", self._on_minimized_toggled)
         content.add(self._minimized_check)
 
-        self._update_shortcut(self._shortcuts, self._shortcuts.shortcut_description)
-        self._shortcut_handler = self._shortcuts.connect(
-            "shortcut-changed", self._on_shortcut_changed
-        )
         self.connect("destroy", self._on_destroy)
+
+    @staticmethod
+    def _set_small(label: Gtk.Label) -> None:
+        attributes = Pango.AttrList()
+        attributes.insert(Pango.attr_scale_new(0.9))
+        label.set_attributes(attributes)
+        label.set_justify(Gtk.Justification.FILL)
+
+    @classmethod
+    def _make_compact(cls, button: Gtk.Button) -> None:
+        if not cls._compact_css_loaded:
+            provider = Gtk.CssProvider()
+            provider.load_from_data(
+                b"button.piper-compact { padding: 2px 10px; min-height: 0; }"
+            )
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(),
+                provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+            )
+            cls._compact_css_loaded = True
+        button.get_style_context().add_class("piper-compact")
+
+    def _add_shortcut_section(
+        self,
+        content: Gtk.Box,
+        title: str,
+        description: str,
+        shortcuts: GlobalShortcuts,
+    ) -> None:
+        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+
+        title_label = Gtk.Label(xalign=0)
+        title_label.set_markup(f"<b>{GLib.markup_escape_text(title)}:</b>")
+        row.pack_start(title_label, False, False, 0)
+
+        help_icon = Gtk.Image.new_from_icon_name(
+            "help-about-symbolic", Gtk.IconSize.BUTTON
+        )
+        help_icon.set_tooltip_text(description)
+        help_icon.set_valign(Gtk.Align.CENTER)
+        row.pack_start(help_icon, False, False, 0)
+
+        button = Gtk.Button(label=_("Configure shortcut…"))
+        button.set_halign(Gtk.Align.START)
+        button.set_valign(Gtk.Align.CENTER)
+        self._make_compact(button)
+        button.connect("clicked", self._on_configure_clicked, shortcuts)
+        row.pack_start(button, False, False, 0)
+
+        shortcut_label = Gtk.Label(xalign=0)
+        shortcut_label.set_ellipsize(Pango.EllipsizeMode.END)
+        shortcut_label.set_hexpand(True)
+        row.pack_start(shortcut_label, True, True, 0)
+        content.add(row)
+
+        if not shortcuts.available:
+            shortcut_label.set_text(
+                _("Global shortcuts are not available on this system.")
+            )
+            button.set_sensitive(False)
+        else:
+            self._update_shortcut(
+                shortcuts, shortcuts.shortcut_description, shortcut_label
+            )
+            handler = shortcuts.connect(
+                "shortcut-changed",
+                lambda source, desc, label=shortcut_label: self._update_shortcut(
+                    source, desc, label
+                ),
+            )
+            self._shortcut_handlers.append((shortcuts, handler))
 
     def _on_delete_event(self, widget: Gtk.Widget, event) -> bool:
         self.destroy()
         return True
 
-    def _on_configure_clicked(self, button: Gtk.Button) -> None:
+    def _on_configure_clicked(
+        self, button: Gtk.Button, shortcuts: GlobalShortcuts
+    ) -> None:
         button.set_sensitive(False)
         try:
-            self._shortcuts.configure("")
+            shortcuts.configure("")
         finally:
-            button.set_sensitive(self._shortcuts.available)
+            button.set_sensitive(shortcuts.available)
 
     def _on_color_mode_toggled(self, button: Gtk.RadioButton, mode: str) -> None:
         if not button.get_active():
@@ -156,14 +225,15 @@ class SettingsDialog(Gtk.Dialog):
     def _on_minimized_toggled(self, button: Gtk.CheckButton) -> None:
         self._settings.set_start_minimized(button.get_active())
 
-    def _on_shortcut_changed(self, shortcuts: GlobalShortcuts, description) -> None:
-        self._update_shortcut(shortcuts, description)
-
-    def _update_shortcut(self, shortcuts: GlobalShortcuts, description) -> None:
+    def _update_shortcut(
+        self, shortcuts: GlobalShortcuts, description, label: Gtk.Label
+    ) -> None:
         if description:
-            self._shortcut_label.set_text(_("Current shortcut: %s") % description)
+            label.set_text(_("Current shortcut: %s") % description)
         else:
-            self._shortcut_label.set_text(_("Not configured"))
+            label.set_text(_("Not configured"))
 
     def _on_destroy(self, widget: Gtk.Widget) -> None:
-        self._shortcuts.disconnect(self._shortcut_handler)
+        for shortcuts, handler in self._shortcut_handlers:
+            shortcuts.disconnect(handler)
+        self._shortcut_handlers.clear()

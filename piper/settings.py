@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
+import hashlib
 import os
 import sys
+from typing import Optional
 
 import gi
 
@@ -18,8 +20,10 @@ AUTOSTART_EXEC = "flatpak run org.freedesktop.Piper"
 class Settings:
     """Persistent Piper settings stored in the user configuration directory."""
 
-    def __init__(self) -> None:
-        self._config_dir = os.path.join(GLib.get_user_config_dir(), "piper")
+    def __init__(self, config_dir: Optional[str] = None) -> None:
+        self._config_dir = config_dir or os.path.join(
+            GLib.get_user_config_dir(), "piper"
+        )
         self._path = os.path.join(self._config_dir, "settings.ini")
         self._keyfile = GLib.KeyFile()
         self._load()
@@ -76,6 +80,45 @@ class Settings:
 
     def set_start_minimized(self, enabled: bool) -> None:
         self._keyfile.set_boolean("startup", "minimized", enabled)
+        self._save()
+
+    @property
+    def selected_device(self) -> tuple:
+        """Return ``(model, name)`` of the last mouse selected by the user."""
+        try:
+            model = self._keyfile.get_string("devices", "model")
+            name = self._keyfile.get_string("devices", "name")
+        except GLib.Error:
+            return ("", "")
+        return (model, name)
+
+    def set_selected_device(self, model: str, name: str) -> None:
+        self._keyfile.set_string("devices", "model", model or "")
+        self._keyfile.set_string("devices", "name", name or "")
+        self._save()
+
+    @staticmethod
+    def _profile_name_key(model: str, name: str, index: int) -> str:
+        raw = f"{model}\0{name}\0{index}".encode()
+        return hashlib.sha1(raw).hexdigest()
+
+    def profile_name(self, model: str, name: str, index: int):
+        """Return the saved name for a profile, or None."""
+        key = self._profile_name_key(model, name, index)
+        try:
+            return self._keyfile.get_string("profile-names", key)
+        except GLib.Error:
+            return None
+
+    def set_profile_name(self, model: str, name: str, index: int, value: str) -> None:
+        key = self._profile_name_key(model, name, index)
+        if value:
+            self._keyfile.set_string("profile-names", key, value)
+        else:
+            try:
+                self._keyfile.remove_key("profile-names", key)
+            except GLib.Error:
+                return
         self._save()
 
     def apply_color_mode(self) -> None:

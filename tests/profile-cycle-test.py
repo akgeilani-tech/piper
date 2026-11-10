@@ -79,6 +79,28 @@ class TestNextProfile(unittest.TestCase):
 
         self.assertIs(self.next_profile(profiles), profiles[1])
 
+    def test_empty_list_returns_none(self):
+        self.assertIsNone(self.next_profile([]))
+
+    def test_single_disabled_profile_returns_none(self):
+        self.assertIsNone(self.next_profile([FakeProfile(disabled=True)]))
+
+    def test_missing_disabled_flag_is_treated_as_enabled(self):
+        first = FakeProfile(active=True)
+        second = FakeProfile()
+        second.disabled = None
+
+        self.assertIs(self.next_profile([first, second]), second)
+
+    def test_wraps_from_last_enabled_to_first(self):
+        profiles = [
+            FakeProfile(),
+            FakeProfile(disabled=True),
+            FakeProfile(active=True),
+        ]
+
+        self.assertIs(self.next_profile(profiles), profiles[0])
+
 
 def main():
     parser = argparse.ArgumentParser(description="piper.profiles.next_profile test")

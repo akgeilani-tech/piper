@@ -55,8 +55,10 @@
       <description>
         <ul>
           <li>Add a Settings dialog with a global keyboard shortcut to cycle through mouse profiles.</li>
+          <li>Add a mouse selector with hotplug detection and a second shortcut to switch between mice.</li>
           <li>Add Dark, Light and System color modes plus automatic startup and minimize-to-tray options.</li>
           <li>Add a system tray icon and a Quit menu entry.</li>
+          <li>Allow renaming profiles and persist the names across restarts.</li>
           <li>Ship complete English and Spanish translations.</li>
           <li>Fix reuse of the Ratbagd instance at startup.</li>
           <li>Run the test suite in CI and pin the main workflow actions by commit.</li>
