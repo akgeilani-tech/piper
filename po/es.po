@@ -120,7 +120,7 @@ msgstr "Desactivado"
 
 #: piper/buttondialog.py:182
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #. Translators: the {} will be replaced with the button index, e.g.
 #. "Button 1 click".
@@ -137,7 +137,7 @@ msgstr "Macro: {}"
 #: piper/buttonspage.py:111
 #, python-brace-format
 msgid "Key: {}"
-msgstr ""
+msgstr "Tecla: {}"
 
 #. Translators: the button is turned disabled, e.g. off.
 #: piper/buttonspage.py:114
@@ -172,7 +172,7 @@ msgstr "LEDs"
 
 #: piper/mouseperspective.py:139
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 
 #: piper/ratbagd.py:856
 msgid "Left mouse button click"
@@ -416,7 +416,7 @@ msgstr "Hz"
 
 #: data/ui/AdvancedPage.ui:154
 msgid "Debounce time"
-msgstr ""
+msgstr "Tiempo de antirrebote"
 
 #: data/ui/AdvancedPage.ui:183 data/ui/LedDialog.ui:138
 #: data/ui/LedDialog.ui:294
@@ -425,7 +425,7 @@ msgstr "ms"
 
 #: data/ui/AdvancedPage.ui:212
 msgid "Angle snapping"
-msgstr ""
+msgstr "Alineación angular"
 
 #: data/ui/ButtonDialog.ui:59
 msgid "Search for a button mapping"
@@ -649,3 +649,35 @@ msgstr "_Acerca de Piper"
 
 #~ msgid "Sensitivity"
 #~ msgstr "Sensibilidad"
+
+#: data/ui/Window.ui
+msgid "_Quit"
+msgstr "_Salir"
+
+#: piper/settingsdialog.py
+msgid "Appearance"
+msgstr "Apariencia"
+
+#: piper/settingsdialog.py
+msgid "Dark"
+msgstr "Oscuro"
+
+#: piper/settingsdialog.py
+msgid "Light"
+msgstr "Claro"
+
+#: piper/settingsdialog.py
+msgid "System"
+msgstr "Sistema"
+
+#: piper/settingsdialog.py
+msgid "Startup"
+msgstr "Inicio"
+
+#: piper/settingsdialog.py
+msgid "Start automatically with the system"
+msgstr "Iniciar automáticamente con el sistema"
+
+#: piper/settingsdialog.py
+msgid "Start minimized in the system tray"
+msgstr "Iniciar minimizado en la bandeja del sistema"

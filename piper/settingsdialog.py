@@ -3,6 +3,7 @@
 from gettext import gettext as _
 
 from .globalshortcuts import GlobalShortcuts
+from .settings import Settings
 
 import gi
 
@@ -14,14 +15,17 @@ from gi.repository import GLib, Gtk, Pango  # noqa
 class SettingsDialog(Gtk.Dialog):
     """Modal settings dialog, using the same window format as About Piper."""
 
-    def __init__(self, shortcuts: GlobalShortcuts, *args, **kwargs) -> None:
+    def __init__(
+        self, shortcuts: GlobalShortcuts, settings: Settings, *args, **kwargs
+    ) -> None:
         Gtk.Dialog.__init__(self, *args, **kwargs)
         self._shortcuts = shortcuts
+        self._settings = settings
         self.set_title(_("Settings"))
         self.set_modal(True)
         self.set_destroy_with_parent(True)
         self.set_resizable(False)
-        self.set_size_request(380, -1)
+        self.set_size_request(480, -1)
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
         header.set_title(_("Settings"))
@@ -48,7 +52,7 @@ class SettingsDialog(Gtk.Dialog):
             ),
             xalign=0,
             wrap=True,
-            max_width_chars=48,
+            max_width_chars=58,
         )
         attributes = Pango.AttrList()
         attributes.insert(Pango.attr_scale_new(0.9))
@@ -74,6 +78,53 @@ class SettingsDialog(Gtk.Dialog):
             content.add(unavailable)
             self._configure_button.set_sensitive(False)
 
+        content.add(Gtk.Separator())
+
+        appearance_heading = Gtk.Label(xalign=0)
+        appearance_heading.set_markup(
+            "<b>{}</b>".format(GLib.markup_escape_text(_("Appearance")))
+        )
+        content.add(appearance_heading)
+
+        color_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+        color_group = None
+        for label, mode in (
+            (_("Dark"), "dark"),
+            (_("Light"), "light"),
+            (_("System"), "system"),
+        ):
+            if color_group is None:
+                button = Gtk.RadioButton.new_with_label(None, label)
+                color_group = button
+            else:
+                button = Gtk.RadioButton.new_with_label_from_widget(color_group, label)
+            button.set_active(self._settings.color_mode == mode)
+            button.connect("toggled", self._on_color_mode_toggled, mode)
+            color_row.add(button)
+        content.add(color_row)
+
+        content.add(Gtk.Separator())
+
+        startup_heading = Gtk.Label(xalign=0)
+        startup_heading.set_markup(
+            "<b>{}</b>".format(GLib.markup_escape_text(_("Startup")))
+        )
+        content.add(startup_heading)
+
+        self._autostart_check = Gtk.CheckButton(
+            label=_("Start automatically with the system")
+        )
+        self._autostart_check.set_active(self._settings.autostart)
+        self._autostart_check.connect("toggled", self._on_autostart_toggled)
+        content.add(self._autostart_check)
+
+        self._minimized_check = Gtk.CheckButton(
+            label=_("Start minimized in the system tray")
+        )
+        self._minimized_check.set_active(self._settings.start_minimized)
+        self._minimized_check.connect("toggled", self._on_minimized_toggled)
+        content.add(self._minimized_check)
+
         self._update_shortcut(self._shortcuts, self._shortcuts.shortcut_description)
         self._shortcut_handler = self._shortcuts.connect(
             "shortcut-changed", self._on_shortcut_changed
@@ -90,6 +141,20 @@ class SettingsDialog(Gtk.Dialog):
             self._shortcuts.configure("")
         finally:
             button.set_sensitive(self._shortcuts.available)
+
+    def _on_color_mode_toggled(self, button: Gtk.RadioButton, mode: str) -> None:
+        if not button.get_active():
+            return
+        self._settings.set_color_mode(mode)
+        self._settings.apply_color_mode()
+
+    def _on_autostart_toggled(self, button: Gtk.CheckButton) -> None:
+        self._settings.set_autostart(button.get_active())
+        if self._settings.autostart != button.get_active():
+            button.set_active(self._settings.autostart)
+
+    def _on_minimized_toggled(self, button: Gtk.CheckButton) -> None:
+        self._settings.set_start_minimized(button.get_active())
 
     def _on_shortcut_changed(self, shortcuts: GlobalShortcuts, description) -> None:
         self._update_shortcut(shortcuts, description)

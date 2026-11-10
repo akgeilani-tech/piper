@@ -33,14 +33,17 @@ if __name__ == "__main__":
     import gettext
     import locale
     import signal
-    from piper.application import Application
 
-    install_excepthook()
-
+    # Configure gettext before importing piper.application: its modules load
+    # the .ui templates, which are translated when they are loaded.
     locale.bindtextdomain('piper', '@localedir@')
     locale.textdomain('piper')
     gettext.bindtextdomain('piper', '@localedir@')
     gettext.textdomain('piper')
+
+    from piper.application import Application
+
+    install_excepthook()
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     exit_status = Application(@RATBAGD_API_VERSION@).run(sys.argv)

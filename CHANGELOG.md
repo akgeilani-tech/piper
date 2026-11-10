@@ -8,13 +8,25 @@ All notable changes to this project are documented here. This project follows
 ### Added
 
 - **Settings and global profile shortcut.** A new *Settings* entry (before
-  *About Piper*) opens a modal, borderless panel inside the main window. It
-  registers a global keyboard shortcut through the XDG Desktop Portal
+  *About Piper*) opens a modal dialog. It registers a global keyboard shortcut
+  through the XDG Desktop Portal
   (`org.freedesktop.portal.GlobalShortcuts`) that switches every connected
   mouse to its next enabled profile. The cycle wraps around and skips disabled
   profiles. It works while another window (for example a game) has focus, as
   long as Piper is running.
-- Spanish translations for the new Settings UI.
+- **Appearance and startup settings.** The Settings dialog adds a color mode
+  (Dark, Light or System, following the desktop appearance portal), an option
+  to start Piper automatically with the session, and an option to start
+  minimized in the system tray. Settings persist in
+  `$XDG_CONFIG_HOME/piper/settings.ini`.
+- **System tray icon.** Piper registers a KDE StatusNotifierItem so it can keep
+  running in the tray, restore its window from the icon and hide instead of
+  quitting when the window is closed.
+- **Quit menu entry.** *Salir*/*Quit* appears after *About Piper* and exits the
+  application and its tray icon for the current session without changing the
+  saved configuration.
+- English and Spanish translation profiles, with Spanish translations for the
+  complete interface.
 - Unit test for the profile cycling logic.
 - CI matrix entry (`runtime-checks`) that configures with runtime dependency
   checks enabled.
@@ -34,6 +46,12 @@ All notable changes to this project are documented here. This project follows
 - Hardened the global shortcut integration: it supports portal v1/v2, bounds
   portal requests with timeouts, recovers from transient errors and cancelled
   sessions, and confines keyboard focus inside the Settings panel with Tab.
+- Flatpak no longer splits translations into a separate `Locale` runtime
+  extension, so rebuilt bundles always ship their current `.mo` files instead
+  of loading a stale extension.
+- The `.ui` templates declare the `piper` translation domain and gettext is
+  configured before the application modules load, so translated templates no
+  longer fall back to English.
 
 ### Changed
 

@@ -13,7 +13,9 @@ from .ratbagd import (
     RatbagdUnavailableError,
     RatbagError,
 )
+from .settings import Settings
 from .settingsdialog import SettingsDialog
+from .tray import TrayIcon
 from .window import Window
 
 import gi
@@ -39,12 +41,17 @@ class Application(Gtk.Application):
         GLib.set_application_name("Piper")
         GLib.set_prgname("org.freedesktop.Piper")
         self._required_ratbagd_version = ratbagd_api_version
+        self._settings = Settings()
+        self._window: Optional[Window] = None
+        self._tray: Optional[TrayIcon] = None
+        self._started_minimized = False
 
     def do_startup(self) -> None:
         """This function is called when the application is first started. All
         initialization should be done here, to prevent doing duplicate work in
         case another window is opened."""
         Gtk.Application.do_startup(self)
+        self._settings.apply_color_mode()
         self._build_app_menu()
         self._ratbagd: Optional[Ratbagd] = None
         self._settings_dialog: Optional[SettingsDialog] = None
@@ -60,13 +67,62 @@ class Application(Gtk.Application):
     def do_activate(self) -> None:
         """This function is called when the user requests a new window to be
         opened."""
+        if self._window is None:
+            self._window = self._create_window()
+        if self._settings.start_minimized and not self._started_minimized:
+            self._started_minimized = True
+            self._window.hide()
+            self.hold()
+            self._show_tray()
+        else:
+            self._window.present()
+
+    def _show_tray(self) -> None:
+        if self._tray is not None:
+            return
+        self._tray = TrayIcon(
+            "org.freedesktop.Piper",
+            "org.freedesktop.Piper",
+            "Piper",
+            self._show_window,
+            self.quit,
+        )
+        if not self._tray.available:
+            self._tray = None
+            self.release()
+            self._window.present()
+
+    def _create_window(self) -> Window:
         window = Window(self.init_ratbagd, application=self)
-        window.present()
+        window.connect("delete-event", self._on_window_delete_event)
+        window.connect("destroy", self._on_window_destroyed)
+        return window
+
+    def _on_window_delete_event(self, window: Window, event) -> bool:
+        if self._tray is not None:
+            window.hide()
+            return True
+        return False
+
+    def _on_window_destroyed(self, window: Window) -> None:
+        if self._window is window:
+            self._window = None
+
+    def _show_window(self) -> None:
+        if self._window is None:
+            self._window = self._create_window()
+        self._window.present()
+
+    def do_shutdown(self) -> None:
+        if self._tray is not None:
+            self._tray.destroy()
+            self._tray = None
+        Gtk.Application.do_shutdown(self)
 
     def _build_app_menu(self) -> None:
         # Set up the app menu
         actions = [
-            ("settings", self._settings),
+            ("settings", self._show_settings),
             ("about", self._about),
             ("quit", self._quit),
         ]
@@ -75,14 +131,16 @@ class Application(Gtk.Application):
             action.connect("activate", callback)
             self.add_action(action)
 
-    def _settings(self, action: Gio.SimpleAction, param: None) -> None:
+    def _show_settings(self, action: Gio.SimpleAction, param: None) -> None:
         if self._settings_dialog is not None:
             self._settings_dialog.present()
             return
         window = self.get_active_window()
         if window is None:
             return
-        dialog = SettingsDialog(self._global_shortcuts, transient_for=window)
+        dialog = SettingsDialog(
+            self._global_shortcuts, self._settings, transient_for=window
+        )
         dialog.connect("destroy", self._on_settings_destroyed)
         self._settings_dialog = dialog
         dialog.show_all()
@@ -134,3 +192,4 @@ class Application(Gtk.Application):
         windows = self.get_windows()
         for window in windows:
             window.destroy()
+        self.quit()

@@ -9,8 +9,12 @@
         "--socket=x11",
         "--socket=wayland",
         "--system-talk-name=org.freedesktop.ratbag1",
-        "--device=dri"
+        "--device=dri",
+        "--filesystem=xdg-config/autostart:create",
+        "--talk-name=org.kde.StatusNotifierWatcher",
+        "--own-name=org.kde.StatusNotifierItem-piper-1"
     ],
+    "separate-locales": false,
     "modules": [
         {
             "name": "python-evdev",

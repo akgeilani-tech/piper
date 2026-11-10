@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 01:14-0400\n"
+"POT-Creation-Date: 2026-11-10 11:12-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,32 +67,42 @@ msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:57
 msgid ""
-"Add a Settings panel with a global keyboard shortcut to cycle through mouse "
+"Add a Settings dialog with a global keyboard shortcut to cycle through mouse "
 "profiles."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:58
-msgid "Add Spanish translations for the new Settings UI."
+msgid ""
+"Add Dark, Light and System color modes plus automatic startup and minimize-"
+"to-tray options."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:59
-msgid "Fix reuse of the Ratbagd instance at startup."
+msgid "Add a system tray icon and a Quit menu entry."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:60
-msgid "Run the test suite in CI and pin GitHub Actions by commit."
+msgid "Ship complete English and Spanish translations."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:61
-msgid "Validate GTK and Rsvg at configure time."
+msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:62
+msgid "Run the test suite in CI and pin the main workflow actions by commit."
+msgstr ""
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+msgid "Validate GTK and Rsvg at configure time."
+msgstr ""
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:64
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
 
-#: piper/application.py:118
+#: piper/application.py:185
 msgid "Contributors"
 msgstr ""
 
@@ -144,7 +154,7 @@ msgstr ""
 msgid "Configure button {}"
 msgstr ""
 
-#: piper/globalshortcuts.py:218
+#: piper/globalshortcuts.py:259
 msgid "Switch to the next profile"
 msgstr ""
 
@@ -287,95 +297,119 @@ msgstr ""
 msgid "Breathing"
 msgstr ""
 
-#: piper/settingsdialog.py:47
+#: piper/settingsdialog.py:24 piper/settingsdialog.py:31
 msgid "Settings"
 msgstr ""
 
-#: piper/settingsdialog.py:52
+#: piper/settingsdialog.py:44
 msgid "Global shortcut"
 msgstr ""
 
-#: piper/settingsdialog.py:58
+#: piper/settingsdialog.py:50
 msgid ""
 "Switch to the next profile on all connected mice. Works while Piper is "
 "running, even when another window has focus."
 msgstr ""
 
-#: piper/settingsdialog.py:72
+#: piper/settingsdialog.py:64
 msgid "Configure shortcut…"
 msgstr ""
 
-#: piper/settingsdialog.py:82
+#: piper/settingsdialog.py:74
 msgid "Global shortcuts are not available on this system."
 msgstr ""
 
-#: piper/settingsdialog.py:89
-msgid "Close"
+#: piper/settingsdialog.py:85
+msgid "Appearance"
+msgstr ""
+
+#: piper/settingsdialog.py:92
+msgid "Dark"
+msgstr ""
+
+#: piper/settingsdialog.py:93
+msgid "Light"
+msgstr ""
+
+#: piper/settingsdialog.py:94
+msgid "System"
 msgstr ""
 
 #: piper/settingsdialog.py:110
+msgid "Startup"
+msgstr ""
+
+#: piper/settingsdialog.py:115
+msgid "Start automatically with the system"
+msgstr ""
+
+#: piper/settingsdialog.py:122
+msgid "Start minimized in the system tray"
+msgstr ""
+
+#: piper/settingsdialog.py:164
 #, python-format
 msgid "Current shortcut: %s"
 msgstr ""
 
-#: piper/settingsdialog.py:112
+#: piper/settingsdialog.py:166
 msgid "Not configured"
 msgstr ""
 
-#: piper/window.py:53
+#: piper/window.py:48
 msgid "Cannot connect to ratbagd"
 msgstr ""
 
-#: piper/window.py:55
+#: piper/window.py:50
 msgid ""
 "Please make sure ratbagd is running and your user is in the required group"
 msgstr ""
 
-#: piper/window.py:64
+#: piper/window.py:59
 msgid "Please update both piper and libratbag to the latest versions"
 msgstr ""
 
-#: piper/window.py:80 piper/window.py:148
+#: piper/window.py:75 piper/window.py:143
 msgid "Cannot find any devices"
 msgstr ""
 
-#: piper/window.py:81 piper/window.py:149
+#: piper/window.py:76 piper/window.py:144
 msgid "Please make sure your device is supported and plugged in"
 msgstr ""
 
-#: piper/window.py:96
+#: piper/window.py:91
 msgid "There are unapplied changes. Are you sure you want to quit?"
 msgstr ""
 
-#: piper/window.py:107
+#: piper/window.py:102
 msgid "Ooops. ratbagd has disappeared"
 msgstr ""
 
-#: piper/window.py:107
+#: piper/window.py:102
 msgid "Please restart Piper"
 msgstr ""
 
-#: piper/window.py:138
+#: piper/window.py:133
 msgid "Your device disconnected!"
 msgstr ""
 
-#: piper/window.py:139
+#: piper/window.py:134
 msgid "Please make sure your device is plugged in"
 msgstr ""
 
-#: piper/window.py:185
+#: piper/window.py:180
 msgid "Cannot display device SVG"
 msgstr ""
 
-#: piper/window.py:193
+#: piper/window.py:188
 msgid "Newer version of ratbagd required"
 msgstr ""
 
-#: piper/window.py:194
+#: piper/window.py:189
 msgid "Please update to the latest available version"
 msgstr ""
 
-#: piper/window.py:198
+#: piper/window.py:193
 msgid "Unknown exception occurred"
 msgstr ""
 
@@ -606,4 +640,8 @@ msgstr ""
 
 #: data/ui/Window.ui:12
 msgid "_About Piper"
+msgstr ""
+
+#: data/ui/Window.ui:16
+msgid "_Quit"
 msgstr ""
