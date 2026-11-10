@@ -58,6 +58,10 @@
           <li>Add a mouse selector with hotplug detection and a second shortcut to switch between mice.</li>
           <li>Add Dark, Light and System color modes plus automatic startup and minimize-to-tray options.</li>
           <li>Add a system tray icon and a Quit menu entry.</li>
+          <li>Add tray actions and retry registration when the desktop tray is not ready at login.</li>
+          <li>Warn about devices with partial ratbagd/libratbag support and disable saving for them.</li>
+          <li>Support single-profile mice in the profile selector.</li>
+          <li>Handle the Breeze/Breeze-Dark GTK themes and live system color changes.</li>
           <li>Allow renaming profiles and persist the names across restarts.</li>
           <li>Ship complete English and Spanish translations.</li>
           <li>Fix reuse of the Ratbagd instance at startup.</li>

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 
 class TestSettings(unittest.TestCase):
@@ -54,6 +56,19 @@ class TestSettings(unittest.TestCase):
         self.assertEqual(settings.profile_name("usb:046d:4085:0", "G604", 0), "Uno")
         self.assertEqual(settings.profile_name("usb:046d:c539:0", "G Pro", 0), "Otro")
         self.assertIsNone(settings.profile_name("usb:046d:4085:0", "G604", 1))
+
+    def test_autostart_exec_flatpak(self):
+        with mock.patch.dict(
+            os.environ, {"FLATPAK_ID": "org.freedesktop.Piper"}, clear=False
+        ):
+            self.assertEqual(
+                self.Settings._autostart_exec(),
+                "flatpak run org.freedesktop.Piper",
+            )
+
+    def test_autostart_exec_native(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(self.Settings._autostart_exec(), "piper")
 
 
 def main():

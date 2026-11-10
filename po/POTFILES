@@ -20,6 +20,7 @@ piper/ratbagd.py
 piper/resolutionrow.py
 piper/resolutionspage.py
 piper/settingsdialog.py
+piper/tray.py
 piper/welcomeperspective.py
 piper/window.py
 

@@ -14,7 +14,8 @@ from gi.repository import Gio, GLib, Gtk  # noqa
 COLOR_MODES = ("dark", "light", "system")
 DEFAULT_COLOR_MODE = "system"
 AUTOSTART_FILE = "org.freedesktop.Piper.desktop"
-AUTOSTART_EXEC = "flatpak run org.freedesktop.Piper"
+BREEZE_LIGHT = "Breeze"
+BREEZE_DARK = "Breeze-Dark"
 
 
 class Settings:
@@ -26,6 +27,7 @@ class Settings:
         )
         self._path = os.path.join(self._config_dir, "settings.ini")
         self._keyfile = GLib.KeyFile()
+        self._color_subscription = 0
         self._load()
 
     def _load(self) -> None:
@@ -132,8 +134,61 @@ class Settings:
             prefer_dark = self._read_portal_color_scheme() == 1
 
         gtk_settings = Gtk.Settings.get_default()
-        if gtk_settings is not None:
-            gtk_settings.set_property("gtk-application-prefer-dark-theme", prefer_dark)
+        if gtk_settings is None:
+            return
+
+        gtk_settings.set_property("gtk-application-prefer-dark-theme", prefer_dark)
+
+        # Breeze ignores prefer-dark; switch between its two GTK themes.
+        theme = gtk_settings.get_property("gtk-theme-name") or ""
+        if "Breeze" in theme:
+            target = BREEZE_DARK if prefer_dark else BREEZE_LIGHT
+            if self._theme_available(target):
+                gtk_settings.set_property("gtk-theme-name", target)
+
+    def watch_color_scheme(self) -> None:
+        """React to system light/dark changes when the mode is System."""
+        if self._color_subscription:
+            return
+        try:
+            bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+        except GLib.Error:
+            return
+        self._color_subscription = bus.signal_subscribe(
+            "org.freedesktop.portal.Desktop",
+            "org.freedesktop.portal.Settings",
+            "SettingChanged",
+            "/org/freedesktop/portal/desktop",
+            None,
+            Gio.DBusSignalFlags.NONE,
+            self._on_color_scheme_changed,
+        )
+
+    def _on_color_scheme_changed(
+        self, connection, sender, path, interface, signal, parameters
+    ) -> None:
+        try:
+            namespace, key, _value = parameters.unpack()
+        except (TypeError, ValueError):
+            return
+        if (
+            namespace == "org.freedesktop.appearance"
+            and key == "color-scheme"
+            and self.color_mode == "system"
+        ):
+            GLib.idle_add(self.apply_color_mode)
+
+    @staticmethod
+    def _theme_available(theme: str) -> bool:
+        candidates = [os.path.join(GLib.get_home_dir(), ".themes")]
+        candidates += [
+            os.path.join(directory, "themes")
+            for directory in GLib.get_system_data_dirs()
+        ]
+        for base in candidates:
+            if os.path.exists(os.path.join(base, theme, "gtk-3.0", "gtk.css")):
+                return True
+        return False
 
     def _read_portal_color_scheme(self) -> int:
         try:
@@ -164,14 +219,26 @@ class Settings:
             return 0
 
     def _autostart_path(self) -> str:
-        return os.path.join(GLib.get_home_dir(), ".config", "autostart", AUTOSTART_FILE)
+        if os.environ.get("FLATPAK_ID"):
+            # Flatpak maps the host ~/.config/autostart inside the sandbox.
+            base = os.path.join(GLib.get_home_dir(), ".config")
+        else:
+            base = GLib.get_user_config_dir()
+        return os.path.join(base, "autostart", AUTOSTART_FILE)
+
+    @staticmethod
+    def _autostart_exec() -> str:
+        flatpak_id = os.environ.get("FLATPAK_ID")
+        if flatpak_id:
+            return f"flatpak run {flatpak_id}"
+        return "piper"
 
     def _write_autostart(self, path: str) -> None:
         content = (
             "[Desktop Entry]\n"
             "Type=Application\n"
             "Name=Piper\n"
-            f"Exec={AUTOSTART_EXEC}\n"
+            f"Exec={self._autostart_exec()}\n"
             "Icon=org.freedesktop.Piper\n"
             "Terminal=false\n"
             "X-GNOME-Autostart-enabled=true\n"

@@ -33,7 +33,15 @@ All notable changes to this project are documented here. This project follows
   `$XDG_CONFIG_HOME/piper/settings.ini`.
 - **System tray icon.** Piper registers a KDE StatusNotifierItem so it can keep
   running in the tray, restore its window from the icon and hide instead of
-  quitting when the window is closed.
+  quitting when the window is closed. The tray is always created, retries the
+  watcher at login and exposes a DBusMenu with *Show Piper*, *Settings* and
+  *Quit*.
+- **Partial device support warning.** Devices whose `Commit` does not persist
+  (for example the Logitech G602 with libratbag 0.18) show a warning and have
+  *Apply* disabled. The check is generic: if a device remains dirty four
+  seconds after a successful commit, saving is disabled for that device.
+- **Single-profile devices.** The profile selector is usable even when the
+  mouse only exposes one profile, so the active profile is visible.
 - **Quit menu entry.** *Salir*/*Quit* appears after *About Piper* and exits the
   application and its tray icon for the current session without changing the
   saved configuration.
@@ -71,6 +79,15 @@ All notable changes to this project are documented here. This project follows
 - The active profile cannot be disabled from the profile list, and profile
   enable/disable operations respect `CAP_DISABLE` and report D-Bus errors in
   the in-app banner.
+- If the portal advertises `ConfigureShortcuts` v2 but returns
+  `UnknownMethod`, Piper now falls back to the v1 rebind path instead of
+  leaving the shortcut inactive.
+- The Breeze GTK theme switches between `Breeze` and `Breeze-Dark`, and the
+  System color mode reacts to `SettingChanged`.
+- Autostart uses `flatpak run` only inside the Flatpak and respects
+  `XDG_CONFIG_HOME` for native installs.
+- `Escape` closes the Settings dialog, and the shortcut help icon and value
+  have accessible names and tooltips.
 
 ### Changed
 

@@ -99,40 +99,65 @@ msgid "Add a system tray icon and a Quit menu entry."
 msgstr "Add a system tray icon and a Quit menu entry."
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:61
+msgid ""
+"Add tray actions and retry registration when the desktop tray is not ready "
+"at login."
+msgstr ""
+"Add tray actions and retry registration when the desktop tray is not ready "
+"at login."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+msgid ""
+"Warn about devices with partial ratbagd/libratbag support and disable saving "
+"for them."
+msgstr ""
+"Warn about devices with partial ratbagd/libratbag support and disable saving "
+"for them."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+msgid "Support single-profile mice in the profile selector."
+msgstr "Support single-profile mice in the profile selector."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+msgid "Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
+msgstr ""
+"Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:65
 msgid "Allow renaming profiles and persist the names across restarts."
 msgstr "Allow renaming profiles and persist the names across restarts."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+#: data/org.freedesktop.Piper.appdata.xml.in.in:66
 msgid "Ship complete English and Spanish translations."
 msgstr "Ship complete English and Spanish translations."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+#: data/org.freedesktop.Piper.appdata.xml.in.in:67
 msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr "Fix reuse of the Ratbagd instance at startup."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+#: data/org.freedesktop.Piper.appdata.xml.in.in:68
 msgid "Run the test suite in CI and pin the main workflow actions by commit."
 msgstr "Run the test suite in CI and pin the main workflow actions by commit."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:65
+#: data/org.freedesktop.Piper.appdata.xml.in.in:69
 msgid "Validate GTK and Rsvg at configure time."
 msgstr "Validate GTK and Rsvg at configure time."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:66
+#: data/org.freedesktop.Piper.appdata.xml.in.in:70
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 
-#: piper/application.py:59
+#: piper/application.py:60
 msgid "Switch to the next profile"
 msgstr "Switch to the next profile"
 
-#: piper/application.py:65
+#: piper/application.py:66
 msgid "Switch to the next mouse"
 msgstr "Switch to the next mouse"
 
-#: piper/application.py:182
+#: piper/application.py:188
 msgid "Contributors"
 msgstr "Contributors"
 
@@ -184,36 +209,49 @@ msgstr "Unknown"
 msgid "Configure button {}"
 msgstr "Configure button {}"
 
-#: piper/mouseperspective.py:112
+#: piper/mouseperspective.py:33
+msgid ""
+"Saving is disabled: this device may have partial support in ratbagd/"
+"libratbag."
+msgstr ""
+"Saving is disabled: this device may have partial support in ratbagd/"
+"libratbag."
+
+#: piper/mouseperspective.py:124
 #, python-format
 msgid "Mouse not supported: %s"
 msgstr "Mouse not supported: %s"
 
-#: piper/mouseperspective.py:128 piper/mouseperspective.py:167
+#: piper/mouseperspective.py:140 piper/mouseperspective.py:183
 msgid "Profile"
 msgstr "Profile"
 
-#: piper/mouseperspective.py:234 data/ui/ResolutionsPage.ui:78
+#: piper/mouseperspective.py:176 piper/mouseperspective.py:312
+#: data/ui/MousePerspective.ui:253
+msgid "Commit the changes to the device"
+msgstr "Commit the changes to the device"
+
+#: piper/mouseperspective.py:254 data/ui/ResolutionsPage.ui:78
 msgid "Resolutions"
 msgstr "Resolutions"
 
-#: piper/mouseperspective.py:238
+#: piper/mouseperspective.py:258
 msgid "Buttons"
 msgstr "Buttons"
 
-#: piper/mouseperspective.py:241
+#: piper/mouseperspective.py:261
 msgid "LEDs"
 msgstr "LEDs"
 
-#: piper/mouseperspective.py:252
+#: piper/mouseperspective.py:272
 msgid "Advanced"
 msgstr "Advanced"
 
-#: piper/mouseperspective.py:266 data/ui/MousePerspective.ui:43
+#: piper/mouseperspective.py:291 data/ui/MousePerspective.ui:43
 msgid "Something went wrong. The device has been reset to a previous state."
 msgstr "Something went wrong. The device has been reset to a previous state."
 
-#: piper/mouseperspective.py:299 piper/mouseperspective.py:310
+#: piper/mouseperspective.py:355 piper/mouseperspective.py:366
 #: piper/profilerow.py:72 piper/profilerow.py:127
 #, python-format
 msgid "Profile %d"
@@ -360,15 +398,15 @@ msgstr "Cycle"
 msgid "Breathing"
 msgstr "Breathing"
 
-#: piper/settingsdialog.py:31 piper/settingsdialog.py:38
+#: piper/settingsdialog.py:31 piper/settingsdialog.py:38 piper/tray.py:336
 msgid "Settings"
 msgstr "Settings"
 
-#: piper/settingsdialog.py:51
+#: piper/settingsdialog.py:52
 msgid "Global shortcuts"
 msgstr "Global shortcuts"
 
-#: piper/settingsdialog.py:57
+#: piper/settingsdialog.py:58
 msgid ""
 "These shortcuts work while Piper is running, even when another window has "
 "focus."
@@ -376,66 +414,74 @@ msgstr ""
 "These shortcuts work while Piper is running, even when another window has "
 "focus."
 
-#: piper/settingsdialog.py:69
+#: piper/settingsdialog.py:70
 msgid "Profile shortcut"
 msgstr "Profile shortcut"
 
-#: piper/settingsdialog.py:70
+#: piper/settingsdialog.py:71
 msgid "Switch to the next profile of the selected mouse."
 msgstr "Switch to the next profile of the selected mouse."
 
-#: piper/settingsdialog.py:75
+#: piper/settingsdialog.py:76
 msgid "Mouse shortcut"
 msgstr "Mouse shortcut"
 
-#: piper/settingsdialog.py:76
+#: piper/settingsdialog.py:77
 msgid "Switch to the next compatible mouse."
 msgstr "Switch to the next compatible mouse."
 
-#: piper/settingsdialog.py:84
+#: piper/settingsdialog.py:85
 msgid "Appearance"
 msgstr "Appearance"
 
-#: piper/settingsdialog.py:91
+#: piper/settingsdialog.py:92
 msgid "Dark"
 msgstr "Dark"
 
-#: piper/settingsdialog.py:92
+#: piper/settingsdialog.py:93
 msgid "Light"
 msgstr "Light"
 
-#: piper/settingsdialog.py:93
+#: piper/settingsdialog.py:94
 msgid "System"
 msgstr "System"
 
-#: piper/settingsdialog.py:109
+#: piper/settingsdialog.py:110
 msgid "Startup"
 msgstr "Startup"
 
-#: piper/settingsdialog.py:114
+#: piper/settingsdialog.py:115
 msgid "Start automatically with the system"
 msgstr "Start automatically with the system"
 
-#: piper/settingsdialog.py:121
+#: piper/settingsdialog.py:122
 msgid "Start minimized in the system tray"
 msgstr "Start minimized in the system tray"
 
-#: piper/settingsdialog.py:171
+#: piper/settingsdialog.py:173
 msgid "Configure shortcut…"
 msgstr "Configure shortcut…"
 
-#: piper/settingsdialog.py:186
+#: piper/settingsdialog.py:188
 msgid "Global shortcuts are not available on this system."
 msgstr "Global shortcuts are not available on this system."
 
-#: piper/settingsdialog.py:232
+#: piper/settingsdialog.py:237
 #, python-format
 msgid "Current shortcut: %s"
 msgstr "Current shortcut: %s"
 
-#: piper/settingsdialog.py:234
+#: piper/settingsdialog.py:239
 msgid "Not configured"
 msgstr "Not configured"
+
+#: piper/tray.py:335
+msgid "Show Piper"
+msgstr "Show Piper"
+
+#: piper/tray.py:337
+msgid "Quit"
+msgstr "Quit"
 
 #: piper/window.py:87
 msgid "Cannot connect to ratbagd"
@@ -667,10 +713,6 @@ msgstr "Mouse"
 #: data/ui/MousePerspective.ui:235
 msgid "Select another profile"
 msgstr "Select another profile"
-
-#: data/ui/MousePerspective.ui:253
-msgid "Commit the changes to the device"
-msgstr "Commit the changes to the device"
 
 #: data/ui/OptionButton.ui:9
 msgid "Open the configuration dialog"

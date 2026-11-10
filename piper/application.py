@@ -51,6 +51,7 @@ class Application(Gtk.Application):
         case another window is opened."""
         Gtk.Application.do_startup(self)
         self._settings.apply_color_mode()
+        self._settings.watch_color_scheme()
         self._build_app_menu()
         self._ratbagd: Optional[Ratbagd] = None
         self._settings_dialog: Optional[SettingsDialog] = None
@@ -69,6 +70,7 @@ class Application(Gtk.Application):
         for shortcuts in (self._profile_shortcuts, self._device_shortcuts):
             shortcuts.connect("activated", self._on_shortcut_activated)
             shortcuts.start()
+        self._show_tray()
 
     def init_ratbagd(self) -> Ratbagd:
         if self._ratbagd is None:
@@ -82,9 +84,11 @@ class Application(Gtk.Application):
             self._window = self._create_window()
         if self._settings.start_minimized and not self._started_minimized:
             self._started_minimized = True
-            self._window.hide()
-            self.hold()
-            self._show_tray()
+            if self._tray is not None and self._tray.available:
+                self._window.hide()
+                self.hold()
+            else:
+                self._window.present()
         else:
             self._window.present()
 
@@ -97,11 +101,8 @@ class Application(Gtk.Application):
             "Piper",
             self._show_window,
             self.quit,
+            self._open_settings,
         )
-        if not self._tray.available:
-            self._tray = None
-            self.release()
-            self._window.present()
 
     def _create_window(self) -> Window:
         window = Window(self.init_ratbagd, self._settings, application=self)
@@ -110,7 +111,7 @@ class Application(Gtk.Application):
         return window
 
     def _on_window_delete_event(self, window: Window, event) -> bool:
-        if self._tray is not None:
+        if self._tray is not None and self._tray.available:
             window.hide()
             return True
         return False
@@ -143,12 +144,17 @@ class Application(Gtk.Application):
             self.add_action(action)
 
     def _show_settings(self, action: Gio.SimpleAction, param: None) -> None:
+        self._open_settings()
+
+    def _open_settings(self) -> None:
         if self._settings_dialog is not None:
             self._settings_dialog.present()
             return
-        window = self.get_active_window()
+        window = self.get_active_window() or self._window
         if window is None:
             return
+        if not window.get_visible():
+            window.present()
         dialog = SettingsDialog(
             self._profile_shortcuts,
             self._device_shortcuts,

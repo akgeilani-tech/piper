@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 15:53-0400\n"
+"POT-Creation-Date: 2026-11-10 17:21-0400\n"
 "PO-Revision-Date: 2020-03-14 15:37-0500\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Español; Castellano <>\n"
@@ -99,41 +99,67 @@ msgid "Add a system tray icon and a Quit menu entry."
 msgstr "Añadir un icono en la bandeja del sistema y una entrada Salir."
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:61
+msgid ""
+"Add tray actions and retry registration when the desktop tray is not ready "
+"at login."
+msgstr ""
+"Añadir acciones en la bandeja y reintentar el registro cuando la bandeja del "
+"escritorio aún no está lista al iniciar sesión."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+msgid ""
+"Warn about devices with partial ratbagd/libratbag support and disable saving "
+"for them."
+msgstr ""
+"Avisar de dispositivos con soporte parcial en ratbagd/libratbag y "
+"deshabilitar el guardado para ellos."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+msgid "Support single-profile mice in the profile selector."
+msgstr "Admitir ratones de un solo perfil en el selector de perfiles."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+msgid "Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
+msgstr ""
+"Gestionar los temas GTK Breeze/Breeze-Dark y los cambios de color del "
+"sistema en vivo."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:65
 msgid "Allow renaming profiles and persist the names across restarts."
 msgstr "Permitir renombrar perfiles y conservar los nombres entre reinicios."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+#: data/org.freedesktop.Piper.appdata.xml.in.in:66
 msgid "Ship complete English and Spanish translations."
 msgstr "Incluir traducciones completas en inglés y español."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+#: data/org.freedesktop.Piper.appdata.xml.in.in:67
 msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr "Corregir la reutilización de la instancia de Ratbagd al iniciar."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+#: data/org.freedesktop.Piper.appdata.xml.in.in:68
 msgid "Run the test suite in CI and pin the main workflow actions by commit."
 msgstr ""
 "Ejecutar la suite de pruebas en CI y fijar las acciones del flujo principal "
 "por commit."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:65
+#: data/org.freedesktop.Piper.appdata.xml.in.in:69
 msgid "Validate GTK and Rsvg at configure time."
 msgstr "Validar GTK y Rsvg durante la configuración."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:66
+#: data/org.freedesktop.Piper.appdata.xml.in.in:70
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
 
-#: piper/application.py:59
+#: piper/application.py:60
 msgid "Switch to the next profile"
 msgstr "Cambiar al siguiente perfil"
 
-#: piper/application.py:65
+#: piper/application.py:66
 msgid "Switch to the next mouse"
 msgstr "Cambiar al siguiente ratón"
 
-#: piper/application.py:182
+#: piper/application.py:188
 msgid "Contributors"
 msgstr "Colaboradores"
 
@@ -186,37 +212,50 @@ msgstr "Desconocido"
 msgid "Configure button {}"
 msgstr "Configurar botón {}"
 
-#: piper/mouseperspective.py:112
+#: piper/mouseperspective.py:33
+msgid ""
+"Saving is disabled: this device may have partial support in ratbagd/"
+"libratbag."
+msgstr ""
+"Guardado deshabilitado: este dispositivo puede tener soporte parcial en "
+"ratbagd/libratbag."
+
+#: piper/mouseperspective.py:124
 #, python-format
 msgid "Mouse not supported: %s"
 msgstr "Ratón no compatible: %s"
 
-#: piper/mouseperspective.py:128 piper/mouseperspective.py:167
+#: piper/mouseperspective.py:140 piper/mouseperspective.py:183
 msgid "Profile"
 msgstr "Perfil"
 
-#: piper/mouseperspective.py:234 data/ui/ResolutionsPage.ui:78
+#: piper/mouseperspective.py:176 piper/mouseperspective.py:312
+#: data/ui/MousePerspective.ui:253
+msgid "Commit the changes to the device"
+msgstr "Efectuar los cambios en el dispositivo"
+
+#: piper/mouseperspective.py:254 data/ui/ResolutionsPage.ui:78
 msgid "Resolutions"
 msgstr "Resoluciones"
 
-#: piper/mouseperspective.py:238
+#: piper/mouseperspective.py:258
 msgid "Buttons"
 msgstr "Botones"
 
-#: piper/mouseperspective.py:241
+#: piper/mouseperspective.py:261
 msgid "LEDs"
 msgstr "LEDs"
 
-#: piper/mouseperspective.py:252
+#: piper/mouseperspective.py:272
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: piper/mouseperspective.py:266 data/ui/MousePerspective.ui:43
+#: piper/mouseperspective.py:291 data/ui/MousePerspective.ui:43
 msgid "Something went wrong. The device has been reset to a previous state."
 msgstr ""
 "Algo salió mal. El dispositivo se ha restablecido a un estado anterior."
 
-#: piper/mouseperspective.py:299 piper/mouseperspective.py:310
+#: piper/mouseperspective.py:355 piper/mouseperspective.py:366
 #: piper/profilerow.py:72 piper/profilerow.py:127
 #, python-format
 msgid "Profile %d"
@@ -363,15 +402,15 @@ msgstr "Ciclo"
 msgid "Breathing"
 msgstr "Respiración"
 
-#: piper/settingsdialog.py:31 piper/settingsdialog.py:38
+#: piper/settingsdialog.py:31 piper/settingsdialog.py:38 piper/tray.py:336
 msgid "Settings"
 msgstr "Configuración"
 
-#: piper/settingsdialog.py:51
+#: piper/settingsdialog.py:52
 msgid "Global shortcuts"
 msgstr "Atajos globales"
 
-#: piper/settingsdialog.py:57
+#: piper/settingsdialog.py:58
 msgid ""
 "These shortcuts work while Piper is running, even when another window has "
 "focus."
@@ -379,66 +418,74 @@ msgstr ""
 "Estos atajos funcionan mientras Piper está abierto, incluso cuando otra "
 "ventana tiene el foco."
 
-#: piper/settingsdialog.py:69
+#: piper/settingsdialog.py:70
 msgid "Profile shortcut"
 msgstr "Atajo de perfil"
 
-#: piper/settingsdialog.py:70
+#: piper/settingsdialog.py:71
 msgid "Switch to the next profile of the selected mouse."
 msgstr "Cambiar al siguiente perfil del ratón seleccionado."
 
-#: piper/settingsdialog.py:75
+#: piper/settingsdialog.py:76
 msgid "Mouse shortcut"
 msgstr "Atajo de ratón"
 
-#: piper/settingsdialog.py:76
+#: piper/settingsdialog.py:77
 msgid "Switch to the next compatible mouse."
 msgstr "Cambiar al siguiente ratón compatible."
 
-#: piper/settingsdialog.py:84
+#: piper/settingsdialog.py:85
 msgid "Appearance"
 msgstr "Apariencia"
 
-#: piper/settingsdialog.py:91
+#: piper/settingsdialog.py:92
 msgid "Dark"
 msgstr "Oscuro"
 
-#: piper/settingsdialog.py:92
+#: piper/settingsdialog.py:93
 msgid "Light"
 msgstr "Claro"
 
-#: piper/settingsdialog.py:93
+#: piper/settingsdialog.py:94
 msgid "System"
 msgstr "Sistema"
 
-#: piper/settingsdialog.py:109
+#: piper/settingsdialog.py:110
 msgid "Startup"
 msgstr "Inicio"
 
-#: piper/settingsdialog.py:114
+#: piper/settingsdialog.py:115
 msgid "Start automatically with the system"
 msgstr "Iniciar automáticamente con el sistema"
 
-#: piper/settingsdialog.py:121
+#: piper/settingsdialog.py:122
 msgid "Start minimized in the system tray"
 msgstr "Iniciar minimizado en la bandeja del sistema"
 
-#: piper/settingsdialog.py:171
+#: piper/settingsdialog.py:173
 msgid "Configure shortcut…"
 msgstr "Configurar atajo…"
 
-#: piper/settingsdialog.py:186
+#: piper/settingsdialog.py:188
 msgid "Global shortcuts are not available on this system."
 msgstr "Los atajos globales no están disponibles en este sistema."
 
-#: piper/settingsdialog.py:232
+#: piper/settingsdialog.py:237
 #, python-format
 msgid "Current shortcut: %s"
 msgstr "Atajo actual: %s"
 
-#: piper/settingsdialog.py:234
+#: piper/settingsdialog.py:239
 msgid "Not configured"
 msgstr "Sin configurar"
+
+#: piper/tray.py:335
+msgid "Show Piper"
+msgstr "Mostrar Piper"
+
+#: piper/tray.py:337
+msgid "Quit"
+msgstr "Salir"
 
 #: piper/window.py:87
 msgid "Cannot connect to ratbagd"
@@ -672,10 +719,6 @@ msgstr "Ratón"
 msgid "Select another profile"
 msgstr "Seleccione otro perfil"
 
-#: data/ui/MousePerspective.ui:253
-msgid "Commit the changes to the device"
-msgstr "Efectuar los cambios en el dispositivo"
-
 #: data/ui/OptionButton.ui:9
 msgid "Open the configuration dialog"
 msgstr "Abre el diálogo de configuración"
@@ -786,9 +829,6 @@ msgstr "_Salir"
 
 #~ msgid "Press Escape to cancel or Return to accept."
 #~ msgstr "Pulse Esc para cancelar o Intro para aceptar."
-
-#~ msgid "Quit"
-#~ msgstr "Salir"
 
 #~ msgid "Sensitivity"
 #~ msgstr "Sensibilidad"

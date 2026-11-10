@@ -96,7 +96,14 @@ class GlobalShortcuts(GObject.GObject):
             self._fail(error)
             return
         version = self._portal.get_cached_property("version")
-        self._portal_version = version.unpack() if version is not None else 0
+        if version is None:
+            print(
+                "piper: the GlobalShortcuts portal does not report a version",
+                file=sys.stderr,
+            )
+            self.available = False
+            return
+        self._portal_version = version.unpack()
         self._portal.connect("g-signal", self._on_portal_signal)
         self.available = True
 
@@ -124,6 +131,9 @@ class GlobalShortcuts(GObject.GObject):
             self._set_shortcut_description(None)
             return
 
+        # KDE only considers a shortcut active when it is bound in the current
+        # session. ListShortcuts remembers it from previous sessions, so bind
+        # again even though the ID is already listed.
         try:
             description = self._bind("")
         except (GLib.Error, _PortalError) as error:
@@ -154,33 +164,45 @@ class GlobalShortcuts(GObject.GObject):
                     parameters = GLib.Variant(
                         "(osa{sv})", (self._session_handle, parent_window, {})
                     )
-                    self._portal.call_sync(
-                        "ConfigureShortcuts",
-                        parameters,
-                        Gio.DBusCallFlags.NONE,
-                        PORTAL_CALL_TIMEOUT_MS,
-                        None,
-                    )
+                    try:
+                        self._portal.call_sync(
+                            "ConfigureShortcuts",
+                            parameters,
+                            Gio.DBusCallFlags.NONE,
+                            PORTAL_CALL_TIMEOUT_MS,
+                            None,
+                        )
+                    except GLib.Error as error:
+                        if self._is_configure_unsupported(error):
+                            self._configure_v1(parent_window)
+                        else:
+                            raise
                 else:
-                    # Portal v1 has no ConfigureShortcuts. Closing the session
-                    # lets the next BindShortcuts call be accepted.
-                    self._reset_session()
-                    self._session_handle = self._create_session()
-                    description = self._bind(parent_window)
-                    if description is None:
-                        self._reset_session()
-                    else:
-                        self._set_shortcut_description(description)
+                    self._configure_v1(parent_window)
             else:
-                description = self._bind(parent_window)
-                if description is None:
-                    self._reset_session()
-                else:
-                    self._set_shortcut_description(description)
+                self._configure_v1(parent_window)
         except (GLib.Error, _PortalError) as error:
             self._handle_request_error(error)
         finally:
             self._configuring = False
+
+    def _configure_v1(self, parent_window):
+        """Recreate the session and bind again, as portal v1 requires."""
+        self._reset_session()
+        self._session_handle = self._create_session()
+        description = self._bind(parent_window)
+        if description is None:
+            self._reset_session()
+        else:
+            self._set_shortcut_description(description)
+
+    @staticmethod
+    def _is_configure_unsupported(error: GLib.Error) -> bool:
+        unsupported = {
+            getattr(Gio.DBusError, "UNKNOWN_METHOD", -1),
+            getattr(Gio.DBusError, "NOT_SUPPORTED", -1),
+        }
+        return error.code in unsupported or "UnknownMethod" in (error.message or "")
 
     def close(self):
         """Closes the portal session.

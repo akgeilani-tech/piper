@@ -38,6 +38,7 @@ class SettingsDialog(Gtk.Dialog):
         header.set_title(_("Settings"))
         self.set_titlebar(header)
         self.connect("delete-event", self._on_delete_event)
+        self.connect("response", self._on_response)
 
         content = self.get_content_area()
         content.set_spacing(8)
@@ -166,6 +167,7 @@ class SettingsDialog(Gtk.Dialog):
         )
         help_icon.set_tooltip_text(description)
         help_icon.set_valign(Gtk.Align.CENTER)
+        help_icon.get_accessible().set_name(description)
         row.pack_start(help_icon, False, False, 0)
 
         button = Gtk.Button(label=_("Configure shortcut…"))
@@ -202,6 +204,9 @@ class SettingsDialog(Gtk.Dialog):
         self.destroy()
         return True
 
+    def _on_response(self, dialog: Gtk.Dialog, response: int) -> None:
+        self.destroy()
+
     def _on_configure_clicked(
         self, button: Gtk.Button, shortcuts: GlobalShortcuts
     ) -> None:
@@ -229,9 +234,12 @@ class SettingsDialog(Gtk.Dialog):
         self, shortcuts: GlobalShortcuts, description, label: Gtk.Label
     ) -> None:
         if description:
-            label.set_text(_("Current shortcut: %s") % description)
+            text = _("Current shortcut: %s") % description
         else:
-            label.set_text(_("Not configured"))
+            text = _("Not configured")
+        label.set_text(text)
+        label.set_tooltip_text(text)
+        label.get_accessible().set_name(text)
 
     def _on_destroy(self, widget: Gtk.Widget) -> None:
         for shortcuts, handler in self._shortcut_handlers:

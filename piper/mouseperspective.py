@@ -23,6 +23,16 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
 from gi.repository import GLib, GObject, Gtk, Pango  # noqa
 
+# Devices known to expose settings in ratbagd but not persist them. Remove an
+# entry once libratbag can commit to that model.
+PARTIAL_SUPPORT_MODELS = {
+    "usb:046d:402c",  # Logitech G602 (libratbag PR #1837, not released)
+}
+
+PARTIAL_SUPPORT_MESSAGE = _(
+    "Saving is disabled: this device may have partial support in " "ratbagd/libratbag."
+)
+
 
 @Gtk.Template(resource_path="/org/freedesktop/Piper/ui/MousePerspective.ui")
 class MousePerspective(Gtk.Overlay):
@@ -60,6 +70,8 @@ class MousePerspective(Gtk.Overlay):
         self._profile: Optional[RatbagdProfile] = None
         self._connections = []
         self._notification_error_timeout_id = 0
+        self._commit_check_id = 0
+        self._commit_unsupported = False
         self.connect("destroy", self._on_destroy)
 
     @GObject.Property
@@ -159,6 +171,10 @@ class MousePerspective(Gtk.Overlay):
         self._disconnect_all()
         self._device = device
         self._profile = None
+        self._cancel_commit_check()
+        self._commit_unsupported = False
+        self.button_commit.set_tooltip_text(_("Commit the changes to the device"))
+        self._hide_notification_error()
 
         self.listbox_profiles.foreach(Gtk.Widget.destroy)
         self.stack.foreach(Gtk.Widget.destroy)
@@ -183,7 +199,9 @@ class MousePerspective(Gtk.Overlay):
             return
 
         self.button_profile.set_visible(True)
-        self.button_profile.set_sensitive(len(device.profiles) > 1)
+        # Keep the selector usable even for devices with a single profile so
+        # the active profile is visible and selectable.
+        self.button_profile.set_sensitive(True)
         self._set_profile(active_profile)
 
         for profile in device.profiles:
@@ -197,8 +215,10 @@ class MousePerspective(Gtk.Overlay):
 
         self._on_profile_notify_disabled(active_profile, None)
         self._select_profile_row(active_profile)
+        self._update_support_state()
 
     def _on_destroy(self, widget: Gtk.Widget) -> None:
+        self._cancel_commit_check()
         self._disconnect_all()
 
     def _connect(self, obj, signal: str, func) -> None:
@@ -260,15 +280,51 @@ class MousePerspective(Gtk.Overlay):
             self._notification_error_timeout_id = 0
         self.notification_error.set_reveal_child(False)
 
-    def _show_notification_error(self, message: Optional[str] = None) -> None:
+    def _show_notification_error(
+        self, message: Optional[str] = None, timeout: int = 5
+    ) -> None:
+        if self._notification_error_timeout_id:
+            GLib.Source.remove(self._notification_error_timeout_id)
+            self._notification_error_timeout_id = 0
         self.notification_error_label.set_text(
             message
             or _("Something went wrong. The device has been reset to a previous state.")
         )
         self.notification_error.set_reveal_child(True)
-        self._notification_error_timeout_id = GLib.timeout_add_seconds(
-            5, self._on_notification_error_timeout
-        )
+        if timeout:
+            self._notification_error_timeout_id = GLib.timeout_add_seconds(
+                timeout, self._on_notification_error_timeout
+            )
+
+    def _cancel_commit_check(self) -> None:
+        if self._commit_check_id:
+            GLib.Source.remove(self._commit_check_id)
+            self._commit_check_id = 0
+
+    def _update_support_state(self) -> None:
+        if self._device is None:
+            return
+        model = self._device.model or ""
+        key = ":".join(model.split(":")[:3])
+        if key in PARTIAL_SUPPORT_MODELS:
+            self._set_commit_unsupported(PARTIAL_SUPPORT_MESSAGE)
+        else:
+            self.button_commit.set_tooltip_text(_("Commit the changes to the device"))
+
+    def _set_commit_unsupported(self, message: str) -> None:
+        self._commit_unsupported = True
+        self.button_commit.set_sensitive(False)
+        self.button_commit.get_style_context().remove_class("suggested-action")
+        self.button_commit.set_tooltip_text(message)
+        self._show_notification_error(message, timeout=0)
+
+    def _check_commit_result(self, device: RatbagdDevice) -> bool:
+        self._commit_check_id = 0
+        if device is not self._device:
+            return False
+        if any(profile.dirty for profile in device.profiles):
+            self._set_commit_unsupported(PARTIAL_SUPPORT_MESSAGE)
+        return False
 
     def _on_resync(self, device: RatbagdDevice) -> None:
         if device is self._device:
@@ -336,12 +392,19 @@ class MousePerspective(Gtk.Overlay):
 
     @Gtk.Template.Callback("_on_save_button_clicked")
     def _on_save_button_clicked(self, _button: Gtk.Button) -> None:
-        if self._device is None:
+        if self._device is None or self._commit_unsupported:
             return
+        device = self._device
         try:
-            self._device.commit()
+            device.commit()
         except (RatbagError, RatbagdDBusTimeoutError, GLib.Error) as error:
             self._show_notification_error(str(error))
+            self._set_commit_unsupported(PARTIAL_SUPPORT_MESSAGE)
+            return
+        self._cancel_commit_check()
+        self._commit_check_id = GLib.timeout_add_seconds(
+            4, self._check_commit_result, device
+        )
 
     @Gtk.Template.Callback("_on_notification_error_close_clicked")
     def _on_notification_error_close_clicked(self, button: Gtk.Button) -> None:
@@ -401,7 +464,11 @@ class MousePerspective(Gtk.Overlay):
         device_dirty = any(p.dirty for p in self._device.profiles)
 
         style_context = self.button_commit.get_style_context()
-        if device_dirty:
+        if self._commit_unsupported:
+            style_context.remove_class("suggested-action")
+            self.button_commit.set_sensitive(False)
+            self.button_commit.set_tooltip_text(PARTIAL_SUPPORT_MESSAGE)
+        elif device_dirty:
             style_context.add_class("suggested-action")
             self.button_commit.set_sensitive(True)
         else:
