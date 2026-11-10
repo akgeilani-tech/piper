@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 17:21-0400\n"
+"POT-Creation-Date: 2026-11-10 19:46-0400\n"
 "PO-Revision-Date: 2020-03-14 15:37-0500\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Español; Castellano <>\n"
@@ -125,41 +125,49 @@ msgstr ""
 "sistema en vivo."
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:65
+msgid ""
+"Reconnect automatically when ratbagd exits after idle and keep it alive "
+"while Piper runs."
+msgstr ""
+"Reconectar automáticamente cuando ratbagd se cierra por inactividad y "
+"mantenerlo activo mientras Piper está abierto."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:66
 msgid "Allow renaming profiles and persist the names across restarts."
 msgstr "Permitir renombrar perfiles y conservar los nombres entre reinicios."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:66
+#: data/org.freedesktop.Piper.appdata.xml.in.in:67
 msgid "Ship complete English and Spanish translations."
 msgstr "Incluir traducciones completas en inglés y español."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:67
+#: data/org.freedesktop.Piper.appdata.xml.in.in:68
 msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr "Corregir la reutilización de la instancia de Ratbagd al iniciar."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:68
+#: data/org.freedesktop.Piper.appdata.xml.in.in:69
 msgid "Run the test suite in CI and pin the main workflow actions by commit."
 msgstr ""
 "Ejecutar la suite de pruebas en CI y fijar las acciones del flujo principal "
 "por commit."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:69
+#: data/org.freedesktop.Piper.appdata.xml.in.in:70
 msgid "Validate GTK and Rsvg at configure time."
 msgstr "Validar GTK y Rsvg durante la configuración."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:70
+#: data/org.freedesktop.Piper.appdata.xml.in.in:71
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
 
-#: piper/application.py:60
+#: piper/application.py:67
 msgid "Switch to the next profile"
 msgstr "Cambiar al siguiente perfil"
 
-#: piper/application.py:66
+#: piper/application.py:73
 msgid "Switch to the next mouse"
 msgstr "Cambiar al siguiente ratón"
 
-#: piper/application.py:188
+#: piper/application.py:238
 msgid "Contributors"
 msgstr "Colaboradores"
 
@@ -203,7 +211,7 @@ msgid "Disabled"
 msgstr "Desactivado"
 
 #. Translators: the button has an unknown function.
-#: piper/buttonspage.py:117 piper/ratbagd.py:874
+#: piper/buttonspage.py:117 piper/ratbagd.py:887
 msgid "Unknown"
 msgstr "Desconocido"
 
@@ -279,126 +287,126 @@ msgstr "No se pudo eliminar el perfil: %s"
 msgid "Could not rename the profile: %s"
 msgstr "No se pudo renombrar el perfil: %s"
 
-#: piper/ratbagd.py:864
+#: piper/ratbagd.py:877
 msgid "Left mouse button click"
 msgstr "Pulsación del botón primario del ratón"
 
-#: piper/ratbagd.py:865
+#: piper/ratbagd.py:878
 msgid "Right mouse button click"
 msgstr "Pulsación del botón secundario del ratón"
 
-#: piper/ratbagd.py:866
+#: piper/ratbagd.py:879
 msgid "Middle mouse button click"
 msgstr "Pulsación del botón central del ratón"
 
-#: piper/ratbagd.py:867
+#: piper/ratbagd.py:880
 msgid "Backward"
 msgstr "Atrás"
 
-#: piper/ratbagd.py:868
+#: piper/ratbagd.py:881
 msgid "Forward"
 msgstr "Adelante"
 
-#: piper/ratbagd.py:873
+#: piper/ratbagd.py:886
 msgid "Invalid"
 msgstr "No válida"
 
-#: piper/ratbagd.py:875
+#: piper/ratbagd.py:888
 msgid "Doubleclick"
 msgstr "Doble pulsación"
 
-#: piper/ratbagd.py:876
+#: piper/ratbagd.py:889
 msgid "Wheel Left"
 msgstr "Rueda a la izquierda"
 
-#: piper/ratbagd.py:877
+#: piper/ratbagd.py:890
 msgid "Wheel Right"
 msgstr "Rueda a la derecha"
 
-#: piper/ratbagd.py:878
+#: piper/ratbagd.py:891
 msgid "Wheel Up"
 msgstr "Rueda hacia arriba"
 
-#: piper/ratbagd.py:879
+#: piper/ratbagd.py:892
 msgid "Wheel Down"
 msgstr "Rueda hacia abajo"
 
-#: piper/ratbagd.py:880
+#: piper/ratbagd.py:893
 msgid "Ratchet Mode"
 msgstr "Modo de giro gradual"
 
-#: piper/ratbagd.py:881
+#: piper/ratbagd.py:894
 msgid "Cycle Resolution Up"
 msgstr "Ciclo de resolución siguiente"
 
-#: piper/ratbagd.py:882
+#: piper/ratbagd.py:895
 msgid "Cycle Resolution Down"
 msgstr "Ciclo de resolución anterior"
 
-#: piper/ratbagd.py:883
+#: piper/ratbagd.py:896
 msgid "Resolution Up"
 msgstr "Aumentar resolución"
 
-#: piper/ratbagd.py:884
+#: piper/ratbagd.py:897
 msgid "Resolution Down"
 msgstr "Reducir resolución"
 
-#: piper/ratbagd.py:885
+#: piper/ratbagd.py:898
 msgid "Resolution Switch"
 msgstr "Cambiar resolución"
 
-#: piper/ratbagd.py:886
+#: piper/ratbagd.py:899
 msgid "Default Resolution"
 msgstr "Resolución predeterminada"
 
-#: piper/ratbagd.py:887
+#: piper/ratbagd.py:900
 msgid "Cycle Profile Up"
 msgstr "Ciclo de perfil siguiente"
 
-#: piper/ratbagd.py:888
+#: piper/ratbagd.py:901
 msgid "Cycle Profile Down"
 msgstr "Ciclo de perfil anterior"
 
-#: piper/ratbagd.py:889
+#: piper/ratbagd.py:902
 msgid "Profile Up"
 msgstr "Perfil siguiente"
 
-#: piper/ratbagd.py:890
+#: piper/ratbagd.py:903
 msgid "Profile Down"
 msgstr "Perfil anterior"
 
-#: piper/ratbagd.py:891
+#: piper/ratbagd.py:904
 msgid "Second Mode"
 msgstr "Segundo modo"
 
-#: piper/ratbagd.py:892
+#: piper/ratbagd.py:905
 msgid "Battery Level"
 msgstr "Nivel de la batería"
 
 #. Translators: this is used when there is no macro to preview.
-#: piper/ratbagd.py:1038 data/ui/ButtonDialog.ui:100
+#: piper/ratbagd.py:1051 data/ui/ButtonDialog.ui:100
 #: data/ui/ButtonDialog.ui:181
 msgid "None"
 msgstr "Ninguno"
 
 #. Translators: the LED is off.
-#: piper/ratbagd.py:1114 data/ui/LedDialog.ui:368
+#: piper/ratbagd.py:1127 data/ui/LedDialog.ui:368
 msgid "Off"
 msgstr "Apagado"
 
 #. Translators: the LED has a single, solid color.
-#: piper/ratbagd.py:1116 data/ui/LedDialog.ui:59
+#: piper/ratbagd.py:1129 data/ui/LedDialog.ui:59
 msgid "Solid"
 msgstr "Sólido"
 
 #. Translators: the LED is cycling between red, green and blue.
-#: piper/ratbagd.py:1118 data/ui/LedDialog.ui:172
+#: piper/ratbagd.py:1131 data/ui/LedDialog.ui:172
 msgid "Cycle"
 msgstr "Ciclo"
 
 #. Translators: the LED's is pulsating a single color on different
 #. brightnesses.
-#: piper/ratbagd.py:1121 data/ui/LedDialog.ui:328
+#: piper/ratbagd.py:1134 data/ui/LedDialog.ui:328
 msgid "Breathing"
 msgstr "Respiración"
 
@@ -487,54 +495,54 @@ msgstr "Mostrar Piper"
 msgid "Quit"
 msgstr "Salir"
 
-#: piper/window.py:87
+#: piper/window.py:91
 msgid "Cannot connect to ratbagd"
 msgstr "No se puede conectar a ratbagd"
 
-#: piper/window.py:89
+#: piper/window.py:93
 msgid ""
 "Please make sure ratbagd is running and your user is in the required group"
 msgstr ""
 "Asegúrese de que ratbagd se esté ejecutando y que su usuario esté en el "
 "grupo requerido"
 
-#: piper/window.py:98
+#: piper/window.py:102
 msgid "Please update both piper and libratbag to the latest versions"
 msgstr "Actualice tanto piper como libratbag a las últimas versiones"
 
-#: piper/window.py:118
+#: piper/window.py:122
 msgid "There are unapplied changes. Are you sure you want to quit?"
 msgstr "Hay cambios no aplicados. ¿Seguro que quiere salir?"
 
-#: piper/window.py:135
+#: piper/window.py:139
 msgid "Ooops. ratbagd has disappeared"
 msgstr "Vaya. ratbagd ha desaparecido"
 
-#: piper/window.py:135
-msgid "Please restart Piper"
-msgstr "Reinicie Piper"
+#: piper/window.py:139
+msgid "Reconnecting to ratbagd…"
+msgstr "Reconectando con ratbagd…"
 
-#: piper/window.py:174
+#: piper/window.py:179
 msgid "Mouse not supported"
 msgstr "Ratón no compatible"
 
-#: piper/window.py:176 piper/window.py:178 piper/window.py:189
+#: piper/window.py:181 piper/window.py:183 piper/window.py:194
 msgid "Mouse not available"
 msgstr "Ratón no disponible"
 
-#: piper/window.py:200
+#: piper/window.py:205
 msgid "Cannot display device SVG"
 msgstr "No se puede mostrar el SVG del dispositivo"
 
-#: piper/window.py:205
+#: piper/window.py:210
 msgid "Newer version of ratbagd required"
 msgstr "Se requiere una versión más reciente de ratbagd"
 
-#: piper/window.py:206
+#: piper/window.py:211
 msgid "Please update to the latest available version"
 msgstr "Actualice a la última versión disponible"
 
-#: piper/window.py:210
+#: piper/window.py:215
 msgid "Unknown exception occurred"
 msgstr "Ha ocurrido una excepción desconocida"
 
@@ -786,6 +794,9 @@ msgstr "_Acerca de Piper"
 #: data/ui/Window.ui:16
 msgid "_Quit"
 msgstr "_Salir"
+
+#~ msgid "Please restart Piper"
+#~ msgstr "Reinicie Piper"
 
 #~ msgid "Run the test suite in CI and pin GitHub Actions by commit."
 #~ msgstr ""

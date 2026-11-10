@@ -223,7 +223,7 @@ class _RatbagdDBus(GObject.GObject):
             self._proxy.call_sync(
                 "org.freedesktop.DBus.Properties.Set",
                 pval,
-                Gio.DBusCallFlags.NO_AUTO_START,
+                Gio.DBusCallFlags.NONE,
                 2000,
                 None,
             )
@@ -242,9 +242,7 @@ class _RatbagdDBus(GObject.GObject):
         # the UI.
         val = GLib.Variant(f"({type})", value)
         try:
-            res = self._proxy.call_sync(
-                method, val, Gio.DBusCallFlags.NO_AUTO_START, 2000, None
-            )
+            res = self._proxy.call_sync(method, val, Gio.DBusCallFlags.NONE, 2000, None)
             if res in EXCEPTION_TABLE:
                 raise EXCEPTION_TABLE[res]
             return res.unpack()[0]  # Result is always a tuple
@@ -290,8 +288,9 @@ class Ratbagd(_RatbagdDBus):
         self._devices = [RatbagdDevice(objpath) for objpath in result or []]
         self._proxy.connect("notify::g-name-owner", self._on_name_owner_changed)
 
-    def _on_name_owner_changed(self, *kwargs):
-        self.emit("daemon-disappeared")
+    def _on_name_owner_changed(self, proxy, pspec):
+        if proxy.get_name_owner() is None:
+            self.emit("daemon-disappeared")
 
     def _on_properties_changed(self, proxy, changed_props, invalidated_props):
         try:
@@ -327,6 +326,20 @@ class Ratbagd(_RatbagdDBus):
             if d.id == id:
                 return d
         return None
+
+    def ping(self) -> bool:
+        """Send a cheap D-Bus message to reset ratbagd's idle timer."""
+        try:
+            self._proxy.call_sync(
+                "org.freedesktop.DBus.Properties.Get",
+                GLib.Variant("(ss)", (self._interface, "Devices")),
+                Gio.DBusCallFlags.NONE,
+                2000,
+                None,
+            )
+        except GLib.Error:
+            return False
+        return True
 
     def __enter__(self):
         return self

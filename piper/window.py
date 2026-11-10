@@ -31,7 +31,7 @@ from .settings import Settings
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, GLib, Gtk, Gio  # noqa
+from gi.repository import Gdk, GLib, Gtk, Gio, GObject  # noqa
 
 
 @Gtk.Template(resource_path="/org/freedesktop/Piper/ui/Window.ui")
@@ -41,6 +41,10 @@ class Window(Gtk.ApplicationWindow):
     that each present their own behavior."""
 
     __gtype_name__ = "Window"
+
+    __gsignals__ = {
+        "daemon-lost": (GObject.SignalFlags.RUN_FIRST, None, ()),
+    }
 
     primary_menu: Gtk.Menu = Gtk.Template.Child()  # type: ignore
     stack_perspectives: Gtk.Stack = Gtk.Template.Child()  # type: ignore
@@ -132,8 +136,9 @@ class Window(Gtk.ApplicationWindow):
 
     def _on_daemon_disappeared(self, ratbag: Ratbagd) -> None:
         self._present_error_perspective(
-            _("Ooops. ratbagd has disappeared"), _("Please restart Piper")
+            _("Ooops. ratbagd has disappeared"), _("Reconnecting to ratbagd…")
         )
+        self.emit("daemon-lost")
 
     def _on_device_added(self, ratbag: Ratbagd, device: RatbagdDevice) -> None:
         self._refresh_devices(force=True)

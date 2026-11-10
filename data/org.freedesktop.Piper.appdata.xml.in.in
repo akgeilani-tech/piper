@@ -62,6 +62,7 @@
           <li>Warn about devices with partial ratbagd/libratbag support and disable saving for them.</li>
           <li>Support single-profile mice in the profile selector.</li>
           <li>Handle the Breeze/Breeze-Dark GTK themes and live system color changes.</li>
+          <li>Reconnect automatically when ratbagd exits after idle and keep it alive while Piper runs.</li>
           <li>Allow renaming profiles and persist the names across restarts.</li>
           <li>Ship complete English and Spanish translations.</li>
           <li>Fix reuse of the Ratbagd instance at startup.</li>

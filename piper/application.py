@@ -11,7 +11,11 @@ from .globalshortcuts import (
     SESSION_HANDLE_TOKEN,
     GlobalShortcuts,
 )
-from .ratbagd import Ratbagd
+from .ratbagd import (
+    Ratbagd,
+    RatbagdIncompatibleError,
+    RatbagdUnavailableError,
+)
 from .settings import Settings
 from .settingsdialog import SettingsDialog
 from .tray import TrayIcon
@@ -44,6 +48,9 @@ class Application(Gtk.Application):
         self._window: Optional[Window] = None
         self._tray: Optional[TrayIcon] = None
         self._started_minimized = False
+        self._reconnect_id = 0
+        self._reconnect_attempt = 0
+        self._keepalive_id = 0
 
     def do_startup(self) -> None:
         """This function is called when the application is first started. All
@@ -71,6 +78,7 @@ class Application(Gtk.Application):
             shortcuts.connect("activated", self._on_shortcut_activated)
             shortcuts.start()
         self._show_tray()
+        self._keepalive_id = GLib.timeout_add_seconds(600, self._keepalive)
 
     def init_ratbagd(self) -> Ratbagd:
         if self._ratbagd is None:
@@ -108,7 +116,43 @@ class Application(Gtk.Application):
         window = Window(self.init_ratbagd, self._settings, application=self)
         window.connect("delete-event", self._on_window_delete_event)
         window.connect("destroy", self._on_window_destroyed)
+        window.connect("daemon-lost", self._on_daemon_lost)
         return window
+
+    def _on_daemon_lost(self, window: Window) -> None:
+        self._ratbagd = None
+        self._reconnect_attempt = 0
+        if self._reconnect_id:
+            return
+        self._reconnect_id = GLib.timeout_add_seconds(2, self._try_reconnect)
+
+    def _keepalive(self) -> bool:
+        if self._ratbagd is not None:
+            self._ratbagd.ping()
+        return True
+
+    def _try_reconnect(self) -> bool:
+        self._reconnect_id = 0
+        try:
+            ratbagd = self.init_ratbagd()
+        except (RatbagdUnavailableError, RatbagdIncompatibleError, GLib.Error):
+            self._reconnect_attempt += 1
+            if self._reconnect_attempt < 15:
+                self._reconnect_id = GLib.timeout_add_seconds(
+                    min(2 + self._reconnect_attempt, 10), self._try_reconnect
+                )
+            return False
+
+        old_window = self._window
+        self._window = None
+        if old_window is not None:
+            old_window.destroy()
+        self._window = self._create_window()
+        self._window.present()
+        # Keep the Ratbagd object alive in the application cache.
+        self._ratbagd = ratbagd
+        self._reconnect_attempt = 0
+        return False
 
     def _on_window_delete_event(self, window: Window, event) -> bool:
         if self._tray is not None and self._tray.available:
@@ -126,6 +170,12 @@ class Application(Gtk.Application):
         self._window.present()
 
     def do_shutdown(self) -> None:
+        if self._reconnect_id:
+            GLib.Source.remove(self._reconnect_id)
+            self._reconnect_id = 0
+        if self._keepalive_id:
+            GLib.Source.remove(self._keepalive_id)
+            self._keepalive_id = 0
         if self._tray is not None:
             self._tray.destroy()
             self._tray = None

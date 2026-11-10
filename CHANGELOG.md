@@ -88,6 +88,9 @@ All notable changes to this project are documented here. This project follows
   `XDG_CONFIG_HOME` for native installs.
 - `Escape` closes the Settings dialog, and the shortcut help icon and value
   have accessible names and tooltips.
+- ratbagd exits after 20 minutes without D-Bus activity. Piper now sends a
+  keepalive every 10 minutes and reconnects automatically, rebuilding the
+  window, if the daemon disappears anyway.
 
 ### Changed
 
