@@ -1,120 +1,211 @@
 Piper by AKGeilani-tech
 =======================
 
-Piper by AKGeilani-tech is a GTK+ application to configure gaming mice. Piper is merely a
-graphical frontend to the ratbagd DBus daemon, see [the libratbag
-README](https://github.com/libratbag/libratbag/blob/master/README.md#running-ratbagd-as-dbus-activated-systemd-service)
-for instructions on how to run ratbagd.
+**Piper by AKGeilani-tech** is a fork of [Piper](https://github.com/libratbag/piper),
+the GTK+ frontend for configuring gaming mice through libratbag's `ratbagd`
+D-Bus daemon. This fork is maintained by
+[Ahmed Geilani (@akgeilani-tech)](https://github.com/akgeilani-tech).
 
-If you are running piper from git, we recommend using libratbag from git
-as well to make sure the latest bugfixes are applied.
+The current release is **0.9.0-akg**. It is an independent fork version:
+future feature releases use `0.9.1-akg`, `0.9.2-akg`, and so on, so they cannot
+be confused with the official Piper version.
 
-This repository is the **Piper by AKGeilani-tech** fork maintained by
-[Ahmed Geilani (@akgeilani-tech)](https://github.com/akgeilani-tech). It is based on
-[libratbag/piper](https://github.com/libratbag/piper); the original project and
-authors are credited in *About Piper*. See the
-[changelog](CHANGELOG.md) for the changes in this release (`0.9.0-akg`).
+[Download the latest release](https://github.com/akgeilani-tech/piper/releases/latest)
 
-Supported Devices
-=================
-Piper is merely a frontend, the list of supported devices depends on
-libratbag. See [the libratbag device
-files](https://github.com/libratbag/libratbag/tree/master/data/devices) for
-a list of all known devices.  The device-specific protocols usually have to
-be reverse-engineered and the features available may vary to the
-manufacturer's advertized features.
+What's new in 0.9.0-akg
+=======================
 
-Settings and global shortcut
-============================
+### Added
 
-Piper 0.9 adds a **Settings** entry before *About Piper*. From there you can
-assign a global keyboard shortcut that switches every connected mouse to its
-next enabled profile (0 → 1 → 2 … → 0), skipping disabled profiles. The
-shortcut is registered through the XDG Desktop Portal, so it keeps working
-while another window, such as a game, has focus. Piper must be running; the
-shortcut is configured from *Settings → Configure shortcut…*.
+- **Settings dialog** with a global shortcut to switch the selected mouse to
+  its next enabled profile, even while another window has focus.
+- **Mouse selector** to the left of *Profile*, with the model name reported by
+  `ratbagd`, persistent selection, hotplug detection and clear
+  *Mouse not supported* / *Mouse not available* states.
+- **Second global shortcut** to switch between compatible mice.
+- **Appearance settings**: Dark, Light and System color modes, with
+  Breeze/Breeze-Dark support and live system color changes.
+- **Startup settings**: start with the session and/or start minimized in the
+  system tray.
+- **System tray icon** with a DBusMenu: *Show Piper*, *Settings* and *Quit*.
+- **Quit entry** after *About Piper*; it closes the app and tray icon for the
+  current session without changing saved settings.
+- **Persistent profile names** with inline renaming. Names are stored in
+  `settings.ini` because many devices ignore `ratbagd`'s writable `Name`.
+- **English and Spanish** translation profiles, with the complete interface
+  translated.
+- **Partial-support warning**: devices that expose settings but cannot persist
+  them (for example the Logitech G602 with libratbag 0.18) show a warning and
+  disable *Apply* instead of pretending to save.
+
+### Fixed
+
+- ratbagd exits after 20 minutes of inactivity. Piper now keeps it alive while
+  running and reconnects automatically if it disappears.
+- Switching the selected mouse no longer mixes profiles from another device.
+- The active profile cannot be deleted, and profile operations respect
+  `CAP_DISABLE` and report D-Bus errors.
+- Flatpak no longer loads a stale `Locale` extension, and templates no longer
+  fall back to English.
+- KDE `ConfigureShortcuts` v2 now falls back to the v1 bind path when the
+  portal does not implement it.
+- Autostart uses the correct Flatpak/native command and respects
+  `XDG_CONFIG_HOME`.
+- `Escape` closes Settings, and shortcut help/value controls have accessible
+  names and tooltips.
+- Several crashes and stale D-Bus/GTK interactions found during real-device
+  validation were fixed.
 
 Screenshots
 ===========
 
-![resolution configuration screenshot](https://github.com/libratbag/piper/blob/wiki/screenshots/piper-resolutionpage.png)
+![Main window with device and profile selectors](data/screenshots/main.png)
 
-![button configuration screenshot](https://github.com/libratbag/piper/blob/wiki/screenshots/piper-buttonpage.png)
+![Mouse selector](data/screenshots/device-selector.png)
 
-![LED configuration screenshot](https://github.com/libratbag/piper/blob/wiki/screenshots/piper-ledpage.png)
+![Profile menu with rename and delete actions](data/screenshots/profiles.png)
 
-And if you see the mousetrap, something isn't right. Usually this means that
-either ratbagd is not running (like in this screenshot), ratbagd needs to be
-updated to a newer version, or some other unexpected error occured.
+![Settings: shortcuts, appearance and startup](data/screenshots/settings.png)
 
-![The error page](https://github.com/libratbag/piper/blob/wiki/screenshots/piper-errorpage.png)
+![About Piper by AKGeilani-tech](data/screenshots/about.png)
 
-Installing Piper
-================
+Supported devices
+=================
 
-See [our Wiki](https://github.com/libratbag/piper/wiki/Installation) for how to install Piper.
+Piper is only a frontend. The list of supported devices comes from
+[libratbag](https://github.com/libratbag/libratbag/tree/master/data/devices).
+Device protocols usually have to be reverse-engineered, and the available
+features may differ from the manufacturer's advertised features.
 
-Building Piper from git
-=======================
+With libratbag 0.18, some devices (notably the Logitech G602) are detected but
+cannot persist changes. Piper warns about this and disables *Apply* for them;
+the actual fix must come from libratbag.
 
-Piper uses the [meson build system](http://mesonbuild.com/). Run the following
-commands to clone Piper and initialize the build:
+Installing Piper by AKGeilani-tech
+==================================
+
+The Flatpak contains Piper, **not** `ratbagd`. Install libratbag/ratbagd on the
+host first; Piper talks to it over the system D-Bus.
+
+### 1. Install libratbag manually
+
+**Fedora**
+
+```sh
+sudo dnf install libratbag-ratbagd
+sudo systemctl enable --now ratbagd
+```
+
+**Arch Linux**
+
+```sh
+sudo pacman -S libratbag
+sudo systemctl enable --now ratbagd
+```
+
+**Debian / Ubuntu**
+
+```sh
+sudo apt install ratbagd
+sudo systemctl enable --now ratbagd
+```
+
+Verify that the daemon sees your mouse:
+
+```sh
+ratbagctl list
+```
+
+If `ratbagctl` does not exist, install the tools package for your distribution
+or use `gdbus` to query `org.freedesktop.ratbag1`.
+
+### 2. Install the Flatpak from Releases
+
+Download
+[the latest release](https://github.com/akgeilani-tech/piper/releases/latest)
+and install the `.flatpak` bundle. The application needs the GNOME 50 runtime:
+
+```sh
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install --user flathub org.gnome.Platform//50
+flatpak install --user ./org.freedesktop.Piper-0.9.0-akg-amd64.flatpak
+flatpak run org.freedesktop.Piper
+```
+
+The Flatpak keeps the application ID `org.freedesktop.Piper`, so existing
+Piper settings, autostart entries and shortcuts continue to work.
+
+### Uninstall
+
+```sh
+flatpak uninstall --user org.freedesktop.Piper
+```
+
+Building from git
+=================
+
+Piper uses the Meson build system:
 
 ```sh
 git clone https://github.com/akgeilani-tech/piper.git
 cd piper
-meson builddir --prefix=/usr/
+meson setup builddir --prefix=/usr/
+ninja -C builddir
 ```
 
-To build or re-build after code-changes and install, run:
+To install:
 
 ```sh
-ninja -C builddir
 sudo ninja -C builddir install
 ```
 
-Note: `builddir` is the build output directory and can be changed to any other
-directory name.
+At runtime Piper needs GTK 3.22+, librsvg 2, PyGObject, `lxml`, `evdev` and
+`pycairo`. On Debian/Ubuntu the typelibs are in `gir1.2-gtk-3.0` and
+`gir1.2-rsvg-2.0`.
 
-At runtime Piper needs the GTK 3.22+ and librsvg 2 typelibs
-(`gir1.2-gtk-3.0` and `gir1.2-rsvg-2.0` on Debian/Ubuntu), PyGObject, `lxml`,
-`evdev` and `pycairo`. Configure checks them unless
-`-Druntime-dependency-checks=false` is passed, for example when ratbagd is not
-installed in the build environment.
-
-See [our Wiki](https://github.com/libratbag/piper/wiki/Installation) for what
-to do when you encounter missing dependencies.
-
-Contributing
-============
-
-Yes please. It's best to contact us first to see what you could do. Note that
-the devices displayed by Piper come from libratbag.
-
-For quicker development iteration, there is a special binary `piper.devel`
-that uses data files from the git directory. This removes the need to
-install piper after every code change.
+For development, `piper.devel` uses the data files from the source tree:
 
 ```sh
 ninja -C builddir
 ./builddir/piper.devel
 ```
-Note that this still requires ratbagd to run on the system bus.
 
-Piper tries to conform to Python's PEP8 style guide using the `black` formatter.
-Checking if code is formatted is done as a part of the test suite.
+This still requires ratbagd on the system bus.
 
-You can check if your code passes tests before submitting changes using the
-following command:
+Troubleshooting
+===============
+
+- **No devices / connection error:** check `systemctl status ratbagd` and
+  `ratbagctl list`.
+- **Piper loses the connection after being idle:** ratbagd exits after 20
+  minutes without D-Bus activity. This fork pings it every 10 minutes and
+  reconnects automatically; if the problem persists, restart `ratbagd`.
+- **A mouse appears but changes are not saved:** the device may have partial
+  libratbag support. Piper shows a warning and disables *Apply*.
+- **No tray icon in KDE:** make sure the status notifier watcher is available.
+  Piper retries at login; check `busctl --user list | grep StatusNotifier`.
+
+Contributing
+============
+
+Bug reports and pull requests are welcome at
+[akgeilani-tech/piper](https://github.com/akgeilani-tech/piper/issues). Device
+support itself belongs to libratbag; reports about a model should include its
+USB vendor/product ID and the output of `ratbagctl list`.
+
+Piper follows Python's PEP8 style with `black`; tests include formatting
+checks:
 
 ```sh
 meson test -C builddir
 ```
 
-Contributors
-============
+Credits
+=======
 
-- [@akgeilani-tech](https://github.com/akgeilani-tech)
+- Fork maintained by [Ahmed Geilani (@akgeilani-tech)](https://github.com/akgeilani-tech).
+- Original Piper created by the [libratbag developers](https://github.com/libratbag/piper).
+- All upstream copyright notices and the GPL license are preserved.
 
 Source
 ======
@@ -126,12 +217,10 @@ git clone https://github.com/akgeilani-tech/piper.git
 Bugs
 ====
 
-Bugs can be reported in the issue tracker on our GitHub repo:
-https://github.com/akgeilani-tech/piper/issues
+Report bugs at <https://github.com/akgeilani-tech/piper/issues>.
 
 License
 =======
 
-Licensed under the GPLv2. See the
-[COPYING](https://github.com/libratbag/piper/blob/master/COPYING) file for the
-full license information.
+Licensed under the GNU General Public License v2.0 or later. See the
+[COPYING](COPYING) file for the full license text.
