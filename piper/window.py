@@ -283,6 +283,7 @@ class Window(Gtk.ApplicationWindow):
             try:
                 self._profile_switch_device.disconnect(self._profile_switch_handler)
             except (TypeError, GLib.Error):
+                # The device or handler may already be gone during shutdown.
                 pass
         self._profile_switch_handler = 0
         self._profile_switch_device = None

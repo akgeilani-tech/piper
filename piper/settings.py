@@ -34,6 +34,7 @@ class Settings:
         try:
             self._keyfile.load_from_file(self._path, GLib.KeyFileFlags.NONE)
         except GLib.Error:
+            # Missing or unreadable settings are normal on first start.
             pass
 
     def _save(self) -> None:
@@ -69,6 +70,7 @@ class Settings:
             try:
                 os.unlink(path)
             except FileNotFoundError:
+                # The autostart file was already removed.
                 pass
             except OSError as error:
                 print(f"piper: could not remove autostart: {error}", file=sys.stderr)

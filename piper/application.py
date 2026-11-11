@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
+import sys
 from gettext import gettext as _
 from typing import Optional
 
@@ -300,8 +301,8 @@ class Application(Gtk.Application):
             Gtk.show_uri_on_window(
                 label.get_toplevel(), uri, Gtk.get_current_event_time()
             )
-        except GLib.Error:
-            pass
+        except GLib.Error as error:
+            print(f"piper: could not open {uri}: {error}", file=sys.stderr)
         return True
 
     def _quit(self, action: Gio.SimpleAction, param: None) -> None:

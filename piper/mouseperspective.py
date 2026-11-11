@@ -188,7 +188,7 @@ class MousePerspective(Gtk.Overlay):
             return
 
         self.no_device_label.set_visible(False)
-        self._connect(device, "resync", lambda dev: self._on_resync(dev))
+        self._connect(device, "resync", self._on_resync)
         self._connect(device, "active-profile-changed", self._on_active_profile_changed)
 
         self._seed_profile_names(device)
@@ -230,6 +230,7 @@ class MousePerspective(Gtk.Overlay):
             try:
                 obj.disconnect(handler)
             except (TypeError, GLib.Error):
+                # The object may already be destroyed during device changes.
                 pass
         self._connections.clear()
 

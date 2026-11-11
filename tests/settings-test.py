@@ -5,7 +5,7 @@ import os
 import sys
 import tempfile
 import unittest
-from unittest import mock
+import unittest.mock
 
 
 class TestSettings(unittest.TestCase):
@@ -58,7 +58,7 @@ class TestSettings(unittest.TestCase):
         self.assertIsNone(settings.profile_name("usb:046d:4085:0", "G604", 1))
 
     def test_autostart_exec_flatpak(self):
-        with mock.patch.dict(
+        with unittest.mock.patch.dict(
             os.environ, {"FLATPAK_ID": "org.freedesktop.Piper"}, clear=False
         ):
             self.assertEqual(
@@ -67,7 +67,7 @@ class TestSettings(unittest.TestCase):
             )
 
     def test_autostart_exec_native(self):
-        with mock.patch.dict(os.environ, {}, clear=True):
+        with unittest.mock.patch.dict(os.environ, {}, clear=True):
             self.assertEqual(self.Settings._autostart_exec(), "piper")
 
 

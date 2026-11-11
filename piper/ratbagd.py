@@ -1062,6 +1062,7 @@ class RatbagdMacro(GObject.Object):
                         t = self._MACRO_KEY
                         idx += 1
             except IndexError:
+                # Macro ends with an unpaired press/release event.
                 pass
             keys.append(self._MACRO_DESCRIPTION[t](v))
             idx += 1
