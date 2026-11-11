@@ -3,6 +3,17 @@
 All notable changes to this project are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.9.1-akg] - 2026-11-10
+
+### Fixed
+
+- Addressed the CodeQL alerts: documented intentional exception handling,
+  logged failures opening About links, removed an unnecessary lambda and fixed
+  the duplicate `unittest` import in tests.
+- Marked the five `missing-equals` alerts as won't-fix: proxy identity is the
+  D-Bus object path inherited from `_RatbagdDBus`.
+- No functional changes; this is a maintenance release on top of 0.9.0-akg.
+
 ## [0.9.0-akg] - 2026-11-10
 
 Fork maintained by Ahmed Geilani ([akgeilani-tech](https://github.com/akgeilani-tech)):

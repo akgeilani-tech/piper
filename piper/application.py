@@ -238,7 +238,7 @@ class Application(Gtk.Application):
         assert about is not None
         version = (about.get_version() or "").replace("Version:", "").strip()
         if not version:
-            version = "0.9.0-akg"
+            version = "0.9.1-akg"
         comments = (
             _(
                 "Version %s (2026). The features added in this fork are the "

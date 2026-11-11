@@ -6,13 +6,13 @@ the GTK+ frontend for configuring gaming mice through libratbag's `ratbagd`
 D-Bus daemon. This fork is maintained by
 [Ahmed Geilani (@akgeilani-tech)](https://github.com/akgeilani-tech).
 
-The current release is **0.9.0-akg**. It is an independent fork version:
-future feature releases use `0.9.1-akg`, `0.9.2-akg`, and so on, so they cannot
+The current release is **0.9.1-akg**. It is an independent fork version:
+future releases use `0.9.2-akg`, `0.9.3-akg`, and so on, so they cannot
 be confused with the official Piper version.
 
 [Download the latest release](https://github.com/akgeilani-tech/piper/releases/latest)
 
-What's new in 0.9.0-akg
+What's new in the 0.9 series
 =======================
 
 ### Added
@@ -128,7 +128,7 @@ and install the `.flatpak` bundle. The application needs the GNOME 50 runtime:
 ```sh
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install --user flathub org.gnome.Platform//50
-flatpak install --user ./org.freedesktop.Piper-0.9.0-akg-amd64.flatpak
+flatpak install --user ./org.freedesktop.Piper-0.9.1-akg-amd64.flatpak
 flatpak run org.freedesktop.Piper
 ```
 
