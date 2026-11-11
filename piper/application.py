@@ -238,35 +238,71 @@ class Application(Gtk.Application):
         version = (about.get_version() or "").replace("Version:", "").strip()
         if not version:
             version = "0.9.0-akg"
-        about.set_comments(
+        comments = (
             _(
                 "Version %s (2026). The features added in this fork are the "
-                "contribution of Ahmed Geilani (akgeilani-tech). Original Piper "
-                "by the libratbag developers."
+                "contribution of Ahmed Geilani "
+                '(<a href="https://github.com/akgeilani-tech">akgeilani-tech</a>). '
+                "Original Piper by the "
+                '<a href="https://github.com/libratbag/piper">libratbag</a> '
+                "developers."
             )
             % version
         )
-        about.set_copyright(
-            _(
-                "© 2026 Ahmed Geilani (akgeilani-tech). "
-                "Original Piper © the libratbag developers."
-            )
-        )
+        about.set_comments(comments)
+        comments_label = self._find_label(about, comments)
+        if comments_label is not None:
+            comments_label.set_markup(comments)
+            comments_label.connect("activate-link", self._on_about_link)
         about.add_credit_section(
             _("Fork maintained by"),
-            ["Ahmed Geilani (akgeilani-tech)"],
+            [
+                "Ahmed Geilani "
+                '(<a href="https://github.com/akgeilani-tech">akgeilani-tech</a>)'
+            ],
         )
         about.add_credit_section(
             _("Fork contributions"),
-            [_("Version %s (2026) — Ahmed Geilani (akgeilani-tech)") % version],
+            [
+                _(
+                    "Version %s (2026) — Ahmed Geilani "
+                    '(<a href="https://github.com/akgeilani-tech">akgeilani-tech</a>)'
+                )
+                % version
+            ],
         )
         about.add_credit_section(
             _("Original project"),
-            ["libratbag developers"],
+            ['<a href="https://github.com/libratbag/piper">libratbag</a> developers'],
         )
+        about.set_size_request(440, 430)
         about.set_transient_for(self.get_active_window())
         about.connect("response", lambda about, param: about.destroy())
         about.show()
+
+    @staticmethod
+    def _find_label(widget: Gtk.Widget, text: str):
+        if isinstance(widget, Gtk.Label) and widget.get_text() == text:
+            return widget
+        try:
+            children = widget.get_children()
+        except AttributeError:
+            return None
+        for child in children:
+            found = Application._find_label(child, text)
+            if found is not None:
+                return found
+        return None
+
+    @staticmethod
+    def _on_about_link(label: Gtk.Label, uri: str) -> bool:
+        try:
+            Gtk.show_uri_on_window(
+                label.get_toplevel(), uri, Gtk.get_current_event_time()
+            )
+        except GLib.Error:
+            pass
+        return True
 
     def _quit(self, action: Gio.SimpleAction, param: None) -> None:
         # Quit the application.

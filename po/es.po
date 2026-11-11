@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 21:17-0400\n"
+"POT-Creation-Date: 2026-11-10 21:43-0400\n"
 "PO-Revision-Date: 2020-03-14 15:37-0500\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Español; Castellano <>\n"
@@ -175,38 +175,37 @@ msgstr "Cambiar al siguiente perfil"
 msgid "Switch to the next mouse"
 msgstr "Cambiar al siguiente ratón"
 
-#: piper/application.py:243
+#: piper/application.py:242
 #, python-format
 msgid ""
 "Version %s (2026). The features added in this fork are the contribution of "
-"Ahmed Geilani (akgeilani-tech). Original Piper by the libratbag developers."
+"Ahmed Geilani (<a href=\"https://github.com/akgeilani-tech\">akgeilani-tech</"
+"a>). Original Piper by the <a href=\"https://github.com/libratbag/"
+"piper\">libratbag</a> developers."
 msgstr ""
 "Versión %s (2026). Las funcionalidades añadidas en este fork son aportación "
-"de Ahmed Geilani (akgeilani-tech). Piper original de los desarrolladores de "
-"libratbag."
+"de Ahmed Geilani (<a href=\"https://github.com/akgeilani-tech\">akgeilani-"
+"tech</a>). Piper original de los desarrolladores de <a "
+"href=\"https://github.com/libratbag/piper\">libratbag</a>."
 
-#: piper/application.py:251
-msgid ""
-"© 2026 Ahmed Geilani (akgeilani-tech). Original Piper © the libratbag "
-"developers."
-msgstr ""
-"© 2026 Ahmed Geilani (akgeilani-tech). Piper original © los desarrolladores "
-"de libratbag."
-
-#: piper/application.py:256
+#: piper/application.py:255
 msgid "Fork maintained by"
 msgstr "Fork mantenido por"
 
-#: piper/application.py:260
+#: piper/application.py:262
 msgid "Fork contributions"
 msgstr "Aportaciones del fork"
 
-#: piper/application.py:261
+#: piper/application.py:265
 #, python-format
-msgid "Version %s (2026) — Ahmed Geilani (akgeilani-tech)"
-msgstr "Versión %s (2026) — Ahmed Geilani (akgeilani-tech)"
+msgid ""
+"Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
+"tech\">akgeilani-tech</a>)"
+msgstr ""
+"Versión %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
+"tech\">akgeilani-tech</a>)"
 
-#: piper/application.py:264
+#: piper/application.py:272
 msgid "Original project"
 msgstr "Proyecto original"
 
@@ -585,11 +584,7 @@ msgstr "Actualice a la última versión disponible"
 msgid "Unknown exception occurred"
 msgstr "Ha ocurrido una excepción desconocida"
 
-#: data/ui/AboutDialog.ui.in:12
-msgid "Piper by AKGeilani-tech on GitHub"
-msgstr "Piper by AKGeilani-tech en GitHub"
-
-#: data/ui/AboutDialog.ui.in:13
+#: data/ui/AboutDialog.ui.in:11
 msgid "translator-credits"
 msgstr "Amaro Martínez <xoas@airmail.cc>, 2019, 2020"
 
@@ -833,6 +828,30 @@ msgstr "_Acerca de Piper"
 #: data/ui/Window.ui:16
 msgid "_Quit"
 msgstr "_Salir"
+
+#, python-format
+#~ msgid ""
+#~ "Version %s (2026). The features added in this fork are the contribution "
+#~ "of Ahmed Geilani (akgeilani-tech). Original Piper by the libratbag "
+#~ "developers."
+#~ msgstr ""
+#~ "Versión %s (2026). Las funcionalidades añadidas en este fork son "
+#~ "aportación de Ahmed Geilani (akgeilani-tech). Piper original de los "
+#~ "desarrolladores de libratbag."
+
+#~ msgid ""
+#~ "© 2026 Ahmed Geilani (akgeilani-tech). Original Piper © the libratbag "
+#~ "developers."
+#~ msgstr ""
+#~ "© 2026 Ahmed Geilani (akgeilani-tech). Piper original © los "
+#~ "desarrolladores de libratbag."
+
+#, python-format
+#~ msgid "Version %s (2026) — Ahmed Geilani (akgeilani-tech)"
+#~ msgstr "Versión %s (2026) — Ahmed Geilani (akgeilani-tech)"
+
+#~ msgid "Piper by AKGeilani-tech on GitHub"
+#~ msgstr "Piper by AKGeilani-tech en GitHub"
 
 #~ msgid "Piper"
 #~ msgstr "Piper"

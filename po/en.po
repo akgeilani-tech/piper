@@ -175,37 +175,37 @@ msgstr "Switch to the next profile"
 msgid "Switch to the next mouse"
 msgstr "Switch to the next mouse"
 
-#: piper/application.py:243
+#: piper/application.py:242
 #, python-format
 msgid ""
 "Version %s (2026). The features added in this fork are the contribution of "
-"Ahmed Geilani (akgeilani-tech). Original Piper by the libratbag developers."
+"Ahmed Geilani (<a href=\"https://github.com/akgeilani-tech\">akgeilani-tech</"
+"a>). Original Piper by the <a href=\"https://github.com/libratbag/"
+"piper\">libratbag</a> developers."
 msgstr ""
 "Version %s (2026). The features added in this fork are the contribution of "
-"Ahmed Geilani (akgeilani-tech). Original Piper by the libratbag developers."
+"Ahmed Geilani (<a href=\"https://github.com/akgeilani-tech\">akgeilani-tech</"
+"a>). Original Piper by the <a href=\"https://github.com/libratbag/"
+"piper\">libratbag</a> developers."
 
-#: piper/application.py:251
-msgid ""
-"© 2026 Ahmed Geilani (akgeilani-tech). Original Piper © the libratbag "
-"developers."
-msgstr ""
-"© 2026 Ahmed Geilani (akgeilani-tech). Original Piper © the libratbag "
-"developers."
-
-#: piper/application.py:256
+#: piper/application.py:255
 msgid "Fork maintained by"
 msgstr "Fork maintained by"
 
-#: piper/application.py:260
+#: piper/application.py:262
 msgid "Fork contributions"
 msgstr "Fork contributions"
 
-#: piper/application.py:261
+#: piper/application.py:265
 #, python-format
-msgid "Version %s (2026) — Ahmed Geilani (akgeilani-tech)"
-msgstr "Version %s (2026) — Ahmed Geilani (akgeilani-tech)"
+msgid ""
+"Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
+"tech\">akgeilani-tech</a>)"
+msgstr ""
+"Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
+"tech\">akgeilani-tech</a>)"
 
-#: piper/application.py:264
+#: piper/application.py:272
 msgid "Original project"
 msgstr "Original project"
 
@@ -581,11 +581,7 @@ msgstr "Please update to the latest available version"
 msgid "Unknown exception occurred"
 msgstr "Unknown exception occurred"
 
-#: data/ui/AboutDialog.ui.in:12
-msgid "Piper by AKGeilani-tech on GitHub"
-msgstr "Piper by AKGeilani-tech on GitHub"
-
-#: data/ui/AboutDialog.ui.in:13
+#: data/ui/AboutDialog.ui.in:11
 msgid "translator-credits"
 msgstr "translator-credits"
 
