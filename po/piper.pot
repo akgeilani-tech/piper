@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 19:46-0400\n"
+"POT-Creation-Date: 2026-11-10 21:17-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: data/org.freedesktop.Piper.desktop.in:2
 #: data/org.freedesktop.Piper.appdata.xml.in.in:10
-msgid "Piper"
+msgid "Piper by AKGeilani-tech"
 msgstr ""
 
 #: data/org.freedesktop.Piper.desktop.in:3
@@ -32,108 +32,115 @@ msgid "gaming;configuration;mouse;mice;"
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:5
-msgid "libratbag developers"
+msgid "Ahmed Geilani (akgeilani-tech)"
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:11
-msgid "Gaming mouse configuration utility"
+msgid "Gaming mouse configuration utility (Piper fork)"
 msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:13
 msgid ""
-"Piper is a graphical user interface to configure gaming mice. Configuration "
-"options include changing the resolution (DPI) of the mouse, adding and "
-"removing profiles, setting LED colors and changing button behaviors."
+"Piper by AKGeilani-tech is a fork of Piper, the graphical user interface to "
+"configure gaming mice, maintained by Ahmed Geilani. The original Piper "
+"project was created by the libratbag developers."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:19
+#: data/org.freedesktop.Piper.appdata.xml.in.in:18
+msgid ""
+"Configuration options include changing the resolution (DPI) of the mouse, "
+"adding and removing profiles, setting LED colors and changing button "
+"behaviors."
+msgstr ""
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:23
 msgid ""
 "Piper requires libratbag’s ratbagd, the daemon to actually communicate with "
 "the mice. Piper is merely a front end to ratbagd, ratbagd must be installed "
 "and running when Piper is launched."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:30
+#: data/org.freedesktop.Piper.appdata.xml.in.in:34
 msgid "The button configuraton page"
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:34
+#: data/org.freedesktop.Piper.appdata.xml.in.in:38
 msgid "The LED configuraton page"
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:38
+#: data/org.freedesktop.Piper.appdata.xml.in.in:42
 msgid "The resolution configuraton page"
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:57
+#: data/org.freedesktop.Piper.appdata.xml.in.in:61
 msgid ""
 "Add a Settings dialog with a global keyboard shortcut to cycle through mouse "
 "profiles."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:58
+#: data/org.freedesktop.Piper.appdata.xml.in.in:62
 msgid ""
 "Add a mouse selector with hotplug detection and a second shortcut to switch "
 "between mice."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:59
+#: data/org.freedesktop.Piper.appdata.xml.in.in:63
 msgid ""
 "Add Dark, Light and System color modes plus automatic startup and minimize-"
 "to-tray options."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:60
+#: data/org.freedesktop.Piper.appdata.xml.in.in:64
 msgid "Add a system tray icon and a Quit menu entry."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:61
+#: data/org.freedesktop.Piper.appdata.xml.in.in:65
 msgid ""
 "Add tray actions and retry registration when the desktop tray is not ready "
 "at login."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+#: data/org.freedesktop.Piper.appdata.xml.in.in:66
 msgid ""
 "Warn about devices with partial ratbagd/libratbag support and disable saving "
 "for them."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+#: data/org.freedesktop.Piper.appdata.xml.in.in:67
 msgid "Support single-profile mice in the profile selector."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+#: data/org.freedesktop.Piper.appdata.xml.in.in:68
 msgid "Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:65
+#: data/org.freedesktop.Piper.appdata.xml.in.in:69
 msgid ""
 "Reconnect automatically when ratbagd exits after idle and keep it alive "
 "while Piper runs."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:66
+#: data/org.freedesktop.Piper.appdata.xml.in.in:70
 msgid "Allow renaming profiles and persist the names across restarts."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:67
+#: data/org.freedesktop.Piper.appdata.xml.in.in:71
 msgid "Ship complete English and Spanish translations."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:68
+#: data/org.freedesktop.Piper.appdata.xml.in.in:72
 msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:69
+#: data/org.freedesktop.Piper.appdata.xml.in.in:73
 msgid "Run the test suite in CI and pin the main workflow actions by commit."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:70
+#: data/org.freedesktop.Piper.appdata.xml.in.in:74
 msgid "Validate GTK and Rsvg at configure time."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:71
+#: data/org.freedesktop.Piper.appdata.xml.in.in:75
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
@@ -146,8 +153,34 @@ msgstr ""
 msgid "Switch to the next mouse"
 msgstr ""
 
-#: piper/application.py:238
-msgid "Contributors"
+#: piper/application.py:243
+#, python-format
+msgid ""
+"Version %s (2026). The features added in this fork are the contribution of "
+"Ahmed Geilani (akgeilani-tech). Original Piper by the libratbag developers."
+msgstr ""
+
+#: piper/application.py:251
+msgid ""
+"© 2026 Ahmed Geilani (akgeilani-tech). Original Piper © the libratbag "
+"developers."
+msgstr ""
+
+#: piper/application.py:256
+msgid "Fork maintained by"
+msgstr ""
+
+#: piper/application.py:260
+msgid "Fork contributions"
+msgstr ""
+
+#: piper/application.py:261
+#, python-format
+msgid "Version %s (2026) — Ahmed Geilani (akgeilani-tech)"
+msgstr ""
+
+#: piper/application.py:264
+msgid "Original project"
 msgstr ""
 
 #: piper/buttondialog.py:156
@@ -468,57 +501,57 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: piper/window.py:91
+#: piper/window.py:92
 msgid "Cannot connect to ratbagd"
 msgstr ""
 
-#: piper/window.py:93
+#: piper/window.py:94
 msgid ""
 "Please make sure ratbagd is running and your user is in the required group"
 msgstr ""
 
-#: piper/window.py:102
+#: piper/window.py:103
 msgid "Please update both piper and libratbag to the latest versions"
 msgstr ""
 
-#: piper/window.py:122
+#: piper/window.py:123
 msgid "There are unapplied changes. Are you sure you want to quit?"
 msgstr ""
 
-#: piper/window.py:139
+#: piper/window.py:140
 msgid "Ooops. ratbagd has disappeared"
 msgstr ""
 
-#: piper/window.py:139
+#: piper/window.py:140
 msgid "Reconnecting to ratbagd…"
 msgstr ""
 
-#: piper/window.py:179
+#: piper/window.py:180
 msgid "Mouse not supported"
 msgstr ""
 
-#: piper/window.py:181 piper/window.py:183 piper/window.py:194
+#: piper/window.py:182 piper/window.py:184 piper/window.py:195
 msgid "Mouse not available"
 msgstr ""
 
-#: piper/window.py:205
+#: piper/window.py:206
 msgid "Cannot display device SVG"
 msgstr ""
 
-#: piper/window.py:210
+#: piper/window.py:211
 msgid "Newer version of ratbagd required"
 msgstr ""
 
-#: piper/window.py:211
+#: piper/window.py:212
 msgid "Please update to the latest available version"
 msgstr ""
 
-#: piper/window.py:215
+#: piper/window.py:216
 msgid "Unknown exception occurred"
 msgstr ""
 
 #: data/ui/AboutDialog.ui.in:12
-msgid "Visit Piper on GitHub"
+msgid "Piper by AKGeilani-tech on GitHub"
 msgstr ""
 
 #: data/ui/AboutDialog.ui.in:13

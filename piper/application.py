@@ -41,7 +41,7 @@ class Application(Gtk.Application):
             application_id="org.freedesktop.Piper",
             flags=Gio.ApplicationFlags.FLAGS_NONE,
         )
-        GLib.set_application_name("Piper")
+        GLib.set_application_name("Piper by AKGeilani-tech")
         GLib.set_prgname("org.freedesktop.Piper")
         self._required_ratbagd_version = ratbagd_api_version
         self._settings = Settings()
@@ -235,7 +235,35 @@ class Application(Gtk.Application):
         )
         about: Optional[Gtk.AboutDialog] = builder.get_object("about_dialog")  # type: ignore
         assert about is not None
-        about.add_credit_section(_("Contributors"), ["akgeilani-tech"])
+        version = (about.get_version() or "").replace("Version:", "").strip()
+        if not version:
+            version = "0.9.0-akg"
+        about.set_comments(
+            _(
+                "Version %s (2026). The features added in this fork are the "
+                "contribution of Ahmed Geilani (akgeilani-tech). Original Piper "
+                "by the libratbag developers."
+            )
+            % version
+        )
+        about.set_copyright(
+            _(
+                "© 2026 Ahmed Geilani (akgeilani-tech). "
+                "Original Piper © the libratbag developers."
+            )
+        )
+        about.add_credit_section(
+            _("Fork maintained by"),
+            ["Ahmed Geilani (akgeilani-tech)"],
+        )
+        about.add_credit_section(
+            _("Fork contributions"),
+            [_("Version %s (2026) — Ahmed Geilani (akgeilani-tech)") % version],
+        )
+        about.add_credit_section(
+            _("Original project"),
+            ["libratbag developers"],
+        )
         about.set_transient_for(self.get_active_window())
         about.connect("response", lambda about, param: about.destroy())
         about.show()

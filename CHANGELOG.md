@@ -3,7 +3,11 @@
 All notable changes to this project are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [0.9] - 2026-11-09
+## [0.9.0-akg] - 2026-11-10
+
+Fork maintained by Ahmed Geilani ([akgeilani-tech](https://github.com/akgeilani-tech)):
+<https://github.com/akgeilani-tech/piper>. Original Piper by the libratbag
+developers.
 
 ### Added
 

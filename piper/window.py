@@ -64,6 +64,7 @@ class Window(Gtk.ApplicationWindow):
         Gtk.ApplicationWindow.__init__(self, *args, **kwargs)
 
         self.set_icon_name("org.freedesktop.Piper")
+        self.set_title("Piper by AKGeilani-tech")
 
         self._settings = settings
         self._ratbag: Optional[Ratbagd] = None

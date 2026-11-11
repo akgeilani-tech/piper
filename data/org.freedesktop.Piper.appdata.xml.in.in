@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>org.freedesktop.Piper</id>
-  <developer id="io.github.libratbag">
-    <name>libratbag developers</name>
+  <developer id="io.github.akgeilani-tech">
+    <name>Ahmed Geilani (akgeilani-tech)</name>
   </developer>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <content_rating type="oars-1.1" />
-  <name translatable="no">Piper</name>
-  <summary>Gaming mouse configuration utility</summary>
+  <name translatable="no">Piper by AKGeilani-tech</name>
+  <summary>Gaming mouse configuration utility (Piper fork)</summary>
   <description>
     <p>
-      Piper is a graphical user interface to configure gaming mice.
+      Piper by AKGeilani-tech is a fork of Piper, the graphical user interface
+      to configure gaming mice, maintained by Ahmed Geilani. The original
+      Piper project was created by the libratbag developers.
+    </p>
+    <p>
       Configuration options include changing the resolution (DPI) of the
       mouse, adding and removing profiles, setting LED colors and changing
       button behaviors.
@@ -40,8 +44,8 @@
     </screenshot>
   </screenshots>
 
-  <url type="homepage">https://github.com/libratbag/piper/</url>
-  <url type="bugtracker">https://github.com/libratbag/piper/issues</url>
+  <url type="homepage">https://github.com/akgeilani-tech/piper</url>
+  <url type="bugtracker">https://github.com/akgeilani-tech/piper/issues</url>
   <url type="help">https://github.com/libratbag/piper/wiki</url>
 
   <translation type="gettext">piper</translation>

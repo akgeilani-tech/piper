@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 19:46-0400\n"
+"POT-Creation-Date: 2026-11-10 21:17-0400\n"
 "PO-Revision-Date: 2020-03-14 15:37-0500\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Español; Castellano <>\n"
@@ -20,8 +20,8 @@ msgstr ""
 
 #: data/org.freedesktop.Piper.desktop.in:2
 #: data/org.freedesktop.Piper.appdata.xml.in.in:10
-msgid "Piper"
-msgstr "Piper"
+msgid "Piper by AKGeilani-tech"
+msgstr "Piper by AKGeilani-tech"
 
 #: data/org.freedesktop.Piper.desktop.in:3
 msgid "Configurable mouse configuration utility"
@@ -33,26 +33,34 @@ msgid "gaming;configuration;mouse;mice;"
 msgstr "gaming;configuración;ratón;ratones;"
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:5
-msgid "libratbag developers"
-msgstr ""
+msgid "Ahmed Geilani (akgeilani-tech)"
+msgstr "Ahmed Geilani (akgeilani-tech)"
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:11
-#, fuzzy
-msgid "Gaming mouse configuration utility"
-msgstr "Utilidad de configuración de ratón configurable"
+msgid "Gaming mouse configuration utility (Piper fork)"
+msgstr "Utilidad de configuración de ratones para juegos (fork de Piper)"
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:13
 msgid ""
-"Piper is a graphical user interface to configure gaming mice. Configuration "
-"options include changing the resolution (DPI) of the mouse, adding and "
-"removing profiles, setting LED colors and changing button behaviors."
+"Piper by AKGeilani-tech is a fork of Piper, the graphical user interface to "
+"configure gaming mice, maintained by Ahmed Geilani. The original Piper "
+"project was created by the libratbag developers."
 msgstr ""
-"Piper es una interfaz gráfica de usuario para configurar ratones «gaming». "
-"Las opciones de configuración incluyen cambiar la resolución PPP (DPI) del "
-"ratón, añadir y eliminar perfiles, configurar los colores de los LED y "
-"cambiar el comportamiento de los botones."
+"Piper by AKGeilani-tech es un fork de Piper, la interfaz gráfica para "
+"configurar ratones de juegos, mantenido por Ahmed Geilani. El proyecto "
+"original Piper fue creado por los desarrolladores de libratbag."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:19
+#: data/org.freedesktop.Piper.appdata.xml.in.in:18
+msgid ""
+"Configuration options include changing the resolution (DPI) of the mouse, "
+"adding and removing profiles, setting LED colors and changing button "
+"behaviors."
+msgstr ""
+"Las opciones de configuración incluyen cambiar la resolución (DPI) del "
+"ratón, añadir y eliminar perfiles, ajustar los colores LED y cambiar el "
+"comportamiento de los botones."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:23
 msgid ""
 "Piper requires libratbag’s ratbagd, the daemon to actually communicate with "
 "the mice. Piper is merely a front end to ratbagd, ratbagd must be installed "
@@ -62,25 +70,25 @@ msgstr ""
 "los ratones. Piper es simplemente un frontal para ratbagd, ratbagd debe "
 "estar instalado y funcionando cuando inicie Piper."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:30
+#: data/org.freedesktop.Piper.appdata.xml.in.in:34
 msgid "The button configuraton page"
 msgstr "La página de configuración de botones"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:34
+#: data/org.freedesktop.Piper.appdata.xml.in.in:38
 msgid "The LED configuraton page"
 msgstr "La página de configuración de LEDs"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:38
+#: data/org.freedesktop.Piper.appdata.xml.in.in:42
 msgid "The resolution configuraton page"
 msgstr "La página de configuración de resolución"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:57
+#: data/org.freedesktop.Piper.appdata.xml.in.in:61
 msgid ""
 "Add a Settings dialog with a global keyboard shortcut to cycle through mouse "
 "profiles."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:58
+#: data/org.freedesktop.Piper.appdata.xml.in.in:62
 msgid ""
 "Add a mouse selector with hotplug detection and a second shortcut to switch "
 "between mice."
@@ -88,17 +96,17 @@ msgstr ""
 "Añadir un selector de ratón con detección de conexión y un segundo atajo "
 "para cambiar entre ratones."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:59
+#: data/org.freedesktop.Piper.appdata.xml.in.in:63
 msgid ""
 "Add Dark, Light and System color modes plus automatic startup and minimize-"
 "to-tray options."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:60
+#: data/org.freedesktop.Piper.appdata.xml.in.in:64
 msgid "Add a system tray icon and a Quit menu entry."
 msgstr "Añadir un icono en la bandeja del sistema y una entrada Salir."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:61
+#: data/org.freedesktop.Piper.appdata.xml.in.in:65
 msgid ""
 "Add tray actions and retry registration when the desktop tray is not ready "
 "at login."
@@ -106,7 +114,7 @@ msgstr ""
 "Añadir acciones en la bandeja y reintentar el registro cuando la bandeja del "
 "escritorio aún no está lista al iniciar sesión."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+#: data/org.freedesktop.Piper.appdata.xml.in.in:66
 msgid ""
 "Warn about devices with partial ratbagd/libratbag support and disable saving "
 "for them."
@@ -114,17 +122,17 @@ msgstr ""
 "Avisar de dispositivos con soporte parcial en ratbagd/libratbag y "
 "deshabilitar el guardado para ellos."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+#: data/org.freedesktop.Piper.appdata.xml.in.in:67
 msgid "Support single-profile mice in the profile selector."
 msgstr "Admitir ratones de un solo perfil en el selector de perfiles."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+#: data/org.freedesktop.Piper.appdata.xml.in.in:68
 msgid "Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
 msgstr ""
 "Gestionar los temas GTK Breeze/Breeze-Dark y los cambios de color del "
 "sistema en vivo."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:65
+#: data/org.freedesktop.Piper.appdata.xml.in.in:69
 msgid ""
 "Reconnect automatically when ratbagd exits after idle and keep it alive "
 "while Piper runs."
@@ -132,29 +140,29 @@ msgstr ""
 "Reconectar automáticamente cuando ratbagd se cierra por inactividad y "
 "mantenerlo activo mientras Piper está abierto."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:66
+#: data/org.freedesktop.Piper.appdata.xml.in.in:70
 msgid "Allow renaming profiles and persist the names across restarts."
 msgstr "Permitir renombrar perfiles y conservar los nombres entre reinicios."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:67
+#: data/org.freedesktop.Piper.appdata.xml.in.in:71
 msgid "Ship complete English and Spanish translations."
 msgstr "Incluir traducciones completas en inglés y español."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:68
+#: data/org.freedesktop.Piper.appdata.xml.in.in:72
 msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr "Corregir la reutilización de la instancia de Ratbagd al iniciar."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:69
+#: data/org.freedesktop.Piper.appdata.xml.in.in:73
 msgid "Run the test suite in CI and pin the main workflow actions by commit."
 msgstr ""
 "Ejecutar la suite de pruebas en CI y fijar las acciones del flujo principal "
 "por commit."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:70
+#: data/org.freedesktop.Piper.appdata.xml.in.in:74
 msgid "Validate GTK and Rsvg at configure time."
 msgstr "Validar GTK y Rsvg durante la configuración."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:71
+#: data/org.freedesktop.Piper.appdata.xml.in.in:75
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
@@ -167,9 +175,40 @@ msgstr "Cambiar al siguiente perfil"
 msgid "Switch to the next mouse"
 msgstr "Cambiar al siguiente ratón"
 
-#: piper/application.py:238
-msgid "Contributors"
-msgstr "Colaboradores"
+#: piper/application.py:243
+#, python-format
+msgid ""
+"Version %s (2026). The features added in this fork are the contribution of "
+"Ahmed Geilani (akgeilani-tech). Original Piper by the libratbag developers."
+msgstr ""
+"Versión %s (2026). Las funcionalidades añadidas en este fork son aportación "
+"de Ahmed Geilani (akgeilani-tech). Piper original de los desarrolladores de "
+"libratbag."
+
+#: piper/application.py:251
+msgid ""
+"© 2026 Ahmed Geilani (akgeilani-tech). Original Piper © the libratbag "
+"developers."
+msgstr ""
+"© 2026 Ahmed Geilani (akgeilani-tech). Piper original © los desarrolladores "
+"de libratbag."
+
+#: piper/application.py:256
+msgid "Fork maintained by"
+msgstr "Fork mantenido por"
+
+#: piper/application.py:260
+msgid "Fork contributions"
+msgstr "Aportaciones del fork"
+
+#: piper/application.py:261
+#, python-format
+msgid "Version %s (2026) — Ahmed Geilani (akgeilani-tech)"
+msgstr "Versión %s (2026) — Ahmed Geilani (akgeilani-tech)"
+
+#: piper/application.py:264
+msgid "Original project"
+msgstr "Proyecto original"
 
 #: piper/buttondialog.py:156
 msgid "Button mapping"
@@ -495,60 +534,60 @@ msgstr "Mostrar Piper"
 msgid "Quit"
 msgstr "Salir"
 
-#: piper/window.py:91
+#: piper/window.py:92
 msgid "Cannot connect to ratbagd"
 msgstr "No se puede conectar a ratbagd"
 
-#: piper/window.py:93
+#: piper/window.py:94
 msgid ""
 "Please make sure ratbagd is running and your user is in the required group"
 msgstr ""
 "Asegúrese de que ratbagd se esté ejecutando y que su usuario esté en el "
 "grupo requerido"
 
-#: piper/window.py:102
+#: piper/window.py:103
 msgid "Please update both piper and libratbag to the latest versions"
 msgstr "Actualice tanto piper como libratbag a las últimas versiones"
 
-#: piper/window.py:122
+#: piper/window.py:123
 msgid "There are unapplied changes. Are you sure you want to quit?"
 msgstr "Hay cambios no aplicados. ¿Seguro que quiere salir?"
 
-#: piper/window.py:139
+#: piper/window.py:140
 msgid "Ooops. ratbagd has disappeared"
 msgstr "Vaya. ratbagd ha desaparecido"
 
-#: piper/window.py:139
+#: piper/window.py:140
 msgid "Reconnecting to ratbagd…"
 msgstr "Reconectando con ratbagd…"
 
-#: piper/window.py:179
+#: piper/window.py:180
 msgid "Mouse not supported"
 msgstr "Ratón no compatible"
 
-#: piper/window.py:181 piper/window.py:183 piper/window.py:194
+#: piper/window.py:182 piper/window.py:184 piper/window.py:195
 msgid "Mouse not available"
 msgstr "Ratón no disponible"
 
-#: piper/window.py:205
+#: piper/window.py:206
 msgid "Cannot display device SVG"
 msgstr "No se puede mostrar el SVG del dispositivo"
 
-#: piper/window.py:210
+#: piper/window.py:211
 msgid "Newer version of ratbagd required"
 msgstr "Se requiere una versión más reciente de ratbagd"
 
-#: piper/window.py:211
+#: piper/window.py:212
 msgid "Please update to the latest available version"
 msgstr "Actualice a la última versión disponible"
 
-#: piper/window.py:215
+#: piper/window.py:216
 msgid "Unknown exception occurred"
 msgstr "Ha ocurrido una excepción desconocida"
 
 #: data/ui/AboutDialog.ui.in:12
-msgid "Visit Piper on GitHub"
-msgstr "Visitar Piper en GitHub"
+msgid "Piper by AKGeilani-tech on GitHub"
+msgstr "Piper by AKGeilani-tech en GitHub"
 
 #: data/ui/AboutDialog.ui.in:13
 msgid "translator-credits"
@@ -794,6 +833,30 @@ msgstr "_Acerca de Piper"
 #: data/ui/Window.ui:16
 msgid "_Quit"
 msgstr "_Salir"
+
+#~ msgid "Piper"
+#~ msgstr "Piper"
+
+#, fuzzy
+#~ msgid "Gaming mouse configuration utility"
+#~ msgstr "Utilidad de configuración de ratón configurable"
+
+#~ msgid ""
+#~ "Piper is a graphical user interface to configure gaming mice. "
+#~ "Configuration options include changing the resolution (DPI) of the mouse, "
+#~ "adding and removing profiles, setting LED colors and changing button "
+#~ "behaviors."
+#~ msgstr ""
+#~ "Piper es una interfaz gráfica de usuario para configurar ratones "
+#~ "«gaming». Las opciones de configuración incluyen cambiar la resolución "
+#~ "PPP (DPI) del ratón, añadir y eliminar perfiles, configurar los colores "
+#~ "de los LED y cambiar el comportamiento de los botones."
+
+#~ msgid "Contributors"
+#~ msgstr "Colaboradores"
+
+#~ msgid "Visit Piper on GitHub"
+#~ msgstr "Visitar Piper en GitHub"
 
 #~ msgid "Please restart Piper"
 #~ msgstr "Reinicie Piper"

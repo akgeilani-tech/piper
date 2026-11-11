@@ -1,7 +1,7 @@
-Piper
-=====
+Piper by AKGeilani-tech
+=======================
 
-Piper is a GTK+ application to configure gaming mice. Piper is merely a
+Piper by AKGeilani-tech is a GTK+ application to configure gaming mice. Piper is merely a
 graphical frontend to the ratbagd DBus daemon, see [the libratbag
 README](https://github.com/libratbag/libratbag/blob/master/README.md#running-ratbagd-as-dbus-activated-systemd-service)
 for instructions on how to run ratbagd.
@@ -9,10 +9,11 @@ for instructions on how to run ratbagd.
 If you are running piper from git, we recommend using libratbag from git
 as well to make sure the latest bugfixes are applied.
 
-This repository is the Piper fork maintained by
-[@akgeilani-tech](https://github.com/akgeilani-tech). It is based on
-[libratbag/piper](https://github.com/libratbag/piper). See the
-[changelog](CHANGELOG.md) for the changes in this release (0.9).
+This repository is the **Piper by AKGeilani-tech** fork maintained by
+[Ahmed Geilani (@akgeilani-tech)](https://github.com/akgeilani-tech). It is based on
+[libratbag/piper](https://github.com/libratbag/piper); the original project and
+authors are credited in *About Piper*. See the
+[changelog](CHANGELOG.md) for the changes in this release (`0.9.0-akg`).
 
 Supported Devices
 =================

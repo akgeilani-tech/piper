@@ -1,9 +1,9 @@
 project('piper',
-    version: '0.9',
+    version: '0.9.0-akg',
     license: 'GPL-2.0-or-later',
     meson_version: '>= 0.51.0')
 # The tag date of the project_version(), update when the version bumps.
-version_date='2026-11-09'
+version_date='2026-11-10'
 
 # The DBus API version of ratbagd that we are compatible with. Anything
 # higher or lower will not be compatible so make sure you bumpt that to the
