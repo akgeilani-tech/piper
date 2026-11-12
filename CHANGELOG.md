@@ -3,6 +3,16 @@
 All notable changes to this project are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.9.2-akg] - 2026-11-12
+
+### Fixed
+
+- Retry the initial ratbagd connection when Piper starts before the daemon is
+  ready at login. Previously the app stayed on the error page until ratbagd was
+  restarted manually.
+- Keep the window hidden after an automatic reconnect when Piper was started
+  minimized in the tray.
+
 ## [0.9.1-akg] - 2026-11-10
 
 ### Fixed

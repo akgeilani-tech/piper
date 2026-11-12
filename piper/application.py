@@ -145,11 +145,19 @@ class Application(Gtk.Application):
             return False
 
         old_window = self._window
+        was_visible = old_window is not None and old_window.get_visible()
         self._window = None
         if old_window is not None:
             old_window.destroy()
         self._window = self._create_window()
-        self._window.present()
+        if was_visible or not (
+            self._settings.start_minimized
+            and self._tray is not None
+            and self._tray.available
+        ):
+            self._window.present()
+        else:
+            self._window.hide()
         # Keep the Ratbagd object alive in the application cache.
         self._ratbagd = ratbagd
         self._reconnect_attempt = 0
@@ -238,7 +246,7 @@ class Application(Gtk.Application):
         assert about is not None
         version = (about.get_version() or "").replace("Version:", "").strip()
         if not version:
-            version = "0.9.1-akg"
+            version = "0.9.2-akg"
         comments = (
             _(
                 "Version %s (2026). The features added in this fork are the "

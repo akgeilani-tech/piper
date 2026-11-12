@@ -89,11 +89,10 @@ class Window(Gtk.ApplicationWindow):
             ratbag = init_ratbagd_cb()
         except RatbagdUnavailableError:
             self._present_error_perspective(
-                _("Cannot connect to ratbagd"),
-                _(
-                    "Please make sure ratbagd is running and your user is in the required group"
-                ),
+                _("Connecting to ratbagd…"),
+                _("Piper will retry automatically."),
             )
+            GLib.idle_add(self.emit, "daemon-lost")
             return
         except RatbagdIncompatibleError as e:
             self._present_error_perspective(

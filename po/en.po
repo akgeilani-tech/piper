@@ -167,15 +167,15 @@ msgid ""
 msgstr ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 
-#: piper/application.py:67
+#: piper/application.py:68
 msgid "Switch to the next profile"
 msgstr "Switch to the next profile"
 
-#: piper/application.py:73
+#: piper/application.py:74
 msgid "Switch to the next mouse"
 msgstr "Switch to the next mouse"
 
-#: piper/application.py:242
+#: piper/application.py:244
 #, python-format
 msgid ""
 "Version %s (2026). The features added in this fork are the contribution of "
@@ -188,15 +188,15 @@ msgstr ""
 "a>). Original Piper by the <a href=\"https://github.com/libratbag/"
 "piper\">libratbag</a> developers."
 
-#: piper/application.py:255
+#: piper/application.py:259
 msgid "Fork maintained by"
 msgstr "Fork maintained by"
 
-#: piper/application.py:262
+#: piper/application.py:266
 msgid "Fork contributions"
 msgstr "Fork contributions"
 
-#: piper/application.py:265
+#: piper/application.py:269
 #, python-format
 msgid ""
 "Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
@@ -205,7 +205,7 @@ msgstr ""
 "Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
 "tech\">akgeilani-tech</a>)"
 
-#: piper/application.py:272
+#: piper/application.py:276
 msgid "Original project"
 msgstr "Original project"
 
@@ -274,32 +274,32 @@ msgstr "Mouse not supported: %s"
 msgid "Profile"
 msgstr "Profile"
 
-#: piper/mouseperspective.py:176 piper/mouseperspective.py:312
+#: piper/mouseperspective.py:176 piper/mouseperspective.py:313
 #: data/ui/MousePerspective.ui:253
 msgid "Commit the changes to the device"
 msgstr "Commit the changes to the device"
 
-#: piper/mouseperspective.py:254 data/ui/ResolutionsPage.ui:78
+#: piper/mouseperspective.py:255 data/ui/ResolutionsPage.ui:78
 msgid "Resolutions"
 msgstr "Resolutions"
 
-#: piper/mouseperspective.py:258
+#: piper/mouseperspective.py:259
 msgid "Buttons"
 msgstr "Buttons"
 
-#: piper/mouseperspective.py:261
+#: piper/mouseperspective.py:262
 msgid "LEDs"
 msgstr "LEDs"
 
-#: piper/mouseperspective.py:272
+#: piper/mouseperspective.py:273
 msgid "Advanced"
 msgstr "Advanced"
 
-#: piper/mouseperspective.py:291 data/ui/MousePerspective.ui:43
+#: piper/mouseperspective.py:292 data/ui/MousePerspective.ui:43
 msgid "Something went wrong. The device has been reset to a previous state."
 msgstr "Something went wrong. The device has been reset to a previous state."
 
-#: piper/mouseperspective.py:355 piper/mouseperspective.py:366
+#: piper/mouseperspective.py:356 piper/mouseperspective.py:367
 #: piper/profilerow.py:72 piper/profilerow.py:127
 #, python-format
 msgid "Profile %d"
@@ -426,23 +426,23 @@ msgid "None"
 msgstr "None"
 
 #. Translators: the LED is off.
-#: piper/ratbagd.py:1127 data/ui/LedDialog.ui:368
+#: piper/ratbagd.py:1128 data/ui/LedDialog.ui:368
 msgid "Off"
 msgstr "Off"
 
 #. Translators: the LED has a single, solid color.
-#: piper/ratbagd.py:1129 data/ui/LedDialog.ui:59
+#: piper/ratbagd.py:1130 data/ui/LedDialog.ui:59
 msgid "Solid"
 msgstr "Solid"
 
 #. Translators: the LED is cycling between red, green and blue.
-#: piper/ratbagd.py:1131 data/ui/LedDialog.ui:172
+#: piper/ratbagd.py:1132 data/ui/LedDialog.ui:172
 msgid "Cycle"
 msgstr "Cycle"
 
 #. Translators: the LED's is pulsating a single color on different
 #. brightnesses.
-#: piper/ratbagd.py:1134 data/ui/LedDialog.ui:328
+#: piper/ratbagd.py:1135 data/ui/LedDialog.ui:328
 msgid "Breathing"
 msgstr "Breathing"
 
@@ -532,52 +532,50 @@ msgid "Quit"
 msgstr "Quit"
 
 #: piper/window.py:92
-msgid "Cannot connect to ratbagd"
-msgstr "Cannot connect to ratbagd"
+msgid "Connecting to ratbagd…"
+msgstr "Connecting to ratbagd…"
 
-#: piper/window.py:94
-msgid ""
-"Please make sure ratbagd is running and your user is in the required group"
-msgstr ""
-"Please make sure ratbagd is running and your user is in the required group"
+#: piper/window.py:93
+msgid "Piper will retry automatically."
+msgstr "Piper will retry automatically."
 
-#: piper/window.py:103
+#: piper/window.py:102
 msgid "Please update both piper and libratbag to the latest versions"
 msgstr "Please update both piper and libratbag to the latest versions"
 
-#: piper/window.py:123
+#: piper/window.py:122
 msgid "There are unapplied changes. Are you sure you want to quit?"
 msgstr "There are unapplied changes. Are you sure you want to quit?"
 
-#: piper/window.py:140
+#: piper/window.py:139
 msgid "Ooops. ratbagd has disappeared"
 msgstr "Ooops. ratbagd has disappeared"
 
-#: piper/window.py:140
+#: piper/window.py:139
 msgid "Reconnecting to ratbagd…"
 msgstr "Reconnecting to ratbagd…"
 
-#: piper/window.py:180
+#: piper/window.py:179
 msgid "Mouse not supported"
 msgstr "Mouse not supported"
 
-#: piper/window.py:182 piper/window.py:184 piper/window.py:195
+#: piper/window.py:181 piper/window.py:183 piper/window.py:194
 msgid "Mouse not available"
 msgstr "Mouse not available"
 
-#: piper/window.py:206
+#: piper/window.py:205
 msgid "Cannot display device SVG"
 msgstr "Cannot display device SVG"
 
-#: piper/window.py:211
+#: piper/window.py:210
 msgid "Newer version of ratbagd required"
 msgstr "Newer version of ratbagd required"
 
-#: piper/window.py:212
+#: piper/window.py:211
 msgid "Please update to the latest available version"
 msgstr "Please update to the latest available version"
 
-#: piper/window.py:216
+#: piper/window.py:215
 msgid "Unknown exception occurred"
 msgstr "Unknown exception occurred"
 
