@@ -16,6 +16,11 @@
       Piper project was created by the libratbag developers.
     </p>
     <p>
+      This fork adds a mouse selector with hotplug detection, global shortcuts
+      for profiles and mice, appearance and startup settings, a system tray
+      icon, persistent profile names and automatic reconnection to ratbagd.
+    </p>
+    <p>
       Configuration options include changing the resolution (DPI) of the
       mouse, adding and removing profiles, setting LED colors and changing
       button behaviors.
@@ -31,22 +36,26 @@
 
   <screenshots>
     <screenshot type="default">
-      <caption>The button configuraton page</caption>
-      <image>https://github.com/libratbag/piper/raw/wiki/screenshots/flathub/piper-buttonpage.png</image>
+      <caption>Main window with mouse and profile selectors</caption>
+      <image>https://raw.githubusercontent.com/akgeilani-tech/piper/master/data/screenshots/main.png</image>
     </screenshot>
     <screenshot>
-      <caption>The LED configuraton page</caption>
-      <image>https://github.com/libratbag/piper/raw/wiki/screenshots/flathub/piper-ledpage.png</image>
+      <caption>Mouse selector with hotplug support</caption>
+      <image>https://raw.githubusercontent.com/akgeilani-tech/piper/master/data/screenshots/device-selector.png</image>
     </screenshot>
     <screenshot>
-      <caption>The resolution configuraton page</caption>
-      <image>https://github.com/libratbag/piper/raw/wiki/screenshots/flathub/piper-resolutionpage.png</image>
+      <caption>Profile menu with rename and delete actions</caption>
+      <image>https://raw.githubusercontent.com/akgeilani-tech/piper/master/data/screenshots/profiles.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Settings: shortcuts, appearance and startup</caption>
+      <image>https://raw.githubusercontent.com/akgeilani-tech/piper/master/data/screenshots/settings.png</image>
     </screenshot>
   </screenshots>
 
   <url type="homepage">https://github.com/akgeilani-tech/piper</url>
   <url type="bugtracker">https://github.com/akgeilani-tech/piper/issues</url>
-  <url type="help">https://github.com/libratbag/piper/wiki</url>
+  <url type="help">https://github.com/akgeilani-tech/piper#readme</url>
 
   <translation type="gettext">piper</translation>
 
@@ -73,6 +82,7 @@
           <li>Run the test suite in CI and pin the main workflow actions by commit.</li>
           <li>Validate GTK and Rsvg at configure time.</li>
           <li>Update the Flatpak runtime and dependencies and make the build reproducible.</li>
+          <li>Show the fork screenshots and repository links in Discover.</li>
         </ul>
       </description>
     </release>

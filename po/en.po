@@ -50,16 +50,26 @@ msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:18
 msgid ""
-"Configuration options include changing the resolution (DPI) of the mouse, "
-"adding and removing profiles, setting LED colors and changing button "
-"behaviors."
+"This fork adds a mouse selector with hotplug detection, global shortcuts for "
+"profiles and mice, appearance and startup settings, a system tray icon, "
+"persistent profile names and automatic reconnection to ratbagd."
 msgstr ""
-"Configuration options include changing the resolution (DPI) of the mouse, "
-"adding and removing profiles, setting LED colors and changing button "
-"behaviors."
+"This fork adds a mouse selector with hotplug detection, global shortcuts for "
+"profiles and mice, appearance and startup settings, a system tray icon, "
+"persistent profile names and automatic reconnection to ratbagd."
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:23
 msgid ""
+"Configuration options include changing the resolution (DPI) of the mouse, "
+"adding and removing profiles, setting LED colors and changing button "
+"behaviors."
+msgstr ""
+"Configuration options include changing the resolution (DPI) of the mouse, "
+"adding and removing profiles, setting LED colors and changing button "
+"behaviors."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:28
+msgid ""
 "Piper requires libratbag’s ratbagd, the daemon to actually communicate with "
 "the mice. Piper is merely a front end to ratbagd, ratbagd must be installed "
 "and running when Piper is launched."
@@ -68,19 +78,23 @@ msgstr ""
 "the mice. Piper is merely a front end to ratbagd, ratbagd must be installed "
 "and running when Piper is launched."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:34
-msgid "The button configuraton page"
-msgstr "The button configuraton page"
+#: data/org.freedesktop.Piper.appdata.xml.in.in:39
+msgid "Main window with mouse and profile selectors"
+msgstr "Main window with mouse and profile selectors"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:38
-msgid "The LED configuraton page"
-msgstr "The LED configuraton page"
+#: data/org.freedesktop.Piper.appdata.xml.in.in:43
+msgid "Mouse selector with hotplug support"
+msgstr "Mouse selector with hotplug support"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:42
-msgid "The resolution configuraton page"
-msgstr "The resolution configuraton page"
+#: data/org.freedesktop.Piper.appdata.xml.in.in:47
+msgid "Profile menu with rename and delete actions"
+msgstr "Profile menu with rename and delete actions"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:61
+#: data/org.freedesktop.Piper.appdata.xml.in.in:51
+msgid "Settings: shortcuts, appearance and startup"
+msgstr "Settings: shortcuts, appearance and startup"
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:70
 msgid ""
 "Add a Settings dialog with a global keyboard shortcut to cycle through mouse "
 "profiles."
@@ -88,7 +102,7 @@ msgstr ""
 "Add a Settings dialog with a global keyboard shortcut to cycle through mouse "
 "profiles."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+#: data/org.freedesktop.Piper.appdata.xml.in.in:71
 msgid ""
 "Add a mouse selector with hotplug detection and a second shortcut to switch "
 "between mice."
@@ -96,7 +110,7 @@ msgstr ""
 "Add a mouse selector with hotplug detection and a second shortcut to switch "
 "between mice."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+#: data/org.freedesktop.Piper.appdata.xml.in.in:72
 msgid ""
 "Add Dark, Light and System color modes plus automatic startup and minimize-"
 "to-tray options."
@@ -104,11 +118,11 @@ msgstr ""
 "Add Dark, Light and System color modes plus automatic startup and minimize-"
 "to-tray options."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+#: data/org.freedesktop.Piper.appdata.xml.in.in:73
 msgid "Add a system tray icon and a Quit menu entry."
 msgstr "Add a system tray icon and a Quit menu entry."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:65
+#: data/org.freedesktop.Piper.appdata.xml.in.in:74
 msgid ""
 "Add tray actions and retry registration when the desktop tray is not ready "
 "at login."
@@ -116,7 +130,7 @@ msgstr ""
 "Add tray actions and retry registration when the desktop tray is not ready "
 "at login."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:66
+#: data/org.freedesktop.Piper.appdata.xml.in.in:75
 msgid ""
 "Warn about devices with partial ratbagd/libratbag support and disable saving "
 "for them."
@@ -124,16 +138,16 @@ msgstr ""
 "Warn about devices with partial ratbagd/libratbag support and disable saving "
 "for them."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:67
+#: data/org.freedesktop.Piper.appdata.xml.in.in:76
 msgid "Support single-profile mice in the profile selector."
 msgstr "Support single-profile mice in the profile selector."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:68
+#: data/org.freedesktop.Piper.appdata.xml.in.in:77
 msgid "Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
 msgstr ""
 "Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:69
+#: data/org.freedesktop.Piper.appdata.xml.in.in:78
 msgid ""
 "Reconnect automatically when ratbagd exits after idle and keep it alive "
 "while Piper runs."
@@ -141,31 +155,35 @@ msgstr ""
 "Reconnect automatically when ratbagd exits after idle and keep it alive "
 "while Piper runs."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:70
+#: data/org.freedesktop.Piper.appdata.xml.in.in:79
 msgid "Allow renaming profiles and persist the names across restarts."
 msgstr "Allow renaming profiles and persist the names across restarts."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:71
+#: data/org.freedesktop.Piper.appdata.xml.in.in:80
 msgid "Ship complete English and Spanish translations."
 msgstr "Ship complete English and Spanish translations."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:72
+#: data/org.freedesktop.Piper.appdata.xml.in.in:81
 msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr "Fix reuse of the Ratbagd instance at startup."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:73
+#: data/org.freedesktop.Piper.appdata.xml.in.in:82
 msgid "Run the test suite in CI and pin the main workflow actions by commit."
 msgstr "Run the test suite in CI and pin the main workflow actions by commit."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:74
+#: data/org.freedesktop.Piper.appdata.xml.in.in:83
 msgid "Validate GTK and Rsvg at configure time."
 msgstr "Validate GTK and Rsvg at configure time."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:75
+#: data/org.freedesktop.Piper.appdata.xml.in.in:84
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:85
+msgid "Show the fork screenshots and repository links in Discover."
+msgstr "Show the fork screenshots and repository links in Discover."
 
 #: piper/application.py:68
 msgid "Switch to the next profile"
@@ -175,7 +193,7 @@ msgstr "Switch to the next profile"
 msgid "Switch to the next mouse"
 msgstr "Switch to the next mouse"
 
-#: piper/application.py:244
+#: piper/application.py:252
 #, python-format
 msgid ""
 "Version %s (2026). The features added in this fork are the contribution of "
@@ -188,15 +206,15 @@ msgstr ""
 "a>). Original Piper by the <a href=\"https://github.com/libratbag/"
 "piper\">libratbag</a> developers."
 
-#: piper/application.py:259
+#: piper/application.py:267
 msgid "Fork maintained by"
 msgstr "Fork maintained by"
 
-#: piper/application.py:266
+#: piper/application.py:274
 msgid "Fork contributions"
 msgstr "Fork contributions"
 
-#: piper/application.py:269
+#: piper/application.py:277
 #, python-format
 msgid ""
 "Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
@@ -205,7 +223,7 @@ msgstr ""
 "Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
 "tech\">akgeilani-tech</a>)"
 
-#: piper/application.py:276
+#: piper/application.py:284
 msgid "Original project"
 msgstr "Original project"
 

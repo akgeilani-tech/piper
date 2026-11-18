@@ -3,6 +3,14 @@
 All notable changes to this project are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.9.3-akg] - 2026-11-17
+
+### Fixed
+
+- AppStream metadata now shows the fork description, fork screenshots and
+  fork links in Discover instead of the original project's wiki screenshots.
+  This affects the software center, not the README shown on GitHub.
+
 ## [0.9.2-akg] - 2026-11-12
 
 ### Fixed

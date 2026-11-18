@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: piper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 14:53-0400\n"
+"POT-Creation-Date: 2026-11-17 21:25-0400\n"
 "PO-Revision-Date: 2020-03-14 15:37-0500\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Español; Castellano <>\n"
@@ -52,6 +52,17 @@ msgstr ""
 
 #: data/org.freedesktop.Piper.appdata.xml.in.in:18
 msgid ""
+"This fork adds a mouse selector with hotplug detection, global shortcuts for "
+"profiles and mice, appearance and startup settings, a system tray icon, "
+"persistent profile names and automatic reconnection to ratbagd."
+msgstr ""
+"Este fork añade un selector de ratón con detección de conexión, atajos "
+"globales para perfiles y ratones, ajustes de apariencia e inicio, un icono "
+"en la bandeja, nombres de perfil persistentes y reconexión automática con "
+"ratbagd."
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:23
+msgid ""
 "Configuration options include changing the resolution (DPI) of the mouse, "
 "adding and removing profiles, setting LED colors and changing button "
 "behaviors."
@@ -60,7 +71,7 @@ msgstr ""
 "ratón, añadir y eliminar perfiles, ajustar los colores LED y cambiar el "
 "comportamiento de los botones."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:23
+#: data/org.freedesktop.Piper.appdata.xml.in.in:28
 msgid ""
 "Piper requires libratbag’s ratbagd, the daemon to actually communicate with "
 "the mice. Piper is merely a front end to ratbagd, ratbagd must be installed "
@@ -70,25 +81,29 @@ msgstr ""
 "los ratones. Piper es simplemente un frontal para ratbagd, ratbagd debe "
 "estar instalado y funcionando cuando inicie Piper."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:34
-msgid "The button configuraton page"
-msgstr "La página de configuración de botones"
+#: data/org.freedesktop.Piper.appdata.xml.in.in:39
+msgid "Main window with mouse and profile selectors"
+msgstr "Ventana principal con selectores de ratón y perfil"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:38
-msgid "The LED configuraton page"
-msgstr "La página de configuración de LEDs"
+#: data/org.freedesktop.Piper.appdata.xml.in.in:43
+msgid "Mouse selector with hotplug support"
+msgstr "Selector de ratón con detección de conexión"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:42
-msgid "The resolution configuraton page"
-msgstr "La página de configuración de resolución"
+#: data/org.freedesktop.Piper.appdata.xml.in.in:47
+msgid "Profile menu with rename and delete actions"
+msgstr "Menú de perfiles con acciones de renombrar y eliminar"
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:61
+#: data/org.freedesktop.Piper.appdata.xml.in.in:51
+msgid "Settings: shortcuts, appearance and startup"
+msgstr "Configuración: atajos, apariencia e inicio"
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:70
 msgid ""
 "Add a Settings dialog with a global keyboard shortcut to cycle through mouse "
 "profiles."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:62
+#: data/org.freedesktop.Piper.appdata.xml.in.in:71
 msgid ""
 "Add a mouse selector with hotplug detection and a second shortcut to switch "
 "between mice."
@@ -96,17 +111,17 @@ msgstr ""
 "Añadir un selector de ratón con detección de conexión y un segundo atajo "
 "para cambiar entre ratones."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:63
+#: data/org.freedesktop.Piper.appdata.xml.in.in:72
 msgid ""
 "Add Dark, Light and System color modes plus automatic startup and minimize-"
 "to-tray options."
 msgstr ""
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:64
+#: data/org.freedesktop.Piper.appdata.xml.in.in:73
 msgid "Add a system tray icon and a Quit menu entry."
 msgstr "Añadir un icono en la bandeja del sistema y una entrada Salir."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:65
+#: data/org.freedesktop.Piper.appdata.xml.in.in:74
 msgid ""
 "Add tray actions and retry registration when the desktop tray is not ready "
 "at login."
@@ -114,7 +129,7 @@ msgstr ""
 "Añadir acciones en la bandeja y reintentar el registro cuando la bandeja del "
 "escritorio aún no está lista al iniciar sesión."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:66
+#: data/org.freedesktop.Piper.appdata.xml.in.in:75
 msgid ""
 "Warn about devices with partial ratbagd/libratbag support and disable saving "
 "for them."
@@ -122,17 +137,17 @@ msgstr ""
 "Avisar de dispositivos con soporte parcial en ratbagd/libratbag y "
 "deshabilitar el guardado para ellos."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:67
+#: data/org.freedesktop.Piper.appdata.xml.in.in:76
 msgid "Support single-profile mice in the profile selector."
 msgstr "Admitir ratones de un solo perfil en el selector de perfiles."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:68
+#: data/org.freedesktop.Piper.appdata.xml.in.in:77
 msgid "Handle the Breeze/Breeze-Dark GTK themes and live system color changes."
 msgstr ""
 "Gestionar los temas GTK Breeze/Breeze-Dark y los cambios de color del "
 "sistema en vivo."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:69
+#: data/org.freedesktop.Piper.appdata.xml.in.in:78
 msgid ""
 "Reconnect automatically when ratbagd exits after idle and keep it alive "
 "while Piper runs."
@@ -140,32 +155,36 @@ msgstr ""
 "Reconectar automáticamente cuando ratbagd se cierra por inactividad y "
 "mantenerlo activo mientras Piper está abierto."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:70
+#: data/org.freedesktop.Piper.appdata.xml.in.in:79
 msgid "Allow renaming profiles and persist the names across restarts."
 msgstr "Permitir renombrar perfiles y conservar los nombres entre reinicios."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:71
+#: data/org.freedesktop.Piper.appdata.xml.in.in:80
 msgid "Ship complete English and Spanish translations."
 msgstr "Incluir traducciones completas en inglés y español."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:72
+#: data/org.freedesktop.Piper.appdata.xml.in.in:81
 msgid "Fix reuse of the Ratbagd instance at startup."
 msgstr "Corregir la reutilización de la instancia de Ratbagd al iniciar."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:73
+#: data/org.freedesktop.Piper.appdata.xml.in.in:82
 msgid "Run the test suite in CI and pin the main workflow actions by commit."
 msgstr ""
 "Ejecutar la suite de pruebas en CI y fijar las acciones del flujo principal "
 "por commit."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:74
+#: data/org.freedesktop.Piper.appdata.xml.in.in:83
 msgid "Validate GTK and Rsvg at configure time."
 msgstr "Validar GTK y Rsvg durante la configuración."
 
-#: data/org.freedesktop.Piper.appdata.xml.in.in:75
+#: data/org.freedesktop.Piper.appdata.xml.in.in:84
 msgid ""
 "Update the Flatpak runtime and dependencies and make the build reproducible."
 msgstr ""
+
+#: data/org.freedesktop.Piper.appdata.xml.in.in:85
+msgid "Show the fork screenshots and repository links in Discover."
+msgstr "Mostrar las capturas y enlaces del fork en Discover."
 
 #: piper/application.py:68
 msgid "Switch to the next profile"
@@ -175,7 +194,7 @@ msgstr "Cambiar al siguiente perfil"
 msgid "Switch to the next mouse"
 msgstr "Cambiar al siguiente ratón"
 
-#: piper/application.py:244
+#: piper/application.py:252
 #, python-format
 msgid ""
 "Version %s (2026). The features added in this fork are the contribution of "
@@ -188,15 +207,15 @@ msgstr ""
 "tech</a>). Piper original de los desarrolladores de <a href=\"https://"
 "github.com/libratbag/piper\">libratbag</a>."
 
-#: piper/application.py:259
+#: piper/application.py:267
 msgid "Fork maintained by"
 msgstr "Fork mantenido por"
 
-#: piper/application.py:266
+#: piper/application.py:274
 msgid "Fork contributions"
 msgstr "Aportaciones del fork"
 
-#: piper/application.py:269
+#: piper/application.py:277
 #, python-format
 msgid ""
 "Version %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
@@ -205,7 +224,7 @@ msgstr ""
 "Versión %s (2026) — Ahmed Geilani (<a href=\"https://github.com/akgeilani-"
 "tech\">akgeilani-tech</a>)"
 
-#: piper/application.py:276
+#: piper/application.py:284
 msgid "Original project"
 msgstr "Proyecto original"
 
@@ -825,6 +844,15 @@ msgstr "_Acerca de Piper"
 #: data/ui/Window.ui:16
 msgid "_Quit"
 msgstr "_Salir"
+
+#~ msgid "The button configuraton page"
+#~ msgstr "La página de configuración de botones"
+
+#~ msgid "The LED configuraton page"
+#~ msgstr "La página de configuración de LEDs"
+
+#~ msgid "The resolution configuraton page"
+#~ msgstr "La página de configuración de resolución"
 
 #~ msgid "Cannot connect to ratbagd"
 #~ msgstr "No se puede conectar a ratbagd"
