@@ -123,14 +123,33 @@ or use `gdbus` to query `org.freedesktop.ratbag1`.
 
 Download
 [the latest release](https://github.com/akgeilani-tech/piper/releases/latest)
-and install the `.flatpak` bundle. The application needs the GNOME 50 runtime:
+and install the `.flatpak` bundle.
+
+> **Important:** the bundle requires the **GNOME 50 runtime**
+> (`org.gnome.Platform/x86_64/50`). If it is missing, Flatpak reports:
+>
+> ```text
+> error: La aplicación org.freedesktop.Piper/x86_64/master requiere el
+> tiempo de ejecución org.gnome.Platform/x86_64/50 que no se encontró
+> ```
+>
+> Install the runtime first. Use `--user` for a user installation, or
+> `sudo flatpak` if you install Piper system-wide.
 
 ```sh
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install --user flathub org.gnome.Platform//50
 flatpak install --user ./org.freedesktop.Piper-0.9.3-akg-amd64.flatpak
 flatpak run org.freedesktop.Piper
 ```
+
+Check that the runtime is present:
+
+```sh
+flatpak list --runtime | grep org.gnome.Platform
+```
+
+It must show `org.gnome.Platform/x86_64/50`.
 
 The Flatpak keeps the application ID `org.freedesktop.Piper`, so existing
 Piper settings, autostart entries and shortcuts continue to work.
